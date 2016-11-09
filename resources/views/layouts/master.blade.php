@@ -33,6 +33,11 @@
     font-size: 14px;
 
 }
+.header-nav-options .dropdown > a .badge {
+    font-size: 16px;
+    top: -13px;
+
+}
 	</style>
 	<!-- END STYLESHEETS -->
 
@@ -69,7 +74,7 @@
 				<ul class="header-nav header-nav-options">
 					<li class="dropdown">
 						<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-							<i class="fa fa-dollar"></i><sup class="badge style-danger">4</sup>
+							<i class="fa fa-2x fa-dollar"></i><sup class="badge style-danger">4</sup>
 						</a>
 						<ul class="dropdown-menu animation-expand">
 							<li class="dropdown-header">Today's Collection</li>
@@ -94,7 +99,7 @@
 					</li><!--end .dropdown -->
 					<li class="dropdown">
 						<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-							<i class="fa fa-money"></i><sup class="badge style-danger">6</sup>
+							<i class="fa fa-2x fa-money"></i><sup class="badge style-danger">6</sup>
 						</a>
 						<ul class="dropdown-menu animation-expand">
 							<li class="dropdown-header">Today's Reciveable</li>
@@ -120,7 +125,7 @@
 
 					<li class="dropdown">
 						<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-							<i class="fa fa-building"></i><sup class="badge style-danger">15</sup>
+							<i class="fa fa-2x fa-building"></i><sup class="badge style-danger">15</sup>
 						</a>
 						<ul class="dropdown-menu animation-expand">
 							<li class="dropdown-header">To-Let</li>
@@ -213,15 +218,15 @@
 
 
 					<!-- BEGIN PROJECT -->
-					<li class="gui-folder active">
+					<li class="gui-folder">
 						<a>
 							<div class="gui-icon"><i class="md md-account-balance"></i></div>
 							<span class="title">Projects</span>
 						</a>
 						<!--start submenu -->
 						<ul>
-							<li><a href="#" ><span class="title">New</span></a></li>
-							<li><a href="#" class="active" ><span class="title">All</span></a></li>
+							<li><a href="{{URL::Route('project.create')}}" ><span class="title">New</span></a></li>
+							<li><a href="{{URL::Route('project.index')}}" ><span class="title">All</span></a></li>
 						</ul><!--end /submenu -->
 					</li><!--end /menu-li -->
 					<!-- END PROJECT -->
@@ -233,8 +238,8 @@
 						</a>
 						<!--start submenu -->
 						<ul>
-							<li><a href="#" ><span class="title">New</span></a></li>
-							<li><a href="#" ><span class="title">All</span></a></li>
+							<li><a href="{{URL::Route('customer.create')}}" ><span class="title">New</span></a></li>
+							<li><a href="{{URL::Route('customer.index')}}" ><span class="title">All</span></a></li>
 						</ul><!--end /submenu -->
 					</li><!--end /menu-li -->
 					<!-- END CUSTOMER -->
@@ -246,7 +251,7 @@
 						</a>
 						<!--start submenu -->
 						<ul>
-							<li><a href="#" ><span class="title">Projects List</span></a></li>
+							<li><a href="{{URL::Route('report.projects')}}" ><span class="title">Projects List</span></a></li>
 							<li><a href="#" ><span class="title">Cutomers List</span></a></li>
 							<li><a href="#" ><span class="title">Collection List</span></a></li>
 							<li><a href="#" ><span class="title">Due List</span></a></li>
@@ -276,11 +281,31 @@
 	<script src="{{url('/')}}/assets/js/libs/jquery/jquery-1.11.2.min.js"></script>
 	<script src="{{url('/')}}/assets/js/libs/jquery/jquery-migrate-1.2.1.min.js"></script>
 	<script src="{{url('/')}}/assets/js/libs/bootstrap/bootstrap.min.js"></script>
+	<script src="{{url('/')}}/assets/js/libs/spin.js/spin.min.js"></script>
+	<script src="{{url('/')}}/assets/js/libs/autosize/jquery.autosize.min.js"></script>
+	<script src="{{url('/')}}/assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script>
 	<script src="{{url('/')}}/assets/js/core/source/App.js"></script>
 	<script src="{{url('/')}}/assets/js/core/source/AppNavigation.js"></script>
-	<!-- Extra js from child page -->
+	<script src="{{url('/')}}/assets/js/core/source/AppOffcanvas.js"></script>
+	<script src="{{url('/')}}/assets/js/core/source/AppCard.js"></script>
+	<script src="{{url('/')}}/assets/js/core/source/AppForm.js"></script>
+	<script src="{{url('/')}}/assets/js/core/source/AppVendor.js"></script>
+	<script type="text/javascript">
+	$( document ).ready(function() {
+		var pgurl = window.location.href.substr(window.location.href);
 
-	@yield("extraScript")
+ 	 $("#main-menu li a").each(function(){
+ 				if($(this).attr("href") == pgurl || $(this).attr("href") == '' ){
+ 					$("#main-menu li").removeClass('active');
+ 					$(this).parent().parent().parent().addClass("active");
+ 					$(this).parent().addClass("active");
+ 				}
+ 	 });
+	});
+
+	</script>
+	<!-- Extra js from child page -->
+		@yield("extraScript")
 
 	<!-- END JAVASCRIPT -->
 

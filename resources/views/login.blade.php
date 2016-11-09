@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>RHM- Locked</title>
+	<title>RHM- Login</title>
 
 	<!-- BEGIN META -->
 	<meta charset="utf-8">
