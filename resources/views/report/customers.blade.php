@@ -93,7 +93,7 @@
     </table>
     <table class="bg2">
       <tr><td>
-        Projects Report
+        Coustomers Report
       </td>
       <td >
 
@@ -105,20 +105,23 @@
 
     <tr class="thead">
       <td>Name </td>
-
-      <td>Area</td>
-      <td>Road No</td>
-      <td>Block/Sector No</td>
-      <td>Address</td>
+      <td>Profession </td>
+      <td>Cell No</td>
+      <td>Phone No</td>
+      <td>Email</td>
+      <td>Mailing. Address</td>
+      <td>Entry Date</td>
     </tr>
 
-    @foreach($projects as $project)
+    @foreach($customers as $customer)
     <tr class="borderBottom">
-      <td>{{$project->name}}</td>
-      <td>{{$project->area}}</td>
-      <td>{{$project->roadNo}}</td>
-      <td>{{$project->sectorNo}}</td>
-      <td>{{$project->address}}</td>
+      <td>{{$customer->name}}</td>
+      <td>{{$customer->profession}}</td>
+      <td>{{$customer->cellNo}}</td>
+      <td>{{$customer->phoneNo}}</td>
+      <td>{{$customer->email}}</td>
+      <td>{{$customer->mailingAddress}}</td>
+      <td>{{$customer->created_at->format('F j, Y')}}</td>
     </tr>
 
   @endforeach

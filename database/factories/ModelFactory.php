@@ -45,7 +45,7 @@ $factory->define(App\Customer::class, function (Faker\Generator $faker) {
     'cellNo' => "01554322707",
     'phoneNo' => "01554322707",
     'email' => $faker->email,
-    'dob' => $faker->date,
+    'dob' => $faker->date('d/m/Y'),
     'contactPerson' => $faker->name,
     'contactPersonCellNo' => "01554322707",
     'referenceName' => $faker->name,

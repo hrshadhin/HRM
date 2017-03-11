@@ -93,7 +93,7 @@
     </table>
     <table class="bg2">
       <tr><td>
-        Projects Report
+        Coustomers Report
       </td>
       <td >
 
@@ -105,30 +105,33 @@
 
     <tr class="thead">
       <td>Name </td>
-
-      <td>Area</td>
-      <td>Road No</td>
-      <td>Block/Sector No</td>
-      <td>Address</td>
+      <td>Profession </td>
+      <td>Cell No</td>
+      <td>Phone No</td>
+      <td>Email</td>
+      <td>Mailing. Address</td>
+      <td>Entry Date</td>
     </tr>
 
-    @foreach($projects as $project)
+    <?php $__currentLoopData = $customers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $customer): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
     <tr class="borderBottom">
-      <td>{{$project->name}}</td>
-      <td>{{$project->area}}</td>
-      <td>{{$project->roadNo}}</td>
-      <td>{{$project->sectorNo}}</td>
-      <td>{{$project->address}}</td>
+      <td><?php echo e($customer->name); ?></td>
+      <td><?php echo e($customer->profession); ?></td>
+      <td><?php echo e($customer->cellNo); ?></td>
+      <td><?php echo e($customer->phoneNo); ?></td>
+      <td><?php echo e($customer->email); ?></td>
+      <td><?php echo e($customer->mailingAddress); ?></td>
+      <td><?php echo e($customer->created_at->format('F j, Y')); ?></td>
     </tr>
 
-  @endforeach
+  <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
 
 
 
   </table>
 
     <div id="footer">
-      <p><strong>Print Date: {{date('F j, Y')}}<strong></p>
+      <p><strong>Print Date: <?php echo e(date('F j, Y')); ?><strong></p>
     </div>
   </body>
   </html>

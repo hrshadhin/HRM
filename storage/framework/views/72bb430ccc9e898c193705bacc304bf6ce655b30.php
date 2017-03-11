@@ -112,23 +112,23 @@
       <td>Address</td>
     </tr>
 
-    @foreach($projects as $project)
+    <?php $__currentLoopData = $projects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $project): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
     <tr class="borderBottom">
-      <td>{{$project->name}}</td>
-      <td>{{$project->area}}</td>
-      <td>{{$project->roadNo}}</td>
-      <td>{{$project->sectorNo}}</td>
-      <td>{{$project->address}}</td>
+      <td><?php echo e($project->name); ?></td>
+      <td><?php echo e($project->area); ?></td>
+      <td><?php echo e($project->roadNo); ?></td>
+      <td><?php echo e($project->sectorNo); ?></td>
+      <td><?php echo e($project->address); ?></td>
     </tr>
 
-  @endforeach
+  <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
 
 
 
   </table>
 
     <div id="footer">
-      <p><strong>Print Date: {{date('F j, Y')}}<strong></p>
+      <p><strong>Print Date: <?php echo e(date('F j, Y')); ?><strong></p>
     </div>
   </body>
   </html>
