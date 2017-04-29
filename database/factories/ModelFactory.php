@@ -13,13 +13,11 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
-    static $password;
-
     return [
         'name' => 'admin',
         'group' => 'admin',
         'email' => 'admin@hrm.com',
-        'password' => $password ?: $password = bcrypt('demo123'),
+        'password' => 'demo123',
         'description' => $faker->paragraph,
         'remember_token' => str_random(10),
     ];

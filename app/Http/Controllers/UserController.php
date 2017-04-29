@@ -28,7 +28,7 @@ class UserController extends Controller
 			session(['name' => auth()->user()->name]);
 			return redirect()->intended('dashboard');
 		} else {
-			return back()->with('error', 'Your username/password combination was incorrect');
+			return back()->with('error', 'Your email/password combination was incorrect');
 
 		}
 

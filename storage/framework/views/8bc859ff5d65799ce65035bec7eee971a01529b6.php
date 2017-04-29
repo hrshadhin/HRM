@@ -45,7 +45,7 @@
 						<br/>
 						<span class="text-lg text-bold text-primary">House Rent Management</span>
 						<br/><br/>
-						<form class="form floating-label" action="<?php echo e(URL::Route('user.login')); ?>" accept-charset="utf-8" method="post">
+						<form class="form floating-label" action="<?php echo e(URL::Route('user.login')); ?>/login" accept-charset="utf-8" method="post">
 							 <?php echo e(csrf_field()); ?>
 
 							<div class="form-group">
