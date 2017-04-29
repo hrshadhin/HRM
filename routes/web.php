@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout','UserController@logout')->name('user.logout');
     Route::get('/lock','UserController@lock')->name('user.lock');
     Route::resource('project','ProjectController');
+    Route::resource('flat','FlatController');
     Route::resource('customer','CustomerController');
     Route::get('/customer/{id}/print','CustomerController@print')->name('customer.print');
     Route::get('/report/projects','ReportController@projects')->name('report.projects');

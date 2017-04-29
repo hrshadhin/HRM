@@ -14,6 +14,7 @@ class ProjectController extends Controller
     {
         $areas = Area::pluck('name','id');
         $today = Carbon::today();
+
         return view('project.create',compact('areas','today'));
     }
     public function store(Request $request)
