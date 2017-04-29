@@ -23,9 +23,9 @@
 </head>
 <body>
 
-  <h1>-: Welcome To HRM :-</h1>
-  <h3>Easy & hassle free <br>HousE rENT Management</h3>
-  <h4>      <strong>Email:</strong> admin@HRM.com ||
+  <h1>-: Welcome To RHM :-</h1>
+  <h3>Easy & hassle free <br>Rent & Housing Management Web Application</h3>
+  <h4>      <strong>Email:</strong> admin@rhm.com ||
     <strong>Password:</strong> demo123
   </h4>
   <a href="/login" class="btn btn-primary btn-lg">

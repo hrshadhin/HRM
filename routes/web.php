@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-Route::get('/login','UserController@login')->name('user.login');
+//Route::get('/', function () {
+//    return view('home');
+//});
+Route::get('/','UserController@login')->name('user.login');
 Route::post('/login','UserController@postLogin');
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('user','UserController');

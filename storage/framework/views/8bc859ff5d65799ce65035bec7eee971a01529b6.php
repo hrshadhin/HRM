@@ -12,9 +12,9 @@
 
 	<!-- BEGIN STYLESHEETS -->
 	<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css'/>
-	<link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/bootstrap.css" />
-	<link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/materialadmin.css" />
-	<link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/font-awesome.min.css" />
+	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/bootstrap.css" />
+	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/materialadmin.css" />
+	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/font-awesome.min.css" />
 	<style>
 	@media (max-height: 700px) and (min-height: 500px){
 		section.section-account .img-backdrop, section.section-account .spacer {
@@ -26,8 +26,8 @@
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
-	<script type="text/javascript" src="{{url('/')}}/assets/js/libs/utils/html5shiv.js"></script>
-	<script type="text/javascript" src="{{url('/')}}/assets/js/libs/utils/respond.min.js"></script>
+	<script type="text/javascript" src="<?php echo e(url('/')); ?>/assets/js/libs/utils/html5shiv.js"></script>
+	<script type="text/javascript" src="<?php echo e(url('/')); ?>/assets/js/libs/utils/respond.min.js"></script>
 	<![endif]-->
 
 </head>
@@ -45,34 +45,38 @@
 						<br/>
 						<span class="text-lg text-bold text-primary">House Rent Management</span>
 						<br/><br/>
-						<form class="form floating-label" action="{{URL::Route('user.login')}}" accept-charset="utf-8" method="post">
-							 {{ csrf_field() }}
+						<form class="form floating-label" action="<?php echo e(URL::Route('user.login')); ?>" accept-charset="utf-8" method="post">
+							 <?php echo e(csrf_field()); ?>
+
 							<div class="form-group">
 								<input required="required" type="email" class="form-control" id="username" name="email">
 								<label for="username">Email Address</label>
-								<span class="text-danger">{{ $errors->first('email') }}</span>
+								<span class="text-danger"><?php echo e($errors->first('email')); ?></span>
 							</div>
 							<div class="form-group">
 								<input required="required" type="password" class="form-control" id="password" name="password">
 								<label for="password">Password</label>
-								<span class="text-danger">{{ $errors->first('password') }}</span>
+								<span class="text-danger"><?php echo e($errors->first('password')); ?></span>
 							</div>
 							<div class="row">
-								@if (Session::has('success'))
+								<?php if(Session::has('success')): ?>
 								<div class="alert alert-success">
-									{{ Session::get('success') }}
+									<?php echo e(Session::get('success')); ?>
+
 								</div>
-								@endif
-								@if (Session::has('error'))
+								<?php endif; ?>
+								<?php if(Session::has('error')): ?>
 								<div class="alert alert-danger">
-									{{ Session::get('error') }}
+									<?php echo e(Session::get('error')); ?>
+
 								</div>
-								@endif
-								@if (Session::has('warning'))
+								<?php endif; ?>
+								<?php if(Session::has('warning')): ?>
 								<div class="alert alert-warning">
-									{{ Session::get('warning') }}
+									<?php echo e(Session::get('warning')); ?>
+
 								</div>
-								@endif
+								<?php endif; ?>
 							</div>
 							<div class="row">
 								<div class="col-xs-6 text-left">
@@ -94,10 +98,10 @@
 			</section>
 			<!-- END LOGIN SECTION -->
 			<!-- BEGIN JAVASCRIPT -->
-			<script src="{{url('/')}}/assets/js/libs/jquery/jquery-1.11.2.min.js"></script>
-			<script src="{{url('/')}}/assets/js/libs/bootstrap/bootstrap.min.js"></script>
-			<script src="{{url('/')}}/assets/js/core/source/App.js"></script>
-			<script src="{{url('/')}}/assets/js/core/source/AppForm.js"></script>
+			<script src="<?php echo e(url('/')); ?>/assets/js/libs/jquery/jquery-1.11.2.min.js"></script>
+			<script src="<?php echo e(url('/')); ?>/assets/js/libs/bootstrap/bootstrap.min.js"></script>
+			<script src="<?php echo e(url('/')); ?>/assets/js/core/source/App.js"></script>
+			<script src="<?php echo e(url('/')); ?>/assets/js/core/source/AppForm.js"></script>
 
 			<!-- END JAVASCRIPT -->
 
