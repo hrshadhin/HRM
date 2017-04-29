@@ -1,0 +1,7 @@
+.myAction{
+    float: right !important;
+    display: inline; !important;
+}
+.mytable td {
+    text-align: center;
+}

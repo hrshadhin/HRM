@@ -45,7 +45,7 @@
 						<br/>
 						<span class="text-lg text-bold text-primary">House Rent Management</span>
 						<br/><br/>
-						<form class="form floating-label" action="{{URL::Route('user.login')}}/login" accept-charset="utf-8" method="post">
+						<form class="form floating-label" action="{{URL::Route('user.login')}}" accept-charset="utf-8" method="post">
 							 {{ csrf_field() }}
 							<div class="form-group">
 								<input required="required" type="email" class="form-control" id="username" name="email">

@@ -22,11 +22,11 @@ class CreateProjectTable extends Migration
             $table->unsignedInteger('users_id');
             $table->unsignedInteger('areas_id');
             $table->string('address',500);
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->text('storied');
             $table->integer('noOfUnits');
             $table->integer('noOfFloor');
-            $table->integer('noOfParking');
+            $table->integer('noOfCarParking');
             $table->unsignedInteger('unitSize');
             $table->enum('lift',['Yes','No']);
             $table->enum('generator',['Yes','No']);

@@ -26,7 +26,8 @@ class UserController extends Controller
 		$remember=$request->has('remember');
 		if (auth()->attempt(['email'=> $email, 'password'=> $password],$remember)) {
 			session(['name' => auth()->user()->name]);
-			return redirect()->intended('dashboard');
+            $notification= array('title' => 'Login', 'body' => 'Hello '.auth()->user()->name.'!You are now logged in.');
+			return redirect()->intended('dashboard')->with('success',$notification);
 		} else {
 			return back()->with('error', 'Your email/password combination was incorrect');
 
