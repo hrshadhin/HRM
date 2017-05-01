@@ -22,8 +22,9 @@ class CreateTableFlats extends Migration
             $table->integer('type');
             $table->enum('parking',['Yes','No']);
             $table->string('parkingNo',255)->nullable();
-            $table->bigIncrements('size');
+            $table->bigInteger('size');
             $table->text('description')->nullable();
+            $table->tinyInteger('status')->default('0'); // 0 for empty 1 for booked
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('projects_id')->references('id')->on('projects');

@@ -37,7 +37,7 @@
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          {!! Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential'], null, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          {!! Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential'], null, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']) !!}
                           <label for="projectType">Project Type</label>
                           <p class="help-block"></p>
                         </div>
@@ -48,7 +48,7 @@
                             <option value=""></option>
                           </select>
                           <label for="projectType">Project</label>
-                          <p class="help-block"></p>
+                          <p  id="projects_id-error" class="help-block">select a project</p>
                         </div>
                       </div>
                     </div>
@@ -61,7 +61,7 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="form-group">
-                          {!! Form::select('floor', $floors, null, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          {!! Form::select('floor', $floors, null, ['id' =>'floor', 'class' => 'form-control select2-list', 'required' => 'required']) !!}
                           <label for="floor">Floor</label>
                         </div>
                       </div>
@@ -69,49 +69,47 @@
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          {!! Form::select('type', $types, null, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          {!! Form::select('type', $types, null, ['id' =>'floorType' ,'class' => 'form-control select2-list', 'required' => 'required']) !!}
                           <label for="floor">Flat Type</label>
                         </div>
                       </div>
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <input type="text" class="form-control"  name="size" data-rule-number="true" required>
+                          <input type="text" id="flatSize" class="form-control"  name="size" data-rule-number="true" required>
                           <label for="size">Flat size(Sft.)</label>
                           <p class="help-block">Numbers only</p>
                         </div>
                       </div>
                     </div>
-                     <div class="row">
+                    <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
                           <span class="radio-inline radio-styled radio-info">
-                            <input type="radio" name="parking" checked value="No"><span>No</span>
+                            <input type="radio"  name="parking" checked value="No"><span>No</span>
                           </span>
                           <span class="radio-inline radio-styled radio-info">
-                            <input type="radio" name="parking" value="Yes"><span>Yes</span>
+                            <input type="radio"  name="parking" value="Yes"><span>Yes</span>
                           </span>
                           <label for="parking">Parking</label>
 
                         </div>
+                      </div>
+                      <div class="col-lg-6" id="haveParking" style="display: none">
+                        <div class="form-group">
+                          <input type="text" class="form-control"  name="parkingNo" data-rule-number="true" required>
+                          <label for="parkingNo">Parking no</label>
+                          <p class="help-block">Numbers only</p>
                         </div>
-                        <div class="col-lg-6" style="display: none">
-                          <div class="form-group">
-                            <input type="text" class="form-control"  name="parkingNo" data-rule-number="true" required>
-                            <label for="parkingNo">Parking no</label>
-                            <p class="help-block">Numbers only</p>
-                          </div>
-                        </div>
+                      </div>
                     </div>
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="form-group">
-                          <textarea class="form-control"  name="description" rows="1"  maxlength="1000"></textarea>
-                          <label for="description">Description</label>
-                          <p class="help-block">max: 1000 letters</p>
+                          <textarea class="form-control" id="description"  placeholder="Description" name="description" rows="1"  maxlength="1000"></textarea>
+                          <p class="help-block">Description</p>
                         </div>
                       </div>
-                      </div>
-
+                    </div>
 
                     <div class="form-group">
                       @if (count($errors) > 0)
@@ -151,8 +149,45 @@
   <script src="{{url('/')}}/assets/js/libs/jquery-validation/additional-methods.min.js"></script>
 
   <script type="text/javascript">
+      var generateDescription = function () {
+          var desc = "";
+          var floor = $('#floor option:selected').text();
+          var floorType = $('#floorType option:selected').text();
+          var floorSize = $('#flatSize').val();
+          if(floor){
+              desc += "Floor:"+floor;
+          }
+          if(floorType){
+              desc += ",Type:"+floorType;
+          }
+          if(floorSize){
+              desc += ",Size:"+floorSize;
+          }
+          //console.log(desc);
+          $('#description').val(desc);
+      };
       $( document ).ready(function() {
           $('select').select2();
+          $('#projectType').change(function () {
+              $.getJSON("/project-by-type/"+$(this).val(),function (response) {
+                  if(response.length){
+                      $("#projects_id").empty();
+                      var option = '<option value=""></option>';
+                      $("#projects_id").append(option);
+                      $.each(response,function (index,project) {
+                          var option = '<option value="'+project.id+'">'+project.value+'</option>';
+                          $("#projects_id").append(option);
+                      });
+
+                  }
+                  else {
+                      $("#projects_id").empty();
+                      var option = '<option value=""></option>';
+                      $("#projects_id").append(option);
+                  }
+                  $('#projects_id').select2();
+              });
+          });
           $('.datepicker').datepicker({
               format: 'dd/mm/yyyy',
               autoclose: true,
@@ -160,7 +195,35 @@
 
           });
           $('.radio-styled').click(function () {
-             $(this).children('input').attr('checked', true);
+              $(this).children('input').attr('checked', true);
+              if($(this).children('input').val() == "Yes"){
+                  $('#haveParking').show();
+              }
+              else{
+                  $('#haveParking').hide();
+              }
+          });
+          generateDescription();
+          $('#floor').change(function () {
+              generateDescription();
+
+          });
+          $('#floorType').change(function () {
+              generateDescription();
+
+          });
+          $('#flatSize').on('input propertychange paste',function () {
+              generateDescription();
+          });
+          $('form').submit(function (e) {
+              e.preventDefault();
+              if($('#projects_id').val()){
+                  this.submit();
+              }
+              else{
+                  $('#projects_id').parent().addClass('has-error');
+                  $('#projects_id').focus;
+              }
           });
       });
   </script>

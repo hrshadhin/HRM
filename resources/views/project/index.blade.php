@@ -26,9 +26,9 @@
                 <div class="card-head style-primary">
                   <header>Projects List</header>
                 </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table no-margin mytable">
+                <div class="card-body no-padding">
+                  <div class="table-responsive no-margin">
+                    <table class="table table-striped no-margin">
                       <thead>
                       <tr>
                         <th width="10%" class="text-center">ID</th>

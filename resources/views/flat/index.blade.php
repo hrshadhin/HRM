@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Project List')
+@section('title', 'flat List')
 @section('extraStyle')
   <style>
     th{
@@ -13,8 +13,8 @@
   <section>
     <div class="section-header">
       <ol class="breadcrumb">
-        <li class="active">Projects</li>
-        <li><a href="{{URL::Route('project.create')}}">Create</a></li>
+        <li class="active">Flat</li>
+        <li><a href="{{URL::Route('flat.create')}}">Allocate</a></li>
       </ol>
     </div><!--end .section-header -->
     <div class="section-body">
@@ -24,45 +24,61 @@
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-head style-primary">
-                  <header>Projects List</header>
+                  <header>Flat List</header>
                 </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table no-margin mytable">
+                <div class="card-body no-padding">
+                  <div class="table-responsive no-margin">
+                    <table class="table table-striped no-margin">
                       <thead>
                       <tr>
-                        <th width="10%" class="text-center">ID</th>
-                        <th width="10%" class="text-center">Type</th>
-                        <th width="15%" class="text-center">Name</th>
+                        <th width="10%" class="text-center">Project</th>
+                        <th width="10%" class="text-center">Floor</th>
+                        <th width="5%" class="text-center">Type</th>
+                        <th width="10%" class="text-center">Size</th>
+                        <th width="10%" class="text-center">Parking</th>
+                        <th width="20%" class="text-center">Description</th>
+                        <th width="5%" class="text-center">status</th>
                         <th width="10%" class="text-center">Entry Date</th>
-                        <th width="10%" class="text-center">Area</th>
-                        <th width="15%" class="text-center">Address</th>
-                        <th width="15%" class="text-center">Storied</th>
-                        <th width="15%" class="text-center">Action</th>
+                        <th width="10%" class="text-center">Entry By</th>
+                        <th width="10%" class="text-center">Action</th>
                       </tr>
                       </thead>
                       <tbody>
-                      @foreach($projects as $project)
+                      @foreach($flats as $flat)
                         <tr>
-                          <td>{{$project->projectId}}</td>
-                          <td>{{$project->projectType}}</td>
-                          <td>{{$project->name}}</td>
-                          <td>{{$project->entryDate->format('F j,Y')}}</td>
-                          <td>{{$project->area->name}}</td>
-                          <td>{{$project->address}}</td>
-                          <td>{{$project->storied}}</td>
+                          <td>{{$flat->project->name}}</td>
+                          <td>{{floorLevel($flat->floor)}}</td>
+                          <td>{{flatType($flat->type)}}</td>
+                          <td>{{$flat->size}}</td>
+                          <td>
+                            @if($flat->parking == "Yes")
+                              {{$flat->parkingNo}}
+                              @else
+                              --
+                              @endif
+                          </td>
+                          <td>{{$flat->description}}</td>
+                          <td>
+                            @if($flat->status == 1)
+                              <span class="text-warning text-bold">Booked</span>
+                            @else
+                              <span class="text-success text-bold">Empty</span>
+
+                            @endif
+                          </td>
+                          <td>{{$flat->entryDate->format('F j,Y')}}</td>
+                          <td>{{$flat->entry->name}}</td>
+
                           <td>
                             <div class="btn-group pull-right">
-                              <form class="myAction" method="POST" action="{{URL::route('project.destroy',$project->id)}}">
+                              <form class="myAction" method="POST" action="{{URL::route('flat.destroy',$flat->id)}}">
                                 <input name="_method" type="hidden" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button type="submit" class="btn ink-reaction btn-floating-action btn-danger btn-sm" title="Delete">
                                   <i class="fa fa-fw fa-trash"></i>
                                 </button>
                               </form>
-                              <a title="Edit" href="{{URL::route('project.edit',$project->id)}}" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
-                              <a title="Details" data-url="{{URL::route('project.show',$project->id)}}" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i>
-
+                              <a title="Edit" href="{{URL::route('flat.edit',$flat->id)}}" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
                               </a>
 
                             </div>
@@ -73,7 +89,7 @@
                       </tbody>
                     </table>
                   </div><!--end .table-responsive -->
-                  {{ $projects->links() }}
+                  {{ $flats->links() }}
                 </div><!--end .card-body -->
               </div><!--end .card -->
             </div><!--end .col -->

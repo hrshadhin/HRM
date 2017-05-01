@@ -93,4 +93,10 @@ class ProjectController extends Controller
         return redirect()->route('project.index')->with('success',$notification);
     }
 
+    public function projectByType($ptype)
+    {
+        return Project::select('id','name AS value')->where('projectType',$ptype)->get();
+
+    }
+
 }

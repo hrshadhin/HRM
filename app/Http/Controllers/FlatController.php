@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Flat;
 
 class FlatController extends Controller
 {
@@ -60,4 +61,63 @@ class FlatController extends Controller
         $today = Carbon::today();
         return view('flat.create',compact('today','floors','types'));
     }
+
+    public function store(Request $request)
+    {
+        //validate form
+        $this->validate($request, [
+            'flats_id' => 'required',
+            'entryDate' => 'required',
+            'floor' => 'required',
+            'type' => 'required',
+            'size' => 'required',
+            'parking' => 'required',
+        ]);
+        $data = $request->all();
+        $data['users_id'] = auth()->user()->id;
+        Flat::create($data);
+        $notification= array('title' => 'Data Store', 'body' => 'Flat allocated Successfully');
+        return redirect()->route('flat.index')->with('success',$notification);
+    }
+
+    public function index()
+    {
+        $flats = Flat::orderBy('id','asc')->with('project')->with('entry')->paginate(10);
+        return view('flat.index',compact('flats'));
+    }
+    public function show($id)
+    {
+        $flat = flat::with('entry')->findOrFail($id);
+        return $flat;
+    }
+    public function edit($id)
+    {
+        $flat = Flat::findOrFail($id);
+        return view('flat.edit',compact('flat'));
+    }
+    public function update(Request $request,$id)
+    {
+        //validate form
+        $this->validate($request, [
+            'status' => 'required',
+            'parking' => 'required'          
+        ]);
+        $flat = Flat::findOrFail($id);
+        $flat->status = $request->get('status');
+        $flat->parking = $request->get('parking');
+        if($request->get('parking')=="Yes"){
+            $flat->parkingNo = $request->get('parkingNo');
+        }
+        $flat->save();
+        $notification= array('title' => 'Data Update', 'body' => 'Flat updated Successfully');
+        return redirect()->route('flat.index')->with('success',$notification);
+    }
+    public function destroy($id)
+    {
+        $flat = Flat::findOrFail($id);
+        $flat->delete();
+        $notification= array('title' => 'Data Remove', 'body' => 'Flat deleted Successfully');
+        return redirect()->route('flat.index')->with('success',$notification);
+    }
+
 }

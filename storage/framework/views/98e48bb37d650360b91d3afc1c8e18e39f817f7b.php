@@ -12,11 +12,10 @@
 	<!-- BEGIN STYLESHEETS -->
 	<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css'/>
 	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/bootstrap.css" />
-	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/pnotify/pnotify.css" />
-	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/pnotify/pnotify.buttons.css" />
 	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/materialadmin.css" />
 	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/font-awesome.min.css" />
 	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/material-design-iconic-font.min.css" />
+	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/toastr.css" />
 	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/css/custom.css" />
 	<!-- Extra CSS files from child page -->
 	<?php echo $__env->yieldContent("extraStyle"); ?>
@@ -193,7 +192,7 @@
 	<!-- END CONTENT -->
 
 	<!-- BEGIN MENUBAR-->
-	<div id="menubar" class="menubar-inverse ">
+	<div id="menubar" class="">
 		<div class="menubar-fixed-panel">
 			<div>
 				<a class="btn btn-icon-toggle btn-default menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
@@ -234,6 +233,19 @@
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
 				<!-- END PROJECT -->
+				<!-- BEGIN Flat -->
+				<li class="gui-folder">
+					<a>
+						<div class="gui-icon"><i class="md md-business"></i></div>
+						<span class="title">Flats</span>
+					</a>
+					<!--start submenu -->
+					<ul>
+						<li><a href="<?php echo e(URL::Route('flat.create')); ?>" ><span class="title">Allocate</span></a></li>
+						<li><a href="<?php echo e(URL::Route('flat.index')); ?>" ><span class="title">All</span></a></li>
+					</ul><!--end /submenu -->
+				</li><!--end /menu-li -->
+				<!-- END Flat -->
 				<!-- BEGIN CUSTOMER -->
 				<li class="gui-folder">
 					<a>
@@ -285,8 +297,7 @@
 <script src="<?php echo e(url('/')); ?>/assets/js/libs/spin.js/spin.min.js"></script>
 <script src="<?php echo e(url('/')); ?>/assets/js/libs/autosize/jquery.autosize.min.js"></script>
 <script src="<?php echo e(url('/')); ?>/assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script>
-<script src="<?php echo e(url('/')); ?>/assets/js/libs/pnotify/pnotify.js"></script>
-<script src="<?php echo e(url('/')); ?>/assets/js/libs/pnotify/pnotify.buttons.js"></script>
+<script src="<?php echo e(url('/')); ?>/assets/js/libs/toastr.js"></script>
 
 <script src="<?php echo e(url('/')); ?>/assets/js/core/source/App.js"></script>
 <script src="<?php echo e(url('/')); ?>/assets/js/core/source/AppNavigation.js"></script>
@@ -304,31 +315,32 @@
                 $(this).parent().addClass("active");
             }
         });
-        <!-- PNotify -->
+        <!-- Toastr -->
+        toastr.options.hideDuration = 0;
+        toastr.clear();
+        toastr.options.closeButton = 'true';
+        toastr.options.progressBar = 'false';
+        toastr.options.debug = 'flase';
+        toastr.options.positionClass = 'toast-top-right';
+        toastr.options.showDuration = 330;
+        toastr.options.hideDuration = 330;
+        toastr.options.timeOut = 5000;
+        toastr.options.extendedTimeOut = 1000;
+        toastr.options.showEasing = 'swing';
+        toastr.options.hideEasing = 'swing';
+        toastr.options.showMethod = 'slideDown';
+        toastr.options.hideMethod = 'slideUp';
+        toastr.options.onclick = null;
         <?php if(Session::has('success')): ?>
-		new PNotify({
-            title: '<?php echo e(Session::get("success")["title"]); ?>',
-            text: '<?php echo e(Session::get("success")["body"]); ?>',
-            type: 'success',
-            styling: 'bootstrap3'
-        });
+        toastr.success('<?php echo e(Session::get("success")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
         <?php endif; ?>
         <?php if(Session::has('error')): ?>
-			new PNotify({
-				title: '<?php echo e(Session::get("error")["title"]); ?>',
-				text: '<?php echo e(Session::get("error")["body"]); ?>',
-				type: 'error',
-				styling: 'bootstrap3'
-			});
+			toastr.error('<?php echo e(Session::get("success")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
         <?php endif; ?>
         <?php if(Session::has('warning')): ?>
-		new PNotify({
-            title: '<?php echo e(Session::get("warning")["title"]); ?>',
-            text: '<?php echo e(Session::get("warning")["body"]); ?>',
-            styling: 'bootstrap3'
-        });
+		toastr.warning('<?php echo e(Session::get("success")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
 		<?php endif; ?>
-        <!-- /PNotify -->
+		<!-- toastr end -->
     });
 
 </script>
