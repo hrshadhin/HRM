@@ -10,14 +10,7 @@ class CustomerController extends Controller
 {
   public function create()
     {
-        $customerCount = Customer::count();
-        $code="c-";
-        $customerCount++;
-        if($customerCount<10)
-          $code = $code.'0'.$customerCount;
-        else
-          $code = $code.$customerCount;
-        return view('customer.create',compact('code'));
+        return view('customer.create');
     }
     public function store(Request $request)
     {

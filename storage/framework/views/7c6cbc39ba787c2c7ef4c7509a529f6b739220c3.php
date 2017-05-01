@@ -1,17 +1,15 @@
-@extends('layouts.master')
-
-@section('title', 'Customer Create')
-@section('extraStyle')
-  <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/select2/select2.css" />
-  <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/bootstrap-datepicker/datepicker3.css" />
+<?php $__env->startSection('title', 'Customer Create'); ?>
+<?php $__env->startSection('extraStyle'); ?>
+  <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/select2/select2.css" />
+  <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/bootstrap-datepicker/datepicker3.css" />
 
 
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header">
       <ol class="breadcrumb">
-        <li><a href="{{URL::Route('customer.index')}}">Cutomers</a></li>
+        <li><a href="<?php echo e(URL::Route('customer.index')); ?>">Cutomers</a></li>
         <li class="active">Create</li>
       </ol>
     </div><!--end .section-header -->
@@ -23,7 +21,7 @@
             <div class="col-lg-12">
               <form class="form form-validate floating-label"
                     novalidate="novalidate"
-                    action="{{URL::route('customer.store')}}"
+                    action="<?php echo e(URL::route('customer.store')); ?>"
                     method="POST"
                     enctype="multipart/form-data"
               >
@@ -37,7 +35,8 @@
                   </div>
                   <div class="card-body tab-content">
                     <div class="tab-pane active" id="first2">
-                        {{ csrf_field() }}
+                        <?php echo e(csrf_field()); ?>
+
                       <div class="row">
                         <div class="col-lg-6">
                           <div class="form-group">
@@ -275,16 +274,16 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      @if (count($errors) > 0)
+                      <?php if(count($errors) > 0): ?>
                         <div class="alert alert-danger">
                           <strong>Whoops!</strong> There were some problems with your input.<br><br>
                           <ul>
-                            @foreach ($errors->all() as $error)
-                              <li>{{ $error }}</li>
-                            @endforeach
+                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+                              <li><?php echo e($error); ?></li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                           </ul>
                         </div>
-                      @endif
+                      <?php endif; ?>
                     </div>
                     <div class="card-actionbar">
                       <div class="card-actionbar-row">
@@ -305,13 +304,13 @@
 
   </section>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('extraScript')
-  <script src="{{url('/')}}/assets/js/libs/select2/select2.min.js"></script>
-  <script src="{{url('/')}}/assets/js/libs/jquery-validation/jquery.validate.min.js"></script>
-  <script src="{{url('/')}}/assets/js/libs/jquery-validation/additional-methods.min.js"></script>
-  <script src="{{url('/')}}/assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<?php $__env->startSection('extraScript'); ?>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/select2/select2.min.js"></script>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/jquery-validation/jquery.validate.min.js"></script>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/jquery-validation/additional-methods.min.js"></script>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 
   <script type="text/javascript">
       $( document ).ready(function() {
@@ -319,4 +318,6 @@
           $('.pick-date').datepicker({autoclose: true, todayHighlight: true, format: "dd/mm/yyyy"});
       });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

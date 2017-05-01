@@ -8,37 +8,58 @@ use Carbon\Carbon;
 
 class Customer extends Model
 {
-  use SoftDeletes;
+    use SoftDeletes;
 
-  protected $dates = ['dob','created_at'];
-  /**
-  * The attributes that are mass assignable.
-  *
-  * @var array
-  */
-  protected $fillable = [
-    'title',
-    'code',
-    'name',
-    'cellNo',
-    'phoneNo',
-    'email',
-    'dob',
-    'contactPerson',
-    'contactPersonCellNo',
-    'referenceName',
-    'referenceContactNo',
-    'mailingAddress',
-    'profession',
-    'active',
-    'salesPerson',
-    'groupName',
-    'photo'
-  ];
+    protected $dates = ['dob','entryDate'];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'cellNo',
+        'phoneNo',
+        'email',
+        'dob',
+        'contactPerson',
+        'contactPersonCellNo',
+        'fatherName',
+        'motherName',
+        'spouseName',
+        'nidNo',
+        'passportNo',
+        'mailingAddress',
+        'presentAddress',
+        'permanentAddress',
+        'birthCertificate',
+        'passport',
+        'photo',
+        'companyName',
+        'designation',
+        'cContactPerson',
+        'cContactPersonCellNo',
+        'cCellNo',
+        'cPhoneNo',
+        'cFaxNo',
+        'cEmail',
+        'cAddress',
+        'cNote',
+        'active',
+        'entryDate',
+        'users_id',
 
-  function setDobAttribute($value)
-  {
-    $this->attributes['dob'] = Carbon::createFromFormat('d/m/Y', $value);
-  }
+    ];
+    public function entry() {
+        return $this->belongsTo('App\User','users_id');
+    }
+    function setDobAttribute($value)
+    {
+        $this->attributes['dob'] = Carbon::createFromFormat('d/m/Y', $value);
+    }
+    function setEntryDateAttribute($value)
+    {
+        $this->attributes['entryDate'] = Carbon::createFromFormat('d/m/Y', $value);
+    }
 
 }
