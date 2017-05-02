@@ -1,20 +1,18 @@
-@extends('layouts.master')
-
-@section('title', 'Customer List')
-@section('extraStyle')
+<?php $__env->startSection('title', 'Customer List'); ?>
+<?php $__env->startSection('extraStyle'); ?>
 <style>
 th{
   font-weight: blod !important;
   color:#000 !important;
 }
 </style>
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <section>
   <div class="section-header">
     <ol class="breadcrumb">
       <li class="active">Customers</li>
-      <li><a href="{{URL::Route('customer.create')}}">Create</a></li>
+      <li><a href="<?php echo e(URL::Route('customer.create')); ?>">Create</a></li>
     </ol>
   </div><!--end .section-header -->
   <div class="section-body">
@@ -41,38 +39,39 @@ th{
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($customers as $customer)
+                      <?php $__currentLoopData = $customers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $customer): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                       <tr>
                         <td>
-                      <img src="{{URL::asset('storage')}}/@if($customer->photo){{$customer->photo}} @else{{'customers/avatar.png'}}@endif" alt="" class="" width="80px" height="70px">
+                      <img src="<?php echo e(URL::asset('storage')); ?>/<?php if($customer->photo): ?><?php echo e($customer->photo); ?> <?php else: ?><?php echo e('customers/avatar.png'); ?><?php endif; ?>" alt="" class="" width="80px" height="70px">
                         </td>
-                        <td>{{$customer->name}}</td>
-                        <td>{{$customer->cellNo}}</td>
-                        <td>{{$customer->entryDate->format('F j, Y')}}</td>
-                        <td>{{$customer->permanentAddress}}</td>
-                        <td>{{$customer->active}}</td>
+                        <td><?php echo e($customer->name); ?></td>
+                        <td><?php echo e($customer->cellNo); ?></td>
+                        <td><?php echo e($customer->entryDate->format('F j, Y')); ?></td>
+                        <td><?php echo e($customer->permanentAddress); ?></td>
+                        <td><?php echo e($customer->active); ?></td>
                         <td>
                           <div class="btn-group pull-right">
-                            <form class="myAction" method="POST" action="{{URL::route('customer.destroy',$customer->id)}}">
+                            <form class="myAction" method="POST" action="<?php echo e(URL::route('customer.destroy',$customer->id)); ?>">
                               <input name="_method" type="hidden" value="DELETE">
-                              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                              <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
                               <button type="submit" class="btn ink-reaction btn-floating-action btn-danger btn-sm" title="Delete">
                                 <i class="fa fa-fw fa-trash"></i>
                               </button>
                             </form>
-                            <a title="Edit" href="{{URL::route('customer.edit',$customer->id)}}" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
-                            <a title="Details" target="_blank" href="{{URL::route('customer.show',$customer->id)}}"  class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction"><i class="fa fa-list"></i>
+                            <a title="Edit" href="<?php echo e(URL::route('customer.edit',$customer->id)); ?>" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
+                            <a title="Details" target="_blank" href="<?php echo e(URL::route('customer.show',$customer->id)); ?>"  class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction"><i class="fa fa-list"></i>
 
                             </a>
 
                           </div>
                         </td>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                       </tbody>
                     </table>
                   </div><!--end .table-responsive -->
-                  {{ $customers->links() }}
+                  <?php echo e($customers->links()); ?>
+
                 </div><!--end .card-body -->
               </div><!--end .card -->
             </div><!--end .col -->
@@ -84,4 +83,6 @@ th{
 
   </section>
 
-  @endsection
+  <?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -83,7 +83,7 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
         $project->fill($request->all())->update();
         $notification= array('title' => 'Data Update', 'body' => 'Project updated Successfully');
-        return redirect()->route('project.index')->with('success',$notification);;
+        return redirect()->route('project.index')->with('success',$notification);
     }
     public function destroy($id)
     {

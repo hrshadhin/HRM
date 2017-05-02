@@ -40,21 +40,21 @@
                       <div class="row">
                         <div class="col-lg-6">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="name" data-rule-minlength="4" maxlength="100" required>
+                            <input type="text" class="form-control" value="<?php echo e(old('name')); ?>"  name="name" data-rule-minlength="4" maxlength="100" required>
                             <label for="name">Name</label>
                             <p class="help-block">min: 4 / max: 100 letters</p>
                           </div>
                         </div>
                         <div class="col-lg-3">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="cellNo" data-rule-minlength="11" maxlength="11" required>
+                            <input type="text" class="form-control" value="<?php echo e(old('cellNo')); ?>" name="cellNo" data-rule-minlength="11" maxlength="11" required>
                             <label for="cellNo">Mobile No</label>
                             <p class="help-block"> min & max: 11 letters</p>
                           </div>
                         </div>
                         <div class="col-lg-3">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="phoneNo" maxlength="15">
+                            <input type="text" class="form-control" value="<?php echo e(old('phoneNo')); ?>" name="phoneNo" maxlength="15">
                             <label for="phoneNo">Phone No</label>
                             <p class="help-block">max: 15 letters</p>
                           </div>
@@ -63,7 +63,7 @@
                       <div class="row">
                         <div class="col-lg-6">
                           <div class="form-group">
-                            <input type="email" class="form-control"  name="email"  maxlength="100">
+                            <input type="email" class="form-control" value="<?php echo e(old('email')); ?>"  name="email"  maxlength="100">
                             <label for="email">Email</label>
                             <p class="help-block">max: 100 letters</p>
                           </div>
@@ -72,7 +72,7 @@
                           <div class="form-group">
                             <div class="input-group date">
                               <div class="input-group-content">
-                                <input type="text" name="dob" class="form-control pick-date">
+                                <input type="text" name="dob" value="<?php echo e(old('dob')); ?>" class="form-control pick-date">
                                 <label>Date of Birth</label>
                               </div>
                               <span class="input-group-addon"></span>
@@ -84,7 +84,7 @@
                           <div class="form-group">
                             <div class="input-group date">
                               <div class="input-group-content">
-                                <input type="text" name="entryDate" class="form-control  pick-date">
+                                <input type="text" name="entryDate" value="<?php if(old('entryDate')): ?> <?php echo e(old('entryDate')); ?> <?php else: ?> <?php echo e($today->format('d/m/Y')); ?> <?php endif; ?>" class="form-control  pick-date" required>
                                 <label>Entry Date</label>
                               </div>
                               <span class="input-group-addon"></span>
@@ -96,14 +96,14 @@
                       <div class="row">
                         <div class="col-lg-6">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="contactPerson" maxlength="100">
+                            <input type="text" class="form-control" value="<?php echo e(old('contactPerson')); ?>" name="contactPerson" maxlength="100">
                             <label for="contactPerson">Contact Person</label>
                             <p class="help-block"> max: 100 letters</p>
                           </div>
                         </div>
                         <div class="col-lg-6">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="contactPersonCellNo" data-rule-minlength="11" maxlength="11">
+                            <input type="text" class="form-control" value="<?php echo e(old('contactPersonCellNo')); ?>"  name="contactPersonCellNo" data-rule-minlength="11" maxlength="11">
                             <label for="contactPersonCellNo">Contact Person Mobile No</label>
                             <p class="help-block"> min & max: 11 letters</p>
                           </div>
@@ -113,21 +113,21 @@
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="fatherName" maxlength="100">
+                            <input type="text" class="form-control" value="<?php echo e(old('fatherName')); ?>" name="fatherName" maxlength="100">
                             <label for="fatherName">Father Name</label>
                             <p class="help-block"> max: 100 letters</p>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="motherName" maxlength="100">
+                            <input type="text" class="form-control" value="<?php echo e(old('motherName')); ?>" name="motherName" maxlength="100">
                             <label for="motherName">Mother Name</label>
                             <p class="help-block"> max: 100 letters</p>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="spouseName" maxlength="100">
+                            <input type="text" class="form-control" value="<?php echo e(old('spouseName')); ?>" name="spouseName" maxlength="100">
                             <label for="spouseName">Spouse Name</label>
                             <p class="help-block"> max: 100 letters</p>
                           </div>
@@ -135,23 +135,40 @@
 
                       </div>
                       <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <input type="text" class="form-control" value="<?php echo e(old('nidNo')); ?>"  name="nidNo" maxlength="50">
+                            <label for="nidNo">National ID No</label>
+                            <p class="help-block"> max: 50 letters</p>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <input type="text" class="form-control" value="<?php echo e(old('passportNo')); ?>" name="passportNo" maxlength="50">
+                            <label for="passportNo">Passport No</label>
+                            <p class="help-block">max: 50 letters</p>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <textarea class="form-control"  name="mailingAddress" maxlength="500"></textarea>
+                            <textarea class="form-control"  name="mailingAddress" maxlength="500"><?php echo e(old('mailingAddress')); ?></textarea>
                             <label for="mailingAddress">Mailing Address</label>
                             <p class="help-block">max: 500 letters</p>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <textarea class="form-control"  name="presentAddress" maxlength="500"></textarea>
+                            <textarea class="form-control"  name="presentAddress" maxlength="500"><?php echo e(old('presentAddress')); ?></textarea>
                             <label for="presentAddress">Present Address</label>
                             <p class="help-block">max: 500 letters</p>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <textarea class="form-control"  name="permanentAddress"  maxlength="500" required></textarea>
+                            <textarea class="form-control"  name="permanentAddress"  maxlength="500" required><?php echo e(old('permanentAddress')); ?></textarea>
                             <label for="permanentAddress">Permanent Address</label>
                             <p class="help-block">max: 500 letters</p>
                           </div>
@@ -197,14 +214,14 @@
                       <div class="row">
                         <div class="col-lg-6">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="companyName" maxlength="255">
+                            <input type="text" class="form-control"  name="companyName" value="<?php echo e(old('companyName')); ?>" maxlength="255">
                             <label for="companyName">Campany Name</label>
                             <p class="help-block">max: 100 letters</p>
                           </div>
                         </div>
                         <div class="col-lg-6">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="designation" maxlength="100">
+                            <input type="text" class="form-control"  name="designation" value="<?php echo e(old('designation')); ?>" maxlength="100">
                             <label for="designation">Designation</label>
                             <p class="help-block"> max: 100 letters</p>
                           </div>
@@ -213,14 +230,14 @@
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <input type="text" class="form-control"  name="cContactPerson" maxlength="100">
+                              <input type="text" class="form-control"  name="cContactPerson" value="<?php echo e(old('cContactPerson')); ?>" maxlength="100">
                               <label for="cContactPerson">Contact person</label>
                               <p class="help-block"> max: 100 letters</p>
                             </div>
                           </div>
                         <div class="col-lg-6">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="cContactPersonCellNo" maxlength="11">
+                            <input type="text" class="form-control"  name="cContactPersonCellNo" value="<?php echo e(old('cContactPersonCellNo')); ?>" maxlength="11">
                             <label for="cContactPersonCellNo">Contact Person Mobile No</label>
                             <p class="help-block">max: 11 letters</p>
                           </div>
@@ -229,21 +246,21 @@
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="cCellNo" maxlength="11">
+                            <input type="text" class="form-control" value="<?php echo e(old('cCellNo')); ?>"  name="cCellNo" maxlength="11">
                             <label for="cCellNo">Mobile No</label>
                             <p class="help-block">max: 11 letters</p>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="cPhoneNo" maxlength="15">
+                            <input type="text" class="form-control"  name="cPhoneNo" value="<?php echo e(old('cPhoneNo')); ?>"  maxlength="15">
                             <label for="cPhoneNo">Phone No</label>
                             <p class="help-block">max: 15 letters</p>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <input type="text" class="form-control"  name="cFaxNo" maxlength="15">
+                            <input type="text" class="form-control"  name="cFaxNo" value="<?php echo e(old('cFaxNo')); ?>" maxlength="15">
                             <label for="cFaxNo">Fax No</label>
                             <p class="help-block">max: 15 letters</p>
                           </div>
@@ -252,21 +269,21 @@
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <input type="email" class="form-control"  name="cEmail"  maxlength="100">
+                            <input type="email" class="form-control"  name="cEmail" value="<?php echo e(old('cEmail')); ?>" maxlength="100">
                             <label for="cEmail">Email</label>
                             <p class="help-block">max: 100 letters</p>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <textarea class="form-control"  name="cAddress" maxlength="500"></textarea>
+                            <textarea class="form-control"  name="cAddress" maxlength="500"><?php echo e(old('cAddress')); ?></textarea>
                             <label for="cAddress">Address</label>
                             <p class="help-block">max: 500 letters</p>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <textarea class="form-control"  name="cNote" maxlength="1000"></textarea>
+                            <textarea class="form-control"  name="cNote" maxlength="1000"><?php echo e(old('cNote')); ?></textarea>
                             <label for="cNote">Note</label>
                             <p class="help-block">max: 1000 letters</p>
                           </div>

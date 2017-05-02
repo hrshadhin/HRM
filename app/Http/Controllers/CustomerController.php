@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Customer;
@@ -10,40 +11,61 @@ class CustomerController extends Controller
 {
   public function create()
     {
-        return view('customer.create');
+        $today = Carbon::now();
+        return view('customer.create',compact('today'));
     }
     public function store(Request $request)
     {
         //validate form
         $this->validate($request, [
-          'title' => 'required|max:20',
-          'code' => 'required|max:20|min:2',
-          'name' => 'required|max:100|min:2',
-          'cellNo' => 'required|max:15|min:11',
-          'phoneNo' => 'required|max:15|min:5',
-          'email' => 'required|email',
-          'dob' => 'required',
-          'contactPerson' => 'required|max:100',
-          'contactPersonCellNo' => 'required|max:15|min:11',
-          'referenceName' => 'required|max:100',
-          'referenceContactNo' => 'required|max:15',
-          'mailingAddress' => 'required|max:255',
-          'profession' => 'required',
-          'active' => 'required',
-          'salesPerson' => 'required',
-          'groupName' => 'required',
-          'photo' => 'image'
+            'name' => 'required|max:100|min:4',
+            'cellNo' => 'required|max:11|min:11|unique:customers',
+            'phoneNo' => 'max:15',
+            'email' => 'max:100',
+            'contactPerson' => 'max:100',
+            'contactPersonCellNo' => 'max:11',
+            'fatherName'=> 'max:100',
+            'motherName'=> 'max:100',
+            'spouseName'=> 'max:100',
+            'nidNo' => 'max:50',
+            'passportNo' => 'max:50',
+            'mailingAddress' => 'max:500',
+            'presentAddress' => 'max:500',
+            'permanentAddress' => 'required|max:500',
+            'birthCertificate' => 'mimes:jpeg,bmp,png,gif,svg,pdf',
+            'passport' => 'mimes:jpeg,bmp,png,gif,svg,pdf',
+            'photo' => 'mimes:jpeg,bmp,png,gif,svg',
+            'companyName' => 'max:100',
+            'designation' => 'max:100',
+            'cContactPerson' => 'max:100',
+            'cContactPersonCellNo' => 'max:11',
+            'cCellNo' => 'max:11',
+            'cPhoneNo' => 'max:15',
+            'cFaxNo' => 'max:15',
+            'cEmail' => 'max:100',
+            'cAddress' => 'max:500',
+            'cNote' => 'max:1000',
+            'entryDate' => 'required',
+
         ]);
         $data = $request->all();
         if(request()->hasFile('photo'))
-          $data['photo']=request()->file('photo')->store('customers');
+          $data['photo']=request()->file('photo')->store('public/customers');
+
+        if(request()->hasFile('birthCertificate'))
+          $data['birthCertificate']=request()->file('birthCertificate')->store('public/customers');
+
+        if(request()->hasFile('passport'))
+          $data['passport']=request()->file('passport')->store('public/customers');
+        $data['users_id'] = auth()->user()->id;
         Customer::create($data);
-        return redirect()->route('customer.index');
+        $notification= array('title' => 'Data Update', 'body' => 'Customer created Successfully');
+        return redirect()->route('customer.index')->with('success',$notification);
     }
 
     public function index()
     {
-        $customers = Customer::orderBy('id','asc')->paginate(5);
+        $customers = Customer::orderBy('id','asc')->paginate(10);
         return view('customer.index',compact('customers'));
     }
 
@@ -51,18 +73,15 @@ class CustomerController extends Controller
       return "This feature is being under development.";
     }
     public function show($id){
-      return "This feature is being under development.";
+      $customer = Customer::with('entry')->findOrFail($id);
+      return view('customer.show',compact('customer'));
     }
 
     public function destroy($id)
     {
         $customer = Customer::findOrFail($id);
         $customer->delete();
-        return redirect()->route('customer.index');
-    }
-
-    public function print()
-    {
-      return "This feature is being under development.";
+        $notification= array('title' => 'Data Remove', 'body' => 'Customer deleted Successfully');
+        return redirect()->route('customer.index')->with('success',$notification);
     }
 }

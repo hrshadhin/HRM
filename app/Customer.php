@@ -55,11 +55,16 @@ class Customer extends Model
     }
     function setDobAttribute($value)
     {
-        $this->attributes['dob'] = Carbon::createFromFormat('d/m/Y', $value);
+        if(strlen($value)){
+            $this->attributes['dob'] =  Carbon::createFromFormat('d/m/Y', trim($value));
+        }
+        else{
+            $this->attributes['dob'] = null;
+        }
     }
     function setEntryDateAttribute($value)
     {
-        $this->attributes['entryDate'] = Carbon::createFromFormat('d/m/Y', $value);
+        $this->attributes['entryDate'] = Carbon::createFromFormat('d/m/Y', trim($value));
     }
 
 }
