@@ -1,15 +1,13 @@
-@extends('layouts.master')
+<?php $__env->startSection('title', 'Rent Update'); ?>
+<?php $__env->startSection('extraStyle'); ?>
+  <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/select2/select2.css" />
 
-@section('title', 'Rent Update')
-@section('extraStyle')
-  <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/select2/select2.css" />
-
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header">
       <ol class="breadcrumb">
-        <li><a href="{{URL::Route('rent.index')}}">Rented List</a></li>
+        <li><a href="<?php echo e(URL::Route('rent.index')); ?>">Rented List</a></li>
         <li class="active">Update</li>
       </ol>
     </div><!--end .section-header -->
@@ -21,7 +19,7 @@
             <div class="col-lg-12">
               <form class="form form-validate floating-label"
                     novalidate="novalidate"
-                    action="{{URL::route('rent.update',$rent->id)}}"
+                    action="<?php echo e(URL::route('rent.update',$rent->id)); ?>"
                     method="POST"
                     enctype="multipart/form-data">
 
@@ -31,21 +29,23 @@
                   </div>
                   <div class="card-body">
                     <div class="form-group">
-                      {{ csrf_field() }}
-                      {{ method_field('PATCH') }}
+                      <?php echo e(csrf_field()); ?>
+
+                      <?php echo e(method_field('PATCH')); ?>
+
                     </div>
 
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <input type="number" id="rentAmount" value="{{$rent->rent}}" class="form-control" min="0" name="rent" data-rule-number="true" required>
+                              <input type="number" id="rentAmount" value="<?php echo e($rent->rent); ?>" class="form-control" min="0" name="rent" data-rule-number="true" required>
                               <label for="rentAmount">Rent amount</label>
                               <p class="help-block">Numbers only</p>
                             </div>
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <input type="number" readonly id="rentAmountPerSft" value="{{$rent->perSftRent}}" class="form-control" min="0" name="perSftRent" data-rule-number="true" required>
+                              <input type="number" readonly id="rentAmountPerSft" value="<?php echo e($rent->perSftRent); ?>" class="form-control" min="0" name="perSftRent" data-rule-number="true" required>
                               <p class="help-block">Rent per Sft.</p>
                             </div>
                           </div>
@@ -53,14 +53,14 @@
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <input type="number" id="securityMoney" value="{{$rent->securityMoney}}" class="form-control" min="0" name="securityMoney" data-rule-number="true" required>
+                              <input type="number" id="securityMoney" value="<?php echo e($rent->securityMoney); ?>" class="form-control" min="0" name="securityMoney" data-rule-number="true" required>
                               <label for="securityMoney">Security money</label>
                               <p class="help-block">Numbers only</p>
                             </div>
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <input type="number" id="advanceMoney" value="{{$rent->advanceMoney}}" class="form-control" min="0" name="advanceMoney" data-rule-number="true" required>
+                              <input type="number" id="advanceMoney" value="<?php echo e($rent->advanceMoney); ?>" class="form-control" min="0" name="advanceMoney" data-rule-number="true" required>
                               <label for="advanceMoney">Advance money</label>
                               <p class="help-block">Numbers only</p>
                             </div>
@@ -69,14 +69,14 @@
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <input type="number" id="utilityCharge" value="{{$rent->utilityCharge}}" class="form-control" min="0" name="utilityCharge" data-rule-number="true" required>
+                              <input type="number" id="utilityCharge" value="<?php echo e($rent->utilityCharge); ?>" class="form-control" min="0" name="utilityCharge" data-rule-number="true" required>
                               <label for="utilityCharge">Utility Charge</label>
                               <p class="help-block">Numbers only</p>
                             </div>
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <input type="number" id="serviceCharge" value="{{$rent->serviceCharge}}" class="form-control" min="0" name="serviceCharge" data-rule-number="true" required>
+                              <input type="number" id="serviceCharge" value="<?php echo e($rent->serviceCharge); ?>" class="form-control" min="0" name="serviceCharge" data-rule-number="true" required>
                               <label for="serviceCharge">Service Charge</label>
                               <p class="help-block">Numbers only</p>
                             </div>
@@ -85,14 +85,14 @@
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <input type="number" id="delayCharge" value="{{$rent->delayCharge}}" class="form-control" min="0" name="delayCharge" data-rule-number="true" required>
+                              <input type="number" id="delayCharge" value="<?php echo e($rent->delayCharge); ?>" class="form-control" min="0" name="delayCharge" data-rule-number="true" required>
                               <label for="delayCharge">Delay Charge</label>
                               <p class="help-block">Numbers only</p>
                             </div>
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <textarea class="form-control" id="description"  placeholder="note" name="note" rows="1"  maxlength="1000">{{$rent->note}}</textarea>
+                              <textarea class="form-control" id="description"  placeholder="note" name="note" rows="1"  maxlength="1000"><?php echo e($rent->note); ?></textarea>
                               <p class="help-block">Description</p>
                             </div>
                           </div>
@@ -125,13 +125,13 @@
                       <div class="col-lg-4">
                         <div class="form-group">
                           <select name="status" id="" class="form-control select2-list" required>
-                            @if($rent->status==0)
+                            <?php if($rent->status==0): ?>
                               <option value="0" selected>Inactive</option>
                               <option value="1">Active</option>
-                            @else
+                            <?php else: ?>
                               <option value="0" >Inactive</option>
                               <option value="1" selected>Active</option>
-                            @endif
+                            <?php endif; ?>
                           </select>
                           <label for="status">Status</label>
                         </div>
@@ -139,16 +139,16 @@
                     </div>
 
                     <div class="form-group">
-                      @if (count($errors) > 0)
+                      <?php if(count($errors) > 0): ?>
                         <div class="alert alert-danger">
                           <strong>Whoops!</strong> There were some problems with your input.<br><br>
                           <ul>
-                            @foreach ($errors->all() as $error)
-                              <li>{{ $error }}</li>
-                            @endforeach
+                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+                              <li><?php echo e($error); ?></li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                           </ul>
                         </div>
-                      @endif
+                      <?php endif; ?>
                     </div>
                   </div><!--end .card-body -->
                   <div class="card-actionbar">
@@ -167,18 +167,18 @@
 
   </section>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('extraScript')
-  <script src="{{url('/')}}/assets/js/libs/select2/select2.min.js"></script>
-  <script src="{{url('/')}}/assets/js/libs/jquery-validation/jquery.validate.min.js"></script>
-  <script src="{{url('/')}}/assets/js/libs/jquery-validation/additional-methods.min.js"></script>
+<?php $__env->startSection('extraScript'); ?>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/select2/select2.min.js"></script>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/jquery-validation/jquery.validate.min.js"></script>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/jquery-validation/additional-methods.min.js"></script>
 
   <script type="text/javascript">
 
       $( document ).ready(function() {
           $('select').select2();
-          window.flatSize = "{{$rent->flat->size}}";
+          window.flatSize = "<?php echo e($rent->flat->size); ?>";
           $('#rentAmount').on('input propertyChange paste focus blur',function(){
               var amount = parseFloat($(this).val());
               $('#rentAmountPerSft').val((amount/window.flatSize).toFixed(2));
@@ -202,4 +202,6 @@
           });
       });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

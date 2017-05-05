@@ -13,7 +13,7 @@
   <section>
     <div class="section-header">
       <ol class="breadcrumb">
-        <li class="active">Flat</li>
+        <li class="active">Rent</li>
         <li><a href="{{URL::Route('rent.create')}}">New rent</a></li>
       </ol>
     </div><!--end .section-header -->
@@ -31,26 +31,26 @@
                     <table class="table table-striped no-margin">
                       <thead>
                       <tr>
+                        <th width="5%" class="text-center">SL</th>
                         <th width="15%" class="text-center">Project</th>
                         <th width="15%" class="text-center">Flat</th>
                         <th width="15%" class="text-center">Customer</th>
-                        <th width="5%" class="text-center">Rent No</th>
-                        <th width="10%" class="text-center">Rent</th>
-                        <th width="5%" class="text-center">Utility Charge</th>
-                        <th width="5%" class="text-center">Service Charge</th>
+                        <th width="8%" class="text-center">Rent</th>
+                        <th width="5%" class="text-center">Utility</th>
+                        <th width="5%" class="text-center">Service</th>
                         <th width="5%" class="text-center">Status</th>
-                        <th width="10%" class="text-center">Entry Date</th>
-                        <th width="5%" class="text-center">Entry By</th>
-                        <th width="10%" class="text-center">Action</th>
+                        <th width="8%" class="text-center">Entry Date</th>
+                        <th width="5%" class="text-center">By</th>
+                        <th width="15%" class="text-center">Action</th>
                       </tr>
                       </thead>
                       <tbody>
                       @foreach($rents as $rent)
                         <tr>
+                          <td>{{$rent->rentNo}}</td>
                           <td>{{$rent->project->name}}</td>
                           <td>{{$rent->flat->description}}</td>
                           <td>{{$rent->customer->name}} [{{$rent->customer->cellNo}}]</td>
-                          <td>{{$rent->rentNo}}</td>
                           <td>{{$rent->rent}}</td>
                           <td>{{$rent->utilityCharge}}</td>
                           <td>{{$rent->serviceCharge}}</td>
@@ -62,7 +62,7 @@
 
                             @endif
                           </td>
-                          <td>{{$rent->entryDate->format('F j,Y')}}</td>
+                          <td>{{$rent->entryDate->format('F j,y')}}</td>
                           <td>{{$rent->entry->name}}</td>
 
                           <td>
@@ -75,7 +75,8 @@
                                 </button>
                               </form>
                               <a title="Edit" href="{{URL::route('rent.edit',$rent->id)}}" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
-                              </a>
+                              <a title="Details" data-url="{{URL::route('rent.show',$rent->id)}}" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i></a>
+
 
                             </div>
                             <!--end .btn-group -->
@@ -97,7 +98,6 @@
 
   </section>
   <div class="offcanvas">
-
     <!-- BEGIN OFFCANVAS DEMO RIGHT -->
     <div id="offcanvas-demo-size2" class="offcanvas-pane width-7">
       <div class="offcanvas-head">
@@ -111,14 +111,13 @@
 
       <div class="offcanvas-body">
         <ul class="list-divided">
-          <li><strong>Entry By</strong><br/><span class="opacity-90" id="entryBy"></span></li>
-          <li><strong>Description</strong><br/><span class="opacity-90" id="description"></span></li>
-          <li><strong>No of units</strong><br/><span class="opacity-90" id="noOfUnits"></span></li>
-          <li><strong>No of floor</strong><br/><span class="opacity-90" id="noOfFloor"></span></li>
-          <li><strong>No of car parking</strong><br/><span class="opacity-90" id="noOfCarParking"></span></li>
-          <li><strong>Unit size</strong><br/><span class="opacity-90" id="unitSize"></span></li>
-          <li><strong>Lift</strong><br/><span class="opacity-90" id="lift"></span></li>
-          <li><strong>Generator</strong><br/><span class="opacity-90" id="generator"></span></li>
+          <li><strong>Per Sft. Rent</strong><br/><span class="opacity-90" id="perSftRent"></span></li>
+          <li><strong>Security Money</strong><br/><span class="opacity-90" id="securityMoney"></span></li>
+          <li><strong>Advance Money</strong><br/><span class="opacity-90" id="advanceMoney"></span></li>
+          <li><strong>Delay Charge</strong><br/><span class="opacity-90" id="delayCharge"></span></li>
+          <li><strong>Note</strong><br/><span class="opacity-90" id="note"></span></li>
+          <li><strong>Deed Paper</strong><br/><a target="_blank" href="#" class="text-link" id="deedpaper">Click To View</a></li>
+          <li><strong>Others Paper</strong><br/><a target="_blank" href="#" class="text-link" id="othersPaper">Click to View</a></li>
         </ul>
       </div>
 
@@ -131,19 +130,19 @@
 @section('extraScript')
   <script>
       $( document ).ready(function() {
+          window.mystorageURL = "{{URL::asset('storage')}}";
           $('.detailsBtn').click(function (e) {
               e.preventDefault();
               var infoUrl = $(this).attr('data-url');
               $.getJSON(infoUrl,function(response){
                   if(response){
-                      $('#entryBy').text(response.entry.name);
-                      $('#description').text(response.description);
-                      $('#noOfUnits').text(response.noOfUnits);
-                      $('#noOfFloor').text(response.noOfFloor);
-                      $('#noOfCarParking').text(response.noOfCarParking);
-                      $('#unitSize').text(response.unitSize+" Sft.");
-                      $('#lift').text(response.lift);
-                      $('#generator').text(response.generator);
+                      $('#perSftRent').text(response.perSftRent);
+                      $('#securityMoney').text(response.securityMoney);
+                      $('#advanceMoney').text(response.advanceMoney);
+                      $('#delayCharge').text(response.delayCharge);
+                      $('#note').text(response.note ? response.note : '');
+                      $('#deedpaper').attr('href',window.mystorageURL+"/"+response.deepPaper);
+                      $('#othersPaper').attr('href',window.mystorageURL+"/"+response.othersPaper);
                   }
               });
               $('#base').append('<div class="backdrop"></div>');

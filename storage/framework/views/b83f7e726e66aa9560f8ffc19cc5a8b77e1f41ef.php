@@ -145,7 +145,7 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <textarea class="form-control" id="description"  placeholder="note" name="description" rows="1"  maxlength="1000"></textarea>
+                                                            <textarea class="form-control" id="description"  placeholder="note" name="note" rows="1"  maxlength="1000"></textarea>
                                                             <p class="help-block">Description</p>
                                                         </div>
                                                     </div>
