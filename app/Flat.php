@@ -27,7 +27,8 @@ class Flat extends Model
         'parking',
         'parkingNo',
         'size',
-        'description'
+        'description',
+        'status'
     ];
 
     public function project() {
