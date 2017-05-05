@@ -152,4 +152,8 @@ class CustomerController extends Controller
         $notification= array('title' => 'Data Remove', 'body' => 'Customer deleted Successfully');
         return redirect()->route('customer.index')->with('success',$notification);
     }
+
+    public function customerAjax ($customerId){
+        return Customer::findOrFail($customerId);
+    }
 }

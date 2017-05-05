@@ -26,7 +26,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('project','ProjectController');
     Route::get('/project-by-type/{ptype}','ProjectController@projectByType');
     Route::resource('flat','FlatController');
+    Route::get('/flats-by-project/{project}','FlatController@flatByProject');
     Route::resource('customer','CustomerController');
+    Route::get('/customer-ajax/{customerId}','CustomerController@customerAjax');
+    Route::resource('rent','RentController');
+
     Route::get('/customer/{id}/print','CustomerController@print')->name('customer.print');
     Route::get('/report/projects','ReportController@projects')->name('report.projects');
     Route::get('/report/customers','ReportController@customers')->name('report.customers');

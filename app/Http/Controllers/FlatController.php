@@ -66,7 +66,7 @@ class FlatController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'flats_id' => 'required',
+            'projects_id' => 'required',
             'entryDate' => 'required',
             'floor' => 'required',
             'type' => 'required',
@@ -119,5 +119,13 @@ class FlatController extends Controller
         $notification= array('title' => 'Data Remove', 'body' => 'Flat deleted Successfully');
         return redirect()->route('flat.index')->with('success',$notification);
     }
+
+    public function flatByProject($project)
+    {
+        return Flat::select('id','description AS value')->where('projects_id',$project)->where('status',0)->get();
+
+    }
+
+
 
 }

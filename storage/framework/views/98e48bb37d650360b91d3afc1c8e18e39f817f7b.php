@@ -257,8 +257,22 @@
 						<li><a href="<?php echo e(URL::Route('customer.create')); ?>" ><span class="title">New</span></a></li>
 						<li><a href="<?php echo e(URL::Route('customer.index')); ?>" ><span class="title">All</span></a></li>
 					</ul><!--end /submenu -->
-				</li><!--end /menu-li -->
+				</li>
 				<!-- END CUSTOMER -->
+				<!-- BEGIN Rent -->
+				<li class="gui-folder">
+					<a>
+						<div class="gui-icon"><i class="md md-markunread-mailbox"></i></div>
+						<span class="title">Manage Rent</span>
+					</a>
+					<!--start submenu -->
+					<ul>
+						<li><a href="<?php echo e(URL::Route('rent.create')); ?>" ><span class="title">New</span></a></li>
+						<li><a href="<?php echo e(URL::Route('rent.index')); ?>" ><span class="title">All</span></a></li>
+					</ul><!--end /submenu -->
+				</li>
+				<!-- END Rent -->
+
 				<!-- BEGIN REPORT -->
 				<li class="gui-folder">
 					<a>
