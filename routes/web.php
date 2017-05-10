@@ -30,6 +30,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('customer','CustomerController');
     Route::get('/customer-ajax/{customerId}','CustomerController@customerAjax');
     Route::resource('rent','RentController');
+    Route::get('/rent/customers/{projectId}','RentController@customerByProject');
+    Route::get('/rent/flats/{customerId}','RentController@flatsByCustomer');
+    Route::resource('collection','CollectionController');
 
     Route::get('/customer/{id}/print','CustomerController@print')->name('customer.print');
     Route::get('/report/projects','ReportController@projects')->name('report.projects');

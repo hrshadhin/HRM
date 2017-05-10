@@ -129,6 +129,8 @@
 <?php $__env->startSection('extraScript'); ?>
   <script>
       $( document ).ready(function() {
+          $('#menubarToggler').trigger('click');
+
           window.mystorageURL = "<?php echo e(URL::asset('storage')); ?>";
           $('.detailsBtn').click(function (e) {
               e.preventDefault();

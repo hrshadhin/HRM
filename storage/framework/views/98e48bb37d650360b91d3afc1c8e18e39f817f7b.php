@@ -65,7 +65,7 @@
 					</div>
 				</li>
 				<li>
-					<a class="btn btn-icon-toggle menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
+					<a id="menubarToggler" class="btn btn-icon-toggle menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
 						<i class="fa fa-bars"></i>
 					</a>
 				</li>
@@ -272,6 +272,19 @@
 					</ul><!--end /submenu -->
 				</li>
 				<!-- END Rent -->
+				<!-- BEGIN Collection -->
+				<li class="gui-folder">
+					<a>
+						<div class="gui-icon"><i class="md md-attach-money"></i></div>
+						<span class="title">Manage Collection</span>
+					</a>
+					<!--start submenu -->
+					<ul>
+						<li><a href="<?php echo e(URL::Route('collection.create')); ?>" ><span class="title">New</span></a></li>
+						<li><a href="<?php echo e(URL::Route('collection.index')); ?>" ><span class="title">All</span></a></li>
+					</ul><!--end /submenu -->
+				</li>
+				<!-- END Collection -->
 
 				<!-- BEGIN REPORT -->
 				<li class="gui-folder">

@@ -135,4 +135,31 @@ class RentController extends Controller
         $notification= array('title' => 'Data Remove', 'body' => 'Rent deleted Successfully');
         return redirect()->route('rent.index')->with('success',$notification);
     }
+
+    public function customerByProject ($projectId){
+        $rents = Rent::with('customer')->where('projects_id',$projectId)->where('status',1)->get();
+        $rentedCustomers = [];
+        foreach ($rents as $rent){
+            $rentCustomer = [
+              'value' =>$rent->customer->id,
+                'text' => $rent->customer->name."[".$rent->customer->cellNo."]"
+            ];
+            array_push($rentedCustomers,$rentCustomer);
+        }
+        return $rentedCustomers;
+
+    }
+    public function flatsByCustomer ($customerId){
+        $rents = Rent::with('flat')->where('customers_id',$customerId)->where('status',1)->get();
+        $rentedFlats = [];
+        foreach ($rents as $rent){
+            $rentFlat = [
+              'value' => $rent->id,
+                'text' => $rent->flat->description
+            ];
+            array_push($rentedFlats,$rentFlat);
+        }
+        return $rentedFlats;
+
+    }
 }

@@ -19,15 +19,16 @@ class CreateRentcollectionTable extends Migration
             $table->unsignedInteger('rents_id');
             $table->string('collectionNo',50);
             $table->decimal('amount',18,2);
-            $table->enum('collectionType',['Cash','Cheque','PO']);
-            $table->string('checkNo')->nullable();
+            $table->enum('collectionType',['Cash','Cheque','P.O']);
+            $table->string('chequeNo')->nullable();
             $table->string('bankName')->nullable();
-            $table->string('bankBranch')->nullable();
+            $table->string('branchName')->nullable();
             $table->string('poNo')->nullable();
             $table->string('poName')->nullable();
             $table->string('poCode')->nullable();
             $table->text('note')->nullable();
             $table->date('collectionDate');
+            $table->tinyInteger('fromAdvance')->default('0');//0 for none 1 for money came from advance
             $table->unsignedInteger('users_id');
             $table->timestamps();
             $table->softDeletes();
