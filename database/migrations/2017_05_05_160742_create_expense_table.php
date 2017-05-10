@@ -17,7 +17,7 @@ class CreateExpenseTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('projects_id');
             $table->string('expenseNo',50);
-            $table->decimal('amount',18,2);
+            $table->decimal('amount',18,2)->default('0.00');
             $table->text('note')->nullable();
             $table->date('entryDate');
             $table->unsignedInteger('users_id');

@@ -285,6 +285,19 @@
 					</ul><!--end /submenu -->
 				</li>
 				<!-- END Collection -->
+				<!-- BEGIN Collection -->
+				<li class="gui-folder">
+					<a>
+						<div class="gui-icon"><i class="md md-send"></i></div>
+						<span class="title">Manage Expense</span>
+					</a>
+					<!--start submenu -->
+					<ul>
+						<li><a href="<?php echo e(URL::Route('expense.create')); ?>" ><span class="title">New</span></a></li>
+						<li><a href="<?php echo e(URL::Route('expense.index')); ?>" ><span class="title">All</span></a></li>
+					</ul><!--end /submenu -->
+				</li>
+				<!-- END Collection -->
 
 				<!-- BEGIN REPORT -->
 				<li class="gui-folder">
@@ -362,10 +375,10 @@
         toastr.success('<?php echo e(Session::get("success")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
         <?php endif; ?>
         <?php if(Session::has('error')): ?>
-			toastr.error('<?php echo e(Session::get("success")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
+			toastr.error('<?php echo e(Session::get("error")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
         <?php endif; ?>
         <?php if(Session::has('warning')): ?>
-		toastr.warning('<?php echo e(Session::get("success")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
+		toastr.warning('<?php echo e(Session::get("warning")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
 		<?php endif; ?>
 		<!-- toastr end -->
     });

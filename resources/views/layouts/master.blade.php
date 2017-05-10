@@ -284,6 +284,19 @@
 					</ul><!--end /submenu -->
 				</li>
 				<!-- END Collection -->
+				<!-- BEGIN Collection -->
+				<li class="gui-folder">
+					<a>
+						<div class="gui-icon"><i class="md md-send"></i></div>
+						<span class="title">Manage Expense</span>
+					</a>
+					<!--start submenu -->
+					<ul>
+						<li><a href="{{URL::Route('expense.create')}}" ><span class="title">New</span></a></li>
+						<li><a href="{{URL::Route('expense.index')}}" ><span class="title">All</span></a></li>
+					</ul><!--end /submenu -->
+				</li>
+				<!-- END Collection -->
 
 				<!-- BEGIN REPORT -->
 				<li class="gui-folder">
@@ -361,10 +374,10 @@
         toastr.success('{{Session::get("success")["body"]}}','{{Session::get("success")["title"]}}');
         @endif
         @if(Session::has('error'))
-			toastr.error('{{Session::get("success")["body"]}}','{{Session::get("success")["title"]}}');
+			toastr.error('{{Session::get("error")["body"]}}','{{Session::get("success")["title"]}}');
         @endif
         @if(Session::has('warning'))
-		toastr.warning('{{Session::get("success")["body"]}}','{{Session::get("success")["title"]}}');
+		toastr.warning('{{Session::get("warning")["body"]}}','{{Session::get("success")["title"]}}');
 		@endif
 		<!-- toastr end -->
     });

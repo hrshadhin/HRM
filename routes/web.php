@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/rent/customers/{projectId}','RentController@customerByProject');
     Route::get('/rent/flats/{customerId}','RentController@flatsByCustomer');
     Route::resource('collection','CollectionController');
+    Route::resource('expense','ExpenseController');
 
     Route::get('/customer/{id}/print','CustomerController@print')->name('customer.print');
     Route::get('/report/projects','ReportController@projects')->name('report.projects');
