@@ -39,16 +39,16 @@ class Rent extends Model
     ];
 
     public function project() {
-        return $this->belongsTo('App\Project','projects_id');
+        return $this->belongsTo('App\Project','projects_id')->select(['id','name']);
     }
     public function flat() {
-        return $this->belongsTo('App\Flat','flats_id');
+        return $this->belongsTo('App\Flat','flats_id')->select(['id','description']);
     }
     public function customer() {
-        return $this->belongsTo('App\Customer','customers_id');
+        return $this->belongsTo('App\Customer','customers_id')->select(['id','name','cellNo','permanentAddress']);
     }
     public function entry() {
-        return $this->belongsTo('App\User','users_id');
+        return $this->belongsTo('App\User','users_id')->select(['id','name']);
     }
 
     function setEntryDateAttribute($value)

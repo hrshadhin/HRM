@@ -1,9 +1,7 @@
-@extends('layouts.master')
-
-@section('title', 'Report-Projects')
-@section('extraStyle')
-@endsection
-@section('content')
+<?php $__env->startSection('title', 'Report-Projects'); ?>
+<?php $__env->startSection('extraStyle'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header no-print">
       <ol class="breadcrumb">
@@ -17,7 +15,7 @@
             <div class="col-lg-12">
               <form class="form form-validate floating-label"
                     novalidate="novalidate"
-                    action="{{URL::route('report.projects')}}"
+                    action="<?php echo e(URL::route('report.projects')); ?>"
                     method="GET"
                     enctype="multipart/form-data">
 
@@ -29,7 +27,8 @@
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          {!! Form::select('ptype', ['All' => 'All', 'Commerical' => 'Commerical','Residential' =>'Residential'], $projectType, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          <?php echo Form::select('ptype', ['All' => 'All', 'Commerical' => 'Commerical','Residential' =>'Residential'], $projectType, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']); ?>
+
                           <label for="projectType">Project Type</label>
                         </div>
                       </div>
@@ -67,30 +66,30 @@
                       <h1 class="text-light text-default-light"><strong>Projects</strong></h1>
                     </div>
                     <div class="col-xs-2 text-right">
-                      <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
+                      <div class="pull-right">Print:<?php echo e(date('d/m/Y')); ?> </div>
                     </div>
                   </div><!--end .row -->
-                  {{--<div class="row">--}}
-                    {{--<div class="col-xs-4">--}}
-                      {{--<div class="well">--}}
-                        {{--<strong>HRS Builders LTD.</strong><br>--}}
-                        {{--House 89/B, Road 4, <br>--}}
-                        {{--Kemal Ataturk Avenue Banani,  Dhaka 1213<br>--}}
-                        {{--<abbr title="Phone">Phone:</abbr> (88) 02-58810300--}}
-                      {{--</div>--}}
-                    {{--</div><!--end .col -->--}}
-                    {{--<div class="col-xs-4">--}}
+                  
+                    
+                      
+                        
+                        
+                        
+                        
+                      
+                    
+                    
 
-                    {{--</div><!--end .col -->--}}
-                    {{--<div class="col-xs-4">--}}
-                      {{--<div class="well">--}}
-                        {{--<div class="clearfix">--}}
-                          {{--<div class="pull-left">Print DATE : </div>--}}
-                          {{--<div class="pull-right"> {{ date('F j,Y') }} </div>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
-                    {{--</div><!--end .col -->--}}
-                  {{--</div><!--end .row -->--}}
+                    
+                    
+                      
+                        
+                          
+                          
+                        
+                      
+                    
+                  
                   <div class="row">
                     <div class="col-md-12">
                       <table class="table table-striped">
@@ -110,26 +109,26 @@
                         </tr>
                         </thead>
                         <tbody>
-                          @foreach($projects as $project)
+                          <?php $__currentLoopData = $projects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $project): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                             <tr>
-                              <td class="text-center">{{$project->projectType}}</td>
-                              <td class="text-center">{{$project->name}}</td>
-                              <td  class="text-center">{{$project->area->name}}</td>
-                              <td  class="text-center">{{$project->address}}</td>
-                              <td  class="text-center">{{$project->storied}}</td>
-                              <td class="text-center">{{$project->noOfUnits}}</td>
-                              <td class="text-center">{{$project->noOfFloor}}</td>
-                              <td class="text-center">{{$project->noOfCarParking}}</td>
-                              <td class="text-center">{{$project->lift}}</td>
-                              <td class="text-center">{{$project->generator}}</td>
-                              <td class="text-center">{{$project->entryDate->format('d/m/Y')}}</td>
+                              <td class="text-center"><?php echo e($project->projectType); ?></td>
+                              <td class="text-center"><?php echo e($project->name); ?></td>
+                              <td  class="text-center"><?php echo e($project->area->name); ?></td>
+                              <td  class="text-center"><?php echo e($project->address); ?></td>
+                              <td  class="text-center"><?php echo e($project->storied); ?></td>
+                              <td class="text-center"><?php echo e($project->noOfUnits); ?></td>
+                              <td class="text-center"><?php echo e($project->noOfFloor); ?></td>
+                              <td class="text-center"><?php echo e($project->noOfCarParking); ?></td>
+                              <td class="text-center"><?php echo e($project->lift); ?></td>
+                              <td class="text-center"><?php echo e($project->generator); ?></td>
+                              <td class="text-center"><?php echo e($project->entryDate->format('d/m/Y')); ?></td>
                             </tr>
-                          @endforeach
+                          <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                         </tbody>
                         <tfoot>
                         <tr>
                           <td colspan="10" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
-                          <td class="text-right"><strong class="text-lg text-default-dark">{{count($projects)}}</strong></td>
+                          <td class="text-right"><strong class="text-lg text-default-dark"><?php echo e(count($projects)); ?></strong></td>
                         </tr>
                         </tfoot>
                       </table>
@@ -145,12 +144,14 @@
     </div>
 
   </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('extraScript')
+<?php $__env->startSection('extraScript'); ?>
   <script type="text/javascript">
       $( document ).ready(function() {
           $('#menubarToggler').trigger('click');
       });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

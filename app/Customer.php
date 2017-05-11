@@ -51,7 +51,7 @@ class Customer extends Model
 
     ];
     public function entry() {
-        return $this->belongsTo('App\User','users_id');
+        return $this->belongsTo('App\User','users_id')->select(['id','name']);
     }
     function setDobAttribute($value)
     {

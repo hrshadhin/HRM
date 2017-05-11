@@ -35,9 +35,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('collection','CollectionController');
     Route::resource('expense','ExpenseController');
 
-    Route::get('/customer/{id}/print','CustomerController@print')->name('customer.print');
     Route::get('/report/projects','ReportController@projects')->name('report.projects');
+    Route::get('/report/flats','ReportController@flats')->name('report.flats');
     Route::get('/report/customers','ReportController@customers')->name('report.customers');
+    Route::get('/report/rents','ReportController@rents')->name('report.rents');
+    Route::get('/report/collections','ReportController@collections')->name('report.collections');
+    Route::get('/report/expenses','ReportController@expenses')->name('report.expenses');
+    Route::get('/report/balance','ReportController@balance')->name('report.balance');
 
 
 

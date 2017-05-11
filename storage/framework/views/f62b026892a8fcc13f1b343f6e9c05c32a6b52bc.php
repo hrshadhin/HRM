@@ -1,11 +1,9 @@
-@extends('layouts.master')
+<?php $__env->startSection('title', 'Report-customers'); ?>
+<?php $__env->startSection('extraStyle'); ?>
+  <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/select2/select2.css" />
 
-@section('title', 'Report-customers')
-@section('extraStyle')
-  <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/select2/select2.css" />
-
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header no-print">
       <ol class="breadcrumb">
@@ -19,7 +17,7 @@
             <div class="col-lg-12">
               <form class="form form-validate floating-label"
                     novalidate="novalidate"
-                    action="{{URL::route('report.customers')}}"
+                    action="<?php echo e(URL::route('report.customers')); ?>"
                     method="GET"
                     enctype="multipart/form-data">
 
@@ -31,7 +29,8 @@
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          {!! Form::select('status', ['All' => 'All', 'No' => 'Inactive','Yes' =>'Active'], $status, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          <?php echo Form::select('status', ['All' => 'All', 'No' => 'Inactive','Yes' =>'Active'], $status, ['class' => 'form-control select2-list', 'required' => 'required']); ?>
+
                           <label for="">Status</label>
                         </div>
                       </div>
@@ -67,7 +66,7 @@
                       <h1 class="text-light text-default-light"><strong>Customers</strong></h1>
                     </div>
                     <div class="col-xs-2 text-right">
-                      <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
+                      <div class="pull-right">Print:<?php echo e(date('d/m/Y')); ?> </div>
                     </div>
                   </div><!--end .row -->
 
@@ -88,32 +87,32 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($customers as $customer)
+                        <?php $__currentLoopData = $customers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $customer): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                           <tr>
-                            <td class="text-center">{{$customer->name}}</td>
-                            <td class="text-center">{{$customer->cellNo}}</td>
-                            <td class="text-center">{{$customer->phone}}</td>
-                            <td class="text-center">{{$customer->permanentAddress}}</td>
-                            <td class="text-center">{{$customer->mailingAddress}}</td>
-                            <td class="text-center">{{$customer->contactPerson}}</td>
-                            <td class="text-center">{{$customer->contactPersonCellNo}}</td>
+                            <td class="text-center"><?php echo e($customer->name); ?></td>
+                            <td class="text-center"><?php echo e($customer->cellNo); ?></td>
+                            <td class="text-center"><?php echo e($customer->phone); ?></td>
+                            <td class="text-center"><?php echo e($customer->permanentAddress); ?></td>
+                            <td class="text-center"><?php echo e($customer->mailingAddress); ?></td>
+                            <td class="text-center"><?php echo e($customer->contactPerson); ?></td>
+                            <td class="text-center"><?php echo e($customer->contactPersonCellNo); ?></td>
                             <td class="text-center">
-                              @if($customer->active == "No")
+                              <?php if($customer->active == "No"): ?>
                                 <span class="text-warning text-bold">Inactive</span>
-                              @else
+                              <?php else: ?>
                                 <span class="text-success text-bold">Active</span>
 
-                              @endif
+                              <?php endif; ?>
                             </td>
 
-                            <td class="text-center">{{$customer->entryDate->format('d/m/Y')}}</td>
+                            <td class="text-center"><?php echo e($customer->entryDate->format('d/m/Y')); ?></td>
                           </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                         </tbody>
                         <tfoot>
                         <tr>
                           <td colspan="8" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
-                          <td class="text-right"><strong class="text-lg text-default-dark">{{count($customers)}}</strong></td>
+                          <td class="text-right"><strong class="text-lg text-default-dark"><?php echo e(count($customers)); ?></strong></td>
                         </tr>
                         </tfoot>
                       </table>
@@ -129,10 +128,10 @@
     </div>
 
   </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('extraScript')
-  <script src="{{url('/')}}/assets/js/libs/select2/select2.min.js"></script>
+<?php $__env->startSection('extraScript'); ?>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/select2/select2.min.js"></script>
 
   <script type="text/javascript">
       $( document ).ready(function() {
@@ -141,4 +140,6 @@
 
       });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

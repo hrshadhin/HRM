@@ -5,3 +5,40 @@
 .mytable td {
     text-align: center;
 }
+.fa-taka {
+    height: 37px;
+    font-size: 30px
+}
+
+@media print
+{
+    body * {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    html, body {
+        height: 99%;
+    }
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+    .top-zero{
+        top: 0 !important;
+    }
+    section {
+        top: 0 !important;
+        position: relative;
+        padding: 0 !important;
+    }
+    .section-body:first-child {
+        top: 0 !important;
+        margin-top: 0px !important;
+    }
+    #content {
+        position: relative;
+        width: 100%;
+        left: 0;
+        padding-top: 0px !important;
+    }
+}

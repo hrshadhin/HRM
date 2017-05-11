@@ -24,7 +24,7 @@
 											<div class="card">
 												<div class="card-body no-padding">
 													<div class="alert alert-callout alert-info no-margin">
-														<strong class="text-xl">$ 32,829</strong><br/>
+														<strong class="text-xl"><i class="fa-taka">&#2547</i> 32,829</strong><br/>
 														<span class="opacity-50">Collections</span>
 														<div class="stick-bottom-left-right">
 															<div class="height-2 sparkline-revenue" data-line-color="#bdc1c1"></div>
@@ -40,7 +40,7 @@
 											<div class="card">
 												<div class="card-body no-padding">
 													<div class="alert alert-callout alert-warning no-margin">
-														<strong class="text-xl">$ 4,32,901</strong><br/>
+														<strong class="text-xl"><i class="fa-taka">&#2547</i> 4,32,901</strong><br/>
 														<span class="opacity-50">Due</span>
 														<div class="stick-bottom-right">
 															<div class="height-1 sparkline-visits" data-bar-color="#e5e6e6"></div>
@@ -56,7 +56,7 @@
 											<div class="card">
 												<div class="card-body no-padding">
 													<div class="alert alert-callout alert-success no-margin">
-														<strong class="text-xl">$ 4,65,730</strong><br/>
+														<strong class="text-xl"><i class="fa-taka">&#2547</i> 4,65,730</strong><br/>
 														<span class="opacity-50">Total</span>
 														<div class="stick-bottom-left-right">
 															<div class="progress progress-hairline no-margin">

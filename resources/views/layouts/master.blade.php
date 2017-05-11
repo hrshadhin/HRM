@@ -52,7 +52,7 @@
 <body class="menubar-hoverable header-fixed menubar-pin ">
 
 <!-- BEGIN HEADER-->
-<header id="header" >
+<header id="header" class="no-print">
 	<div class="headerbar">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="headerbar-left">
@@ -76,7 +76,7 @@
 			<ul class="header-nav header-nav-options">
 				<li class="dropdown">
 					<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-						<i class="fa fa-2x fa-dollar"></i><sup class="badge style-danger">4</sup>
+						<i class="fa fa-taka">&#2547;</i><sup class="badge style-danger">4</sup>
 					</a>
 					<ul class="dropdown-menu animation-expand">
 						<li class="dropdown-header">Today's Collection</li>
@@ -191,7 +191,7 @@
 	<!-- END CONTENT -->
 
 	<!-- BEGIN MENUBAR-->
-	<div id="menubar" class="">
+	<div id="menubar" class="no-print">
 		<div class="menubar-fixed-panel">
 			<div>
 				<a class="btn btn-icon-toggle btn-default menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
@@ -274,7 +274,7 @@
 				<!-- BEGIN Collection -->
 				<li class="gui-folder">
 					<a>
-						<div class="gui-icon"><i class="md md-attach-money"></i></div>
+						<div class="gui-icon"><i class="fa fa-taka">&#2547;</i></div>
 						<span class="title">Manage Collection</span>
 					</a>
 					<!--start submenu -->
@@ -306,11 +306,13 @@
 					</a>
 					<!--start submenu -->
 					<ul>
-						<li><a href="{{URL::Route('report.projects')}}" ><span class="title">Projects List</span></a></li>
-						<li><a href="{{URL::Route('report.customers')}}" ><span class="title">Cutomers List</span></a></li>
-						<li><a href="#" ><span class="title">Collection List</span></a></li>
-						<li><a href="#" ><span class="title">Due List</span></a></li>
-						<li><a href="#" ><span class="title">Account Balance</span></a></li>
+						<li><a href="{{URL::Route('report.projects')}}" ><span class="title">Projects</span></a></li>
+						<li><a href="{{URL::Route('report.flats')}}" ><span class="title">Flats</span></a></li>
+						<li><a href="{{URL::Route('report.customers')}}" ><span class="title">Cutomers</span></a></li>
+						<li><a href="{{URL::Route('report.rents')}}" ><span class="title">Rents</span></a></li>
+						<li><a href="{{URL::Route('report.collections')}}" ><span class="title">Collections</span></a></li>
+						<li><a href="{{URL::Route('report.expenses')}}" ><span class="title">Expenses</span></a></li>
+						<li><a href="{{URL::Route('report.balance')}}" ><span class="title">Account Balance</span></a></li>
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
 				<!-- END REPORT -->
@@ -320,7 +322,7 @@
 
 			<div class="menubar-foot-panel">
 				<small class="no-linebreak hidden-folded">
-					<span class="opacity-75">Copyright &copy; 2014</span> <strong>ShanixLab</strong>
+					<span class="opacity-75">Copyright &copy; 201</span> <strong>ShanixLab</strong>
 				</small>
 			</div>
 		</div><!--end .menubar-scroll-panel-->

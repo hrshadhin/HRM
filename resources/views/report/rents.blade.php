@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Report-customers')
+@section('title', 'Report-Rents')
 @section('extraStyle')
   <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/select2/select2.css" />
 
@@ -9,7 +9,7 @@
   <section>
     <div class="section-header no-print">
       <ol class="breadcrumb">
-        <li class="active">Customer Report</li>
+        <li class="active">Rents Report</li>
       </ol>
     </div><!--end .section-header -->
     <div class="section-body">
@@ -19,7 +19,7 @@
             <div class="col-lg-12">
               <form class="form form-validate floating-label"
                     novalidate="novalidate"
-                    action="{{URL::route('report.customers')}}"
+                    action="{{URL::route('report.rents')}}"
                     method="GET"
                     enctype="multipart/form-data">
 
@@ -29,13 +29,19 @@
                   </div>
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-lg-6">
+                      <div class="col-lg-4">
                         <div class="form-group">
-                          {!! Form::select('status', ['All' => 'All', 'No' => 'Inactive','Yes' =>'Active'], $status, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          {!! Form::select('project', $projects, $project, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          <label for="">Project</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          {!! Form::select('status', ['All' => 'All', '0' => 'Inactive','1' =>'Active'], $status, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
                           <label for="">Status</label>
                         </div>
                       </div>
-                      <div class="col-lg-6">
+                      <div class="col-lg-4">
                         <div class="form-group">
                           <button type="submit" class="btn btn-primary ink-reaction"><i class="md md-filter-list"></i> get</button>
                         </div>
@@ -64,7 +70,7 @@
                       <h1 class="text-light"><img src="/assets/img/logo.png" height="80px" width="100px" alt="">HRS Builders</h1>
                     </div>
                     <div class="col-xs-4 text-right">
-                      <h1 class="text-light text-default-light"><strong>Customers</strong></h1>
+                      <h1 class="text-light text-default-light"><strong>Rents</strong></h1>
                     </div>
                     <div class="col-xs-2 text-right">
                       <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
@@ -76,29 +82,27 @@
                       <table class="table table-striped">
                         <thead>
                         <tr>
-                          <th style="width:15%" class="text-center">Name</th>
-                          <th style="width:10%" class="text-center">Mobile</th>
-                          <th style="width:10%" class="text-center">Phone</th>
-                          <th style="width:20%" class="text-center">Permanent Address</th>
-                          <th style="width:20%" class="text-center">Mailing Address</th>
-                          <th style="width:10%" class="text-center">Contact Person</th>
-                          <th style="width:10%" class="text-center">C.P Mobile</th>
-                          <th style="width:5%" class="text-center">Status</th>
+                          <th style="width:15%" class="text-center">Customer Name</th>
+                          <th style="width:10%" class="text-center">C. Mobile</th>
+                          <th style="width:15%" class="text-center">C. P.Address</th>
+                          <th style="width:15%" class="text-center">Project</th>
+                          <th style="width:15%" class="text-center">Flat</th>
+                          <th style="width:10%" class="text-center">Rent(&#2547;)</th>
+                          <th style="width:10%" class="text-center">Status</th>
                           <th style="width:10%" class="text-center">Entry</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($customers as $customer)
+                        @foreach($rents as $rent)
                           <tr>
-                            <td class="text-center">{{$customer->name}}</td>
-                            <td class="text-center">{{$customer->cellNo}}</td>
-                            <td class="text-center">{{$customer->phone}}</td>
-                            <td class="text-center">{{$customer->permanentAddress}}</td>
-                            <td class="text-center">{{$customer->mailingAddress}}</td>
-                            <td class="text-center">{{$customer->contactPerson}}</td>
-                            <td class="text-center">{{$customer->contactPersonCellNo}}</td>
+                            <td class="text-center">{{$rent->customer->name}}</td>
+                            <td class="text-center">{{$rent->customer->cellNo}}</td>
+                            <td class="text-center">{{$rent->customer->permanentAddress}}</td>
+                            <td class="text-center">{{$rent->project->name}}</td>
+                            <td class="text-center">{{$rent->flat->description}}</td>
+                            <td class="text-center">{{$rent->rent}}</td>
                             <td class="text-center">
-                              @if($customer->active == "No")
+                              @if($rent->status == 0)
                                 <span class="text-warning text-bold">Inactive</span>
                               @else
                                 <span class="text-success text-bold">Active</span>
@@ -106,14 +110,14 @@
                               @endif
                             </td>
 
-                            <td class="text-center">{{$customer->entryDate->format('d/m/Y')}}</td>
+                            <td class="text-center">{{$rent->entryDate->format('d/m/Y')}}</td>
                           </tr>
                         @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
-                          <td colspan="8" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
-                          <td class="text-right"><strong class="text-lg text-default-dark">{{count($customers)}}</strong></td>
+                          <td colspan="7" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
+                          <td class="text-right"><strong class="text-lg text-default-dark">{{count($rents)}}</strong></td>
                         </tr>
                         </tfoot>
                       </table>

@@ -42,10 +42,10 @@ class RentCollection extends Model
         return $this->belongsTo('App\Rent','rents_id');
     }
     public function customer() {
-        return $this->belongsTo('App\Customer','customers_id');
+        return $this->belongsTo('App\Customer','customers_id')->select(['id','name','cellNo']);
     }
     public function entry() {
-        return $this->belongsTo('App\User','users_id');
+        return $this->belongsTo('App\User','users_id')->select('id','name');
     }
 
     function setCollectionDateAttribute($value)
