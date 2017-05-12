@@ -298,47 +298,41 @@
 					</ul><!--end /submenu -->
 				</li>
 				<!-- END Collection -->
-				<?php if(auth()->check() && auth()->user()->hasRole('supervisor')): ?>
+			<?php if(Gate::check('report.projects') || Gate::check('report.flats') || Gate::check('report.customers') || Gate::check('report.rents') || Gate::check('report.collections') || Gate::check('report.expenses') || Gate::check('report.balance')): ?>
 				<!-- BEGIN REPORT -->
-				<li class="gui-folder">
-					<a>
-						<div class="gui-icon"><i class="md md-file-download"></i></div>
-						<span class="title">Reports</span>
-					</a>
-					<!--start submenu -->
-					<ul>
-						<li><a href="<?php echo e(URL::Route('report.projects')); ?>" ><span class="title">Projects</span></a></li>
-						<li><a href="<?php echo e(URL::Route('report.flats')); ?>" ><span class="title">Flats</span></a></li>
-						<li><a href="<?php echo e(URL::Route('report.customers')); ?>" ><span class="title">Cutomers</span></a></li>
-						<li><a href="<?php echo e(URL::Route('report.rents')); ?>" ><span class="title">Rents</span></a></li>
-						<li><a href="<?php echo e(URL::Route('report.collections')); ?>" ><span class="title">Collections</span></a></li>
-						<li><a href="<?php echo e(URL::Route('report.expenses')); ?>" ><span class="title">Expenses</span></a></li>
-						<li><a href="<?php echo e(URL::Route('report.balance')); ?>" ><span class="title">Account Balance</span></a></li>
-					</ul><!--end /submenu -->
-				</li><!--end /menu-li -->
-				<!-- END REPORT -->
+					<li class="gui-folder">
+						<a>
+							<div class="gui-icon"><i class="md md-file-download"></i></div>
+							<span class="title">Reports</span>
+						</a>
+						<!--start submenu -->
+						<ul>
+							<?php if(Gate::check('report.projects')): ?>
+								<li><a href="<?php echo e(URL::Route('report.projects')); ?>" ><span class="title">Projects</span></a></li>
+							<?php endif; ?>
+							<?php if(Gate::check('report.flats')): ?>
+								<li><a href="<?php echo e(URL::Route('report.flats')); ?>" ><span class="title">Flats</span></a></li>
+							<?php endif; ?>
+							<?php if(Gate::check('report.customers')): ?>
+								<li><a href="<?php echo e(URL::Route('report.customers')); ?>" ><span class="title">Cutomers</span></a></li>
+							<?php endif; ?>
+							<?php if(Gate::check('report.rents')): ?>
+								<li><a href="<?php echo e(URL::Route('report.rents')); ?>" ><span class="title">Rents</span></a></li>
+							<?php endif; ?>
+							<?php if(Gate::check('report.collections')): ?>
+								<li><a href="<?php echo e(URL::Route('report.collections')); ?>" ><span class="title">Collections</span></a></li>
+							<?php endif; ?>
+							<?php if(Gate::check('report.expenses')): ?>
+								<li><a href="<?php echo e(URL::Route('report.expenses')); ?>" ><span class="title">Expenses</span></a></li>
+							<?php endif; ?>
+							<?php if(Gate::check('report.balance')): ?>
+								<li><a href="<?php echo e(URL::Route('report.balance')); ?>" ><span class="title">Account Balance</span></a></li>
+							<?php endif; ?>
+						</ul><!--end /submenu -->
+					</li><!--end /menu-li -->
+					<!-- END REPORT -->
 				<?php endif; ?>
-			<?php if(auth()->check() && auth()->user()->hasRole('admin')): ?>
-				<!-- BEGIN REPORT -->
-				<li class="gui-folder">
-					<a>
-						<div class="gui-icon"><i class="md md-file-download"></i></div>
-						<span class="title">Reports</span>
-					</a>
-					<!--start submenu -->
-					<ul>
-						<li><a href="<?php echo e(URL::Route('report.projects')); ?>" ><span class="title">Projects</span></a></li>
-						<li><a href="<?php echo e(URL::Route('report.flats')); ?>" ><span class="title">Flats</span></a></li>
-						<li><a href="<?php echo e(URL::Route('report.customers')); ?>" ><span class="title">Cutomers</span></a></li>
-						<li><a href="<?php echo e(URL::Route('report.rents')); ?>" ><span class="title">Rents</span></a></li>
-						<li><a href="<?php echo e(URL::Route('report.collections')); ?>" ><span class="title">Collections</span></a></li>
-						<li><a href="<?php echo e(URL::Route('report.expenses')); ?>" ><span class="title">Expenses</span></a></li>
-						<li><a href="<?php echo e(URL::Route('report.balance')); ?>" ><span class="title">Account Balance</span></a></li>
-					</ul><!--end /submenu -->
-				</li><!--end /menu-li -->
-				<!-- END REPORT -->
-				<?php endif; ?>
-			<?php if(auth()->check() && auth()->user()->hasRole('admin')): ?>
+				<?php if(Gate::check('user.create') || Gate::check('user.index')): ?>
 				<!-- BEGIN user -->
 				<li class="gui-folder">
 					<a>
@@ -347,20 +341,26 @@
 					</a>
 					<!--start submenu -->
 					<ul>
-						<li><a href="<?php echo e(URL::Route('user.create')); ?>" ><span class="title">New</span></a></li>
-						<li><a href="<?php echo e(URL::Route('user.index')); ?>" ><span class="title">All</span></a></li>
+						<?php if(Gate::check('user.create')): ?>
+							<li><a href="<?php echo e(URL::Route('user.create')); ?>" ><span class="title">New</span></a></li>
+						<?php endif; ?>
+						<?php if(Gate::check('user.create') ): ?>
+							<li><a href="<?php echo e(URL::Route('user.index')); ?>" ><span class="title">All</span></a></li>
+						<?php endif; ?>
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
 				<!-- END user -->
+				<?php endif; ?>
+				<?php if(Gate::check('mail.compose')): ?>
 				<!-- BEGIN mail -->
-				<li class="gui-folder">
-					<a href="<?php echo e(URL::Route('mail.compose')); ?>">
-						<div class="gui-icon"><i class="md md-send"></i></div>
-						<span class="title">Send Mail</span>
-					</a>
-					
-				</li><!--end /menu-li -->
-				<!-- END mail -->
+					<li class="gui-folder">
+						<a href="<?php echo e(URL::Route('mail.compose')); ?>">
+							<div class="gui-icon"><i class="md md-send"></i></div>
+							<span class="title">Send Mail</span>
+						</a>
+
+					</li><!--end /menu-li -->
+					<!-- END mail -->
 				<?php endif; ?>
 
 			</ul><!--end .main-menu -->
@@ -419,15 +419,15 @@
         toastr.options.hideMethod = 'slideUp';
         toastr.options.onclick = null;
         <?php if(Session::has('success')): ?>
-        toastr.success('<?php echo e(Session::get("success")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
+toastr.success('<?php echo e(Session::get("success")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
         <?php endif; ?>
         <?php if(Session::has('error')): ?>
-			toastr.error('<?php echo e(Session::get("error")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
+toastr.error('<?php echo e(Session::get("error")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
         <?php endif; ?>
         <?php if(Session::has('warning')): ?>
-		toastr.warning('<?php echo e(Session::get("warning")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
+toastr.warning('<?php echo e(Session::get("warning")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
 		<?php endif; ?>
-		<!-- toastr end -->
+        <!-- toastr end -->
     });
 
 </script>

@@ -104,7 +104,7 @@
 														<li class="tile">
 															<div class="tile-content">
 																<div class="tile-icon">
-																	<img src="../../assets/img/user01.jpg" alt="" />
+																	<img src="../../assets/img/avatar.png" alt="" />
 																</div>
 																<div class="tile-text">Ann Laurens</div>
 															</div>
@@ -115,7 +115,7 @@
 														<li class="tile">
 															<div class="tile-content">
 																<div class="tile-icon">
-																	<img src="../../assets/img/user01.jpg" alt="" />
+																	<img src="../../assets/img/avatar.png" alt="" />
 																</div>
 																<div class="tile-text">Alex Nelson</div>
 															</div>
@@ -126,7 +126,7 @@
 														<li class="tile">
 															<div class="tile-content">
 																<div class="tile-icon">
-																	<img src="../../assets/img/user01.jpg" alt="" />
+																	<img src="../../assets/img/avatar.png" alt="" />
 																</div>
 																<div class="tile-text">Mary Peterson</div>
 															</div>
@@ -137,7 +137,7 @@
 														<li class="tile">
 															<div class="tile-content">
 																<div class="tile-icon">
-																	<img src="../../assets/img/user01.jpg" alt="" />
+																	<img src="../../assets/img/avatar.png" alt="" />
 																</div>
 																<div class="tile-text">Philip Ericsson</div>
 															</div>
@@ -148,7 +148,7 @@
 														<li class="tile">
 															<div class="tile-content">
 																<div class="tile-icon">
-																	<img src="../../assets/img/user01.jpg" alt="" />
+																	<img src="../../assets/img/avatar.png" alt="" />
 																</div>
 																<div class="tile-text">Jim Peters</div>
 															</div>

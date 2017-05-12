@@ -12,4 +12,7 @@ class DashboardController extends Controller
     public function mailCompose(){
         return view('composemail');
     }
+    public function mailSend(){
+        return view('composemail');
+    }
 }

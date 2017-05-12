@@ -44,5 +44,6 @@ Route::group(['middleware' => 'role'], function () {
     Route::get('/report/balance','ReportController@balance')->name('report.balance');
 
     Route::get('/mail-compose','DashboardController@mailCompose')->name('mail.compose');
+    Route::post('/mail-send','DashboardController@mailSend')->name('mail.send');
 
 });

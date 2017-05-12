@@ -297,47 +297,41 @@
 					</ul><!--end /submenu -->
 				</li>
 				<!-- END Collection -->
-				@hasrole('supervisor')
+			@if(Gate::check('report.projects') || Gate::check('report.flats') || Gate::check('report.customers') || Gate::check('report.rents') || Gate::check('report.collections') || Gate::check('report.expenses') || Gate::check('report.balance'))
 				<!-- BEGIN REPORT -->
-				<li class="gui-folder">
-					<a>
-						<div class="gui-icon"><i class="md md-file-download"></i></div>
-						<span class="title">Reports</span>
-					</a>
-					<!--start submenu -->
-					<ul>
-						<li><a href="{{URL::Route('report.projects')}}" ><span class="title">Projects</span></a></li>
-						<li><a href="{{URL::Route('report.flats')}}" ><span class="title">Flats</span></a></li>
-						<li><a href="{{URL::Route('report.customers')}}" ><span class="title">Cutomers</span></a></li>
-						<li><a href="{{URL::Route('report.rents')}}" ><span class="title">Rents</span></a></li>
-						<li><a href="{{URL::Route('report.collections')}}" ><span class="title">Collections</span></a></li>
-						<li><a href="{{URL::Route('report.expenses')}}" ><span class="title">Expenses</span></a></li>
-						<li><a href="{{URL::Route('report.balance')}}" ><span class="title">Account Balance</span></a></li>
-					</ul><!--end /submenu -->
-				</li><!--end /menu-li -->
-				<!-- END REPORT -->
-				@endhasrole
-			@hasrole('admin')
-				<!-- BEGIN REPORT -->
-				<li class="gui-folder">
-					<a>
-						<div class="gui-icon"><i class="md md-file-download"></i></div>
-						<span class="title">Reports</span>
-					</a>
-					<!--start submenu -->
-					<ul>
-						<li><a href="{{URL::Route('report.projects')}}" ><span class="title">Projects</span></a></li>
-						<li><a href="{{URL::Route('report.flats')}}" ><span class="title">Flats</span></a></li>
-						<li><a href="{{URL::Route('report.customers')}}" ><span class="title">Cutomers</span></a></li>
-						<li><a href="{{URL::Route('report.rents')}}" ><span class="title">Rents</span></a></li>
-						<li><a href="{{URL::Route('report.collections')}}" ><span class="title">Collections</span></a></li>
-						<li><a href="{{URL::Route('report.expenses')}}" ><span class="title">Expenses</span></a></li>
-						<li><a href="{{URL::Route('report.balance')}}" ><span class="title">Account Balance</span></a></li>
-					</ul><!--end /submenu -->
-				</li><!--end /menu-li -->
-				<!-- END REPORT -->
-				@endhasrole
-			@hasrole('admin')
+					<li class="gui-folder">
+						<a>
+							<div class="gui-icon"><i class="md md-file-download"></i></div>
+							<span class="title">Reports</span>
+						</a>
+						<!--start submenu -->
+						<ul>
+							@if(Gate::check('report.projects'))
+								<li><a href="{{URL::Route('report.projects')}}" ><span class="title">Projects</span></a></li>
+							@endif
+							@if(Gate::check('report.flats'))
+								<li><a href="{{URL::Route('report.flats')}}" ><span class="title">Flats</span></a></li>
+							@endif
+							@if(Gate::check('report.customers'))
+								<li><a href="{{URL::Route('report.customers')}}" ><span class="title">Cutomers</span></a></li>
+							@endif
+							@if(Gate::check('report.rents'))
+								<li><a href="{{URL::Route('report.rents')}}" ><span class="title">Rents</span></a></li>
+							@endif
+							@if(Gate::check('report.collections'))
+								<li><a href="{{URL::Route('report.collections')}}" ><span class="title">Collections</span></a></li>
+							@endif
+							@if(Gate::check('report.expenses'))
+								<li><a href="{{URL::Route('report.expenses')}}" ><span class="title">Expenses</span></a></li>
+							@endif
+							@if(Gate::check('report.balance'))
+								<li><a href="{{URL::Route('report.balance')}}" ><span class="title">Account Balance</span></a></li>
+							@endif
+						</ul><!--end /submenu -->
+					</li><!--end /menu-li -->
+					<!-- END REPORT -->
+				@endif
+				@if(Gate::check('user.create') || Gate::check('user.index'))
 				<!-- BEGIN user -->
 				<li class="gui-folder">
 					<a>
@@ -346,21 +340,27 @@
 					</a>
 					<!--start submenu -->
 					<ul>
-						<li><a href="{{URL::Route('user.create')}}" ><span class="title">New</span></a></li>
-						<li><a href="{{URL::Route('user.index')}}" ><span class="title">All</span></a></li>
+						@if(Gate::check('user.create'))
+							<li><a href="{{URL::Route('user.create')}}" ><span class="title">New</span></a></li>
+						@endif
+						@if(Gate::check('user.create') )
+							<li><a href="{{URL::Route('user.index')}}" ><span class="title">All</span></a></li>
+						@endif
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
 				<!-- END user -->
+				@endif
+				@if(Gate::check('mail.compose'))
 				<!-- BEGIN mail -->
-				<li class="gui-folder">
-					<a href="{{URL::Route('mail.compose')}}">
-						<div class="gui-icon"><i class="md md-send"></i></div>
-						<span class="title">Send Mail</span>
-					</a>
+					<li class="gui-folder">
+						<a href="{{URL::Route('mail.compose')}}">
+							<div class="gui-icon"><i class="md md-send"></i></div>
+							<span class="title">Send Mail</span>
+						</a>
 
-				</li><!--end /menu-li -->
-				<!-- END mail -->
-				@endhasrole
+					</li><!--end /menu-li -->
+					<!-- END mail -->
+				@endif
 
 			</ul><!--end .main-menu -->
 			<!-- END MAIN MENU -->
@@ -418,15 +418,15 @@
         toastr.options.hideMethod = 'slideUp';
         toastr.options.onclick = null;
         @if(Session::has('success'))
-        toastr.success('{{Session::get("success")["body"]}}','{{Session::get("success")["title"]}}');
+toastr.success('{{Session::get("success")["body"]}}','{{Session::get("success")["title"]}}');
         @endif
         @if(Session::has('error'))
-			toastr.error('{{Session::get("error")["body"]}}','{{Session::get("success")["title"]}}');
+toastr.error('{{Session::get("error")["body"]}}','{{Session::get("success")["title"]}}');
         @endif
         @if(Session::has('warning'))
-		toastr.warning('{{Session::get("warning")["body"]}}','{{Session::get("success")["title"]}}');
+toastr.warning('{{Session::get("warning")["body"]}}','{{Session::get("success")["title"]}}');
 		@endif
-		<!-- toastr end -->
+        <!-- toastr end -->
     });
 
 </script>
