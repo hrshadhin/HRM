@@ -10,6 +10,8 @@ use App\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use DB;
+use Hash;
+
 class UserController extends Controller
 {
 
@@ -56,7 +58,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required',
+            'password' => 'required|min:6',
             'role' => 'required',
         ]);
         $user = User::create($request->all());
@@ -125,13 +127,12 @@ class UserController extends Controller
 
     public function update(Request $request,$id){
         $user = User::findOrFail($id);
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            'role' => 'required',
-        ]);
-
         if(!$request->has('isOnlyPasword') && \auth()->user()->hasRole('admin')) {
+            $this->validate($request, [
+                'name' => 'required|max:255',
+                'email' => 'required|email|unique:users,email,'.$user->id,
+                'role' => 'required',
+            ]);
 
             $user->name = $request->get('name');
             $user->email = $request->get('email');
@@ -161,12 +162,30 @@ class UserController extends Controller
             return redirect()->route('user.index')->with('success', $notification);
         }
         else{
-            return 'foo bar';
+            $this->validate($request, [
+                'password' => 'required|confirmed|min:6'
+            ]);
+////            echo bcrypt($request->get('oldpassword'));
+////            echo '<br>'.auth()->user()->password;
+////            die();
+//
+//            dd(Hash::check('demo123',$user->password));
+//            if(!Hash::check($request->get('oldpassword'), auth()->user()->password)){
+//                $notification= array('title' => 'Validation Error', 'body' => 'Old Password did not match!!!');
+//                return Redirect::back()->with('error',$notification);
+//            }
+            $user->password = $request->get('password');
+            $user->save();
+
+            $notification= 'Password changed.';
+            return redirect()->route('user.login')->with('success',$notification);
         }
     }
 
     public function lock(){
-        return view('lock');
+        $email = \auth()->user()->email;
+        Auth::logout();
+        return view('lock',compact('email'));
     }
     public function profile(){
         return view('profile');

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>RHM- 404</title>
+	<title>RHM- Locked</title>
 
 	<!-- BEGIN META -->
 	<meta charset="utf-8">
@@ -15,22 +15,6 @@
 	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/bootstrap.css" />
 	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/materialadmin.css" />
 	<link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/font-awesome.min.css" />
-	<style>
-  html, body {
-    height: 100%;
-  }
-
-  html {
-    display: table;
-    margin: auto;
-  }
-
-  body {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-  }
-  </style>
 	<!-- END STYLESHEETS -->
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -42,19 +26,39 @@
 </head>
 <body class="menubar-hoverable header-fixed ">
 
-	<!-- BEGIN 404 MESSAGE -->
-	<section>
+	<!-- BEGIN LOCKED SECTION -->
+	<section class="section-account">
+		<div class="img-backdrop" style="background-image: url('<?php echo e(URL::asset('assets')); ?>/img/rhm.jpg')"></div>
+		<div class="spacer"></div>
+		<div class="card contain-xs style-transparent" style="margin-top: -23px;">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<img class="img-circle" src="<?php echo e(URL::asset('assets')); ?>/img/avatar.png" alt="" />
+						<h2><?php echo e(session('name')); ?></h2>
+						<form class="form" action="/login" accept-charset="utf-8" method="post">
+							<?php echo e(csrf_field()); ?>
 
-		<div class="section-body contain-lg">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<h1><span class="text-xxxl text-danger">403 <i class="fa fa-question-circle text-danger"></i></span></h1>
-					<h2 class="text-danger">Access denied!</h2>
-				</div><!--end .col -->
-			</div><!--end .row -->
-		</div><!--end .section-body -->
+							<div class="form-group floating-label">
+								<div class="input-group">
+									<div class="input-group-content">
+										<input type="hidden" id="email" class="form-control" name="email" value="<?php echo e($email); ?>">
+										<input type="password" id="password" class="form-control" name="password">
+										<label for="password">Password</label>
+										<p class="help-block"><a href="/login">? Not <?php echo e(session('name')); ?></a></p>
+									</div>
+									<div class="input-group-btn">
+										<button type="submit" class="btn btn-floating-action btn-primary" ><i class="fa fa-unlock"></i></button>
+									</div>
+								</div><!--end .input-group -->
+							</div><!--end .form-group -->
+						</form>
+					</div><!--end .col -->
+				</div><!--end .row -->
+			</div><!--end .card-body -->
+		</div><!--end .card -->
 	</section>
-	<!-- END 404 MESSAGE -->
+	<!-- END LOCKED SECTION -->
 
 			<!-- BEGIN JAVASCRIPT -->
 			<script src="<?php echo e(url('/')); ?>/assets/js/libs/jquery/jquery-1.11.2.min.js"></script>

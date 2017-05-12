@@ -155,7 +155,7 @@
 			<ul class="header-nav header-nav-profile">
 				<li class="dropdown">
 					<a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
-						<img src="../../assets/img/user01.jpg" alt="" />
+						<img src="{{URL::asset('assets')}}/img/avatar.png" alt="" />
 						<span class="profile-info">
 								{{ session('name')}}
 							<small>{{getUserRole(auth()->user())}}</small>

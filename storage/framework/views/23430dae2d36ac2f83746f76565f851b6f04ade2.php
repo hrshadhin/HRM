@@ -54,7 +54,7 @@
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="form-group">
-                                                    <input type="password" class="form-control" value="" name="password" required>
+                                                    <input type="password" class="form-control" value="" minlength="6" name="password" required>
                                                     <label for="entryDate">Password</label>
                                                 </div>
                                             </div>

@@ -28,24 +28,26 @@
 
 	<!-- BEGIN LOCKED SECTION -->
 	<section class="section-account">
-		<div class="img-backdrop" style="background-image: url('../../assets/img/img16.jpg')"></div>
+		<div class="img-backdrop" style="background-image: url('{{URL::asset('assets')}}/img/rhm.jpg')"></div>
 		<div class="spacer"></div>
-		<div class="card contain-xs style-transparent">
+		<div class="card contain-xs style-transparent" style="margin-top: -23px;">
 			<div class="card-body">
 				<div class="row">
 					<div class="col-sm-12">
-						<img class="img-circle" src="../../assets/img/user01.jpg" alt="" />
+						<img class="img-circle" src="{{URL::asset('assets')}}/img/avatar.png" alt="" />
 						<h2>{{session('name')}}</h2>
 						<form class="form" action="/login" accept-charset="utf-8" method="post">
+							{{csrf_field()}}
 							<div class="form-group floating-label">
 								<div class="input-group">
 									<div class="input-group-content">
+										<input type="hidden" id="email" class="form-control" name="email" value="{{$email}}">
 										<input type="password" id="password" class="form-control" name="password">
 										<label for="password">Password</label>
 										<p class="help-block"><a href="/login">? Not {{session('name')}}</a></p>
 									</div>
 									<div class="input-group-btn">
-										<a href="/dashboard" class="btn btn-floating-action btn-primary" ><i class="fa fa-unlock"></i></a>
+										<button type="submit" class="btn btn-floating-action btn-primary" ><i class="fa fa-unlock"></i></button>
 									</div>
 								</div><!--end .input-group -->
 							</div><!--end .form-group -->
