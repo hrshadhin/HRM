@@ -288,7 +288,7 @@
 				<!-- BEGIN Collection -->
 				<li class="gui-folder">
 					<a>
-						<div class="gui-icon"><i class="md md-send"></i></div>
+						<div class="gui-icon"><i class="fa fa-money"></i></div>
 						<span class="title">Manage Expense</span>
 					</a>
 					<!--start submenu -->
@@ -352,6 +352,15 @@
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
 				<!-- END user -->
+				<!-- BEGIN mail -->
+				<li class="gui-folder">
+					<a href="<?php echo e(URL::Route('mail.compose')); ?>">
+						<div class="gui-icon"><i class="md md-send"></i></div>
+						<span class="title">Send Mail</span>
+					</a>
+					
+				</li><!--end /menu-li -->
+				<!-- END mail -->
 				<?php endif; ?>
 
 			</ul><!--end .main-menu -->

@@ -43,6 +43,6 @@ Route::group(['middleware' => 'role'], function () {
     Route::get('/report/expenses','ReportController@expenses')->name('report.expenses');
     Route::get('/report/balance','ReportController@balance')->name('report.balance');
 
-
+    Route::get('/mail-compose','DashboardController@mailCompose')->name('mail.compose');
 
 });
