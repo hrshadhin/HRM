@@ -53,6 +53,7 @@ th{
                         <td>{{$customer->active}}</td>
                         <td>
                           <div class="btn-group pull-right">
+                            @can('customer.destroy')
                             <form class="myAction" method="POST" action="{{URL::route('customer.destroy',$customer->id)}}">
                               <input name="_method" type="hidden" value="DELETE">
                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -60,11 +61,12 @@ th{
                                 <i class="fa fa-fw fa-trash"></i>
                               </button>
                             </form>
+                            @endcan
+                              @can('customer.edit')
                             <a title="Edit" href="{{URL::route('customer.edit',$customer->id)}}" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
+                           @endcan
                             <a title="Details" target="_blank" href="{{URL::route('customer.show',$customer->id)}}"  class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction"><i class="fa fa-list"></i>
-
                             </a>
-
                           </div>
                         </td>
                         </tr>

@@ -51,6 +51,7 @@
                           <td class="text-center">{{$expense->entry->name}}</td>
                           <td>
                             <div class="btn-group pull-right">
+                                @can('expense.destroy')
                               <form class="myAction" method="POST" action="{{URL::route('expense.destroy',$expense->id)}}">
                                 <input name="_method" type="hidden" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -58,6 +59,7 @@
                                   <i class="fa fa-fw fa-trash"></i>
                                 </button>
                               </form>
+                                @endcan
                               <a title="Details" data-url="{{URL::route('expense.show',$expense->id)}}" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i></a>
 
                             </div>

@@ -17,21 +17,21 @@
 Route::get('/','UserController@login')->name('home');
 Route::get('/login','UserController@login')->name('user.login');
 Route::post('/login','UserController@postLogin');
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'role'], function () {
     Route::resource('user','UserController');
     Route::get('/dashboard','DashboardController@index')->name('user.dashboard');
     Route::get('/profile','UserController@profile')->name('user.profile');
     Route::get('/logout','UserController@logout')->name('user.logout');
     Route::get('/lock','UserController@lock')->name('user.lock');
     Route::resource('project','ProjectController');
-    Route::get('/project-by-type/{ptype}','ProjectController@projectByType');
+    Route::get('/project-by-type/{ptype}','ProjectController@projectByType')->name('project.bytype');
     Route::resource('flat','FlatController');
-    Route::get('/flats-by-project/{project}','FlatController@flatByProject');
+    Route::get('/flats-by-project/{project}','FlatController@flatByProject')->name('flat.byproject');
     Route::resource('customer','CustomerController');
-    Route::get('/customer-ajax/{customerId}','CustomerController@customerAjax');
+    Route::get('/customer-ajax/{customerId}','CustomerController@customerAjax')->name('customer.ajax');
     Route::resource('rent','RentController');
-    Route::get('/rent/customers/{projectId}','RentController@customerByProject');
-    Route::get('/rent/flats/{customerId}','RentController@flatsByCustomer');
+    Route::get('/rent/customers/{projectId}','RentController@customerByProject')->name('customer.byproject');
+    Route::get('/rent/flats/{customerId}','RentController@flatsByCustomer')->name('flat.bycustomer');
     Route::resource('collection','CollectionController');
     Route::resource('expense','ExpenseController');
 

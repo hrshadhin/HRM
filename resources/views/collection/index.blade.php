@@ -67,6 +67,7 @@
                           <td class="text-center">{{$collection->entry->name}}</td>
                           <td>
                             <div class="btn-group pull-right">
+                              @can('cullection.destroy')
                               <form class="myAction" method="POST" action="{{URL::route('collection.destroy',$collection->id)}}">
                                 <input name="_method" type="hidden" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -74,6 +75,7 @@
                                   <i class="fa fa-fw fa-trash"></i>
                                 </button>
                               </form>
+                                @endcan
                             </div>
                             <!--end .btn-group -->
                           </td>

@@ -158,7 +158,7 @@
 						<img src="../../assets/img/user01.jpg" alt="" />
 						<span class="profile-info">
 								{{ session('name')}}
-							<small>Administrator</small>
+							<small>{{getUserRole(auth()->user())}}</small>
 							</span>
 					</a>
 					<ul class="dropdown-menu animation-dock">
@@ -297,7 +297,7 @@
 					</ul><!--end /submenu -->
 				</li>
 				<!-- END Collection -->
-
+				@hasrole('supervisor')
 				<!-- BEGIN REPORT -->
 				<li class="gui-folder">
 					<a>
@@ -316,6 +316,42 @@
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
 				<!-- END REPORT -->
+				@endhasrole
+			@hasrole('admin')
+				<!-- BEGIN REPORT -->
+				<li class="gui-folder">
+					<a>
+						<div class="gui-icon"><i class="md md-file-download"></i></div>
+						<span class="title">Reports</span>
+					</a>
+					<!--start submenu -->
+					<ul>
+						<li><a href="{{URL::Route('report.projects')}}" ><span class="title">Projects</span></a></li>
+						<li><a href="{{URL::Route('report.flats')}}" ><span class="title">Flats</span></a></li>
+						<li><a href="{{URL::Route('report.customers')}}" ><span class="title">Cutomers</span></a></li>
+						<li><a href="{{URL::Route('report.rents')}}" ><span class="title">Rents</span></a></li>
+						<li><a href="{{URL::Route('report.collections')}}" ><span class="title">Collections</span></a></li>
+						<li><a href="{{URL::Route('report.expenses')}}" ><span class="title">Expenses</span></a></li>
+						<li><a href="{{URL::Route('report.balance')}}" ><span class="title">Account Balance</span></a></li>
+					</ul><!--end /submenu -->
+				</li><!--end /menu-li -->
+				<!-- END REPORT -->
+				@endhasrole
+			@hasrole('admin')
+				<!-- BEGIN user -->
+				<li class="gui-folder">
+					<a>
+						<div class="gui-icon"><i class="md md-account-child"></i></div>
+						<span class="title">Manage Users</span>
+					</a>
+					<!--start submenu -->
+					<ul>
+						<li><a href="{{URL::Route('user.create')}}" ><span class="title">New</span></a></li>
+						<li><a href="{{URL::Route('user.index')}}" ><span class="title">All</span></a></li>
+					</ul><!--end /submenu -->
+				</li><!--end /menu-li -->
+				<!-- END user -->
+				@endhasrole
 
 			</ul><!--end .main-menu -->
 			<!-- END MAIN MENU -->

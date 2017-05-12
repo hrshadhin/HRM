@@ -65,6 +65,7 @@
 
                           <td>
                             <div class="btn-group pull-right">
+                                <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('rent.destroy')): ?>
                               <form class="myAction" method="POST" action="<?php echo e(URL::route('rent.destroy',$rent->id)); ?>">
                                 <input name="_method" type="hidden" value="DELETE">
                                 <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
@@ -72,7 +73,10 @@
                                   <i class="fa fa-fw fa-trash"></i>
                                 </button>
                               </form>
+                                <?php endif; ?>
+                                <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('rent.edit')): ?>
                               <a title="Edit" href="<?php echo e(URL::route('rent.edit',$rent->id)); ?>" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
+                            <?php endif; ?>
                               <a title="Details" data-url="<?php echo e(URL::route('rent.show',$rent->id)); ?>" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i></a>
 
 

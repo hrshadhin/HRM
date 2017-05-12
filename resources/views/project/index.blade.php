@@ -53,6 +53,7 @@
                           <td>{{$project->storied}}</td>
                           <td>
                             <div class="btn-group pull-right">
+                              @can('project.destroy')
                               <form class="myAction" method="POST" action="{{URL::route('project.destroy',$project->id)}}">
                                 <input name="_method" type="hidden" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -60,7 +61,10 @@
                                   <i class="fa fa-fw fa-trash"></i>
                                 </button>
                               </form>
+                              @endcan
+                                @can('project.edit')
                               <a title="Edit" href="{{URL::route('project.edit',$project->id)}}" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
+                             @endcan
                               <a title="Details" data-url="{{URL::route('project.show',$project->id)}}" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i>
 
                               </a>

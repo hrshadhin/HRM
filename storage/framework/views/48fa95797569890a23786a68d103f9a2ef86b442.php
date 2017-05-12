@@ -49,6 +49,7 @@
                           <td class="text-center"><?php echo e($expense->entry->name); ?></td>
                           <td>
                             <div class="btn-group pull-right">
+                                <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('expense.destroy')): ?>
                               <form class="myAction" method="POST" action="<?php echo e(URL::route('expense.destroy',$expense->id)); ?>">
                                 <input name="_method" type="hidden" value="DELETE">
                                 <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
@@ -56,6 +57,7 @@
                                   <i class="fa fa-fw fa-trash"></i>
                                 </button>
                               </form>
+                                <?php endif; ?>
                               <a title="Details" data-url="<?php echo e(URL::route('expense.show',$expense->id)); ?>" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i></a>
 
                             </div>

@@ -65,6 +65,7 @@
                           <td class="text-center"><?php echo e($collection->entry->name); ?></td>
                           <td>
                             <div class="btn-group pull-right">
+                              <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('cullection.destroy')): ?>
                               <form class="myAction" method="POST" action="<?php echo e(URL::route('collection.destroy',$collection->id)); ?>">
                                 <input name="_method" type="hidden" value="DELETE">
                                 <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
@@ -72,6 +73,7 @@
                                   <i class="fa fa-fw fa-trash"></i>
                                 </button>
                               </form>
+                                <?php endif; ?>
                             </div>
                             <!--end .btn-group -->
                           </td>

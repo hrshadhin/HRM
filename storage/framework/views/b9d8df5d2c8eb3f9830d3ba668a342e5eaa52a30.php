@@ -51,6 +51,7 @@ th{
                         <td><?php echo e($customer->active); ?></td>
                         <td>
                           <div class="btn-group pull-right">
+                            <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('customer.destroy')): ?>
                             <form class="myAction" method="POST" action="<?php echo e(URL::route('customer.destroy',$customer->id)); ?>">
                               <input name="_method" type="hidden" value="DELETE">
                               <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
@@ -58,11 +59,12 @@ th{
                                 <i class="fa fa-fw fa-trash"></i>
                               </button>
                             </form>
+                            <?php endif; ?>
+                              <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('customer.edit')): ?>
                             <a title="Edit" href="<?php echo e(URL::route('customer.edit',$customer->id)); ?>" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
+                           <?php endif; ?>
                             <a title="Details" target="_blank" href="<?php echo e(URL::route('customer.show',$customer->id)); ?>"  class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction"><i class="fa fa-list"></i>
-
                             </a>
-
                           </div>
                         </td>
                         </tr>

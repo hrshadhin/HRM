@@ -5,6 +5,23 @@
  * Date: 5/1/17
  * Time: 11:37 AM
  */
+use \DB;
+
+function hasUserPermission($user_id,$permission_id){
+
+        $havePermission = DB::table('user_has_permissions')->where('user_id',$user_id)->where('permission_id',$permission_id)->get();
+        if(count($havePermission)){
+            return true;
+        }
+        return false;
+}
+function getUserRole($user){
+    if($user->hasRole('admin')) { return  'Admin'; }
+    if($user->hasRole('supervisor')) { return  'Supervisor'; }
+    if($user->hasRole('operator')) { return  'Operator'; }
+
+}
+
 function floorLevel($floor){
     $floors = [
         '-1' => 'Basement',
