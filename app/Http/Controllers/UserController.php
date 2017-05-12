@@ -61,7 +61,9 @@ class UserController extends Controller
             'password' => 'required|min:6',
             'role' => 'required',
         ]);
-        $user = User::create($request->all());
+        $data = $request->all();
+        $data['users_id'] = auth()->user()->id;
+        $user = User::create($data);
         $user->assignRole($request->get('role'));
         if($request->has('permission')){
             $permissions = $request->get('permission');
@@ -136,6 +138,7 @@ class UserController extends Controller
 
             $user->name = $request->get('name');
             $user->email = $request->get('email');
+            //$user->users_id = auth()->user()->id;
 
             if ($request->get('password') != '') {
                 $user->password = $request->get('password');
