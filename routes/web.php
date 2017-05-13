@@ -40,6 +40,7 @@ Route::group(['middleware' => 'role'], function () {
     Route::get('/report/customers','ReportController@customers')->name('report.customers');
     Route::get('/report/rents','ReportController@rents')->name('report.rents');
     Route::get('/report/collections','ReportController@collections')->name('report.collections');
+    Route::get('/report/dues','ReportController@dues')->name('report.dues');
     Route::get('/report/expenses','ReportController@expenses')->name('report.expenses');
     Route::get('/report/balance','ReportController@balance')->name('report.balance');
 
@@ -52,3 +53,4 @@ Route::get('/make-link',function(){
     App::make('files')->link(storage_path('app/public'), public_path('storage'));
     return 'Done link';
 });
+Route::get('/notification-read','DashboardController@deleteNotification')->name('notification.read');

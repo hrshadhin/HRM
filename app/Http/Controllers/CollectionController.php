@@ -7,6 +7,7 @@ use App\Customer;
 use App\RentCollection;
 use Carbon\Carbon;
 use App\Rent;
+use App\MyNotify;
 
 class CollectionController extends Controller
 {
@@ -68,6 +69,14 @@ class CollectionController extends Controller
         else{
             RentCollection::create($data);
         }
+        //notification code
+        $customer = Customer::where('id',$data['customers_id'])->first();
+        $myNoti = new MyNotify();
+        $myNoti->title = $customer->name;
+        $myNoti->value = $data['amount'];
+        $myNoti->notiType = "collection";
+        $myNoti->save();
+        //end mynoti
         $notification= array('title' => 'Data Store', 'body' => 'Rent collected Successfully');
         return redirect()->route('collection.create')->with('success',$notification);
     }

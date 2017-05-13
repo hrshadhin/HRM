@@ -9,6 +9,8 @@ use App\Rent;
 use App\Flat;
 use DB;
 use Storage;
+use App\Project;
+use App\MyNotify;
 
 
 class RentController extends Controller
@@ -120,6 +122,16 @@ class RentController extends Controller
         }
         $rent->fill($data)->update();
         $flat->save();
+        if($flat->status == 0){
+            //notification code
+            $project = Project::where('id',$flat->projects_id)->first();
+            $myNoti = new MyNotify();
+            $myNoti->title = $project->name;
+            $myNoti->value = $flat->description;
+            $myNoti->notiType = "tolet";
+            $myNoti->save();
+            //end mynoti
+        }
         $notification= array('title' => 'Data Update', 'body' => 'Rent updated Successfully');
         return redirect()->route('rent.index')->with('success',$notification);
     }
@@ -131,7 +143,16 @@ class RentController extends Controller
         $flat->status = 0;
         $rent->delete();
         $flat->save();
-
+        if($flat->status == 0){
+            //notification code
+            $project = Project::where('id',$flat->projects_id)->first();
+            $myNoti = new MyNotify();
+            $myNoti->title = $project->name;
+            $myNoti->value = $flat->description;
+            $myNoti->notiType = "tolet";
+            $myNoti->save();
+            //end mynoti
+        }
         $notification= array('title' => 'Data Remove', 'body' => 'Rent deleted Successfully');
         return redirect()->route('rent.index')->with('success',$notification);
     }

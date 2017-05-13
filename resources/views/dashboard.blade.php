@@ -110,7 +110,7 @@
 														<li class="tile">
 															<div class="tile-content">
 																<div class="tile-icon">
-																	<img src="{{URL::asset('storage')}}/{{$renter->customer->photo}}" alt="" />
+																	<img src="{{URL::asset('storage')}}/@if($renter->customer->photo){{$renter->customer->photo}} @else{{'customers/avatar.png'}}@endif" alt="" />
 																</div>
 																<div class="tile-text">{{$renter->customer->name}}</div>
 															</div>

@@ -76,72 +76,63 @@
 			<ul class="header-nav header-nav-options">
 				<li class="dropdown">
 					<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-						<i class="fa fa-taka">&#2547;</i><sup class="badge style-danger">4</sup>
+						<i class="fa fa-taka">&#2547;</i><sup class="badge style-danger"><?php echo e(count( session('collectionNotifications'))); ?></sup>
 					</a>
 					<ul class="dropdown-menu animation-expand">
-						<li class="dropdown-header">Today's Collection</li>
+						<li class="dropdown-header">Collections</li>
+						<?php $__currentLoopData = session('collectionNotifications'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
 						<li>
 							<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-								<strong>Alex Anistor</strong><br/>
-								<small>&#2547; 45,000</small>
+								<strong><?php echo e($notification->title); ?></strong><br/>
+								<small>&#2547; <?php echo e(number_format($notification->value, 2, '.', ',')); ?></small>
 							</a>
 						</li>
-						<li>
-							<a class="alert alert-callout alert-info" href="javascript:void(0);">
-								<strong>Alicia Adell</strong><br/>
-								<small>&#2547; 50,000</small>
-							</a>
-						</li>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
+
 						<li class="dropdown-header">Options</li>
 						<li><a href="<?php echo e(URL::route('collection.index')); ?>">View All Collections <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
-						<li><a href="#">Mark As Read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="#" data-type="collection" class="btnMarkRead">Mark As Read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 					</ul><!--end .dropdown-menu -->
 				</li><!--end .dropdown -->
 				<li class="dropdown">
 					<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-						<i class="fa fa-2x fa-money"></i><sup class="badge style-danger">6</sup>
+						<i class="fa fa-2x fa-money"></i><sup class="badge style-danger"><?php echo e(count( session('dueNotifications'))); ?></sup>
 					</a>
 					<ul class="dropdown-menu animation-expand">
 						<li class="dropdown-header">This Month Dues</li>
-						<li>
-							<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-								<strong>Alex Anistor</strong><br/>
-								<small>&#2547; 2,5000</small>
-							</a>
-						</li>
-						<li>
-							<a class="alert alert-callout alert-info" href="javascript:void(0);">
-								<strong>Alicia Adell</strong><br/>
-								<small>&#2547; 5,5000</small>
-							</a>
-						</li>
+						<?php $__currentLoopData = session('dueNotifications'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+							<li>
+								<a class="alert alert-callout alert-warning" href="javascript:void(0);">
+									<strong><?php echo e($notification->title); ?></strong><br/>
+									<small>&#2547; <?php echo e(number_format($notification->value, 2, '.', ',')); ?></small>
+								</a>
+							</li>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
+
 						<li class="dropdown-header">Options</li>
-						<li><a href="#">View All Dues <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
-						<li><a href="#">Mark As Read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="<?php echo e(URL::route('report.dues')); ?>">View All Dues <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="#" data-type="due" class="btnMarkRead">Mark As Read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 					</ul><!--end .dropdown-menu -->
 				</li><!--end .dropdown -->
 
 				<li class="dropdown">
 					<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-						<i class="fa fa-2x fa-home"></i><sup class="badge style-danger">15</sup>
+						<i class="fa fa-2x fa-home"></i><sup class="badge style-danger"><?php echo e(count( session('toletNotifications'))); ?></sup>
 					</a>
 					<ul class="dropdown-menu animation-expand">
 						<li class="dropdown-header">To-Let</li>
-						<li>
-							<a class="alert alert-callout alert-info" href="javascript:void(0);">
-								<strong>Navana Tower</strong><br/>
-								<small>10th Floor[105]</small>
-							</a>
-						</li>
-						<li>
-							<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-								<strong>Tridhara Tower</strong><br/>
-								<small>8th Floor[850]</small>
-							</a>
-						</li>
+						<?php $__currentLoopData = session('toletNotifications'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+							<li>
+								<a class="alert alert-callout alert-warning" href="javascript:void(0);">
+									<strong><?php echo e($notification->title); ?></strong><br/>
+									<small><?php echo e($notification->value); ?></small>
+								</a>
+							</li>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
+
 						<li class="dropdown-header">Options</li>
 						<li><a href="<?php echo e(URL::route('flat.index')); ?>">View all To-Let <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
-						<li><a href="../../html/pages/login.html">Mark as read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="#" data-type="tolet" class="btnMarkRead">Mark as read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 					</ul><!--end .dropdown-menu -->
 				</li><!--end .dropdown -->
 
@@ -310,7 +301,7 @@
 					</ul><!--end /submenu -->
 				</li>
 				<!-- END Collection -->
-			<?php if(Gate::check('report.projects') || Gate::check('report.flats') || Gate::check('report.customers') || Gate::check('report.rents') || Gate::check('report.collections') || Gate::check('report.expenses') || Gate::check('report.balance')): ?>
+			<?php if(Gate::check('report.projects') || Gate::check('report.dues') || Gate::check('report.flats') || Gate::check('report.customers') || Gate::check('report.rents') || Gate::check('report.collections') || Gate::check('report.expenses') || Gate::check('report.balance')): ?>
 				<!-- BEGIN REPORT -->
 					<li class="gui-folder">
 						<a>
@@ -333,6 +324,9 @@
 							<?php endif; ?>
 							<?php if(Gate::check('report.collections')): ?>
 								<li><a href="<?php echo e(URL::Route('report.collections')); ?>" ><span class="title">Collections</span></a></li>
+							<?php endif; ?>
+								<?php if(Gate::check('report.dues')): ?>
+								<li><a href="<?php echo e(URL::Route('report.dues')); ?>" ><span class="title">Collection Dues</span></a></li>
 							<?php endif; ?>
 							<?php if(Gate::check('report.expenses')): ?>
 								<li><a href="<?php echo e(URL::Route('report.expenses')); ?>" ><span class="title">Expenses</span></a></li>
@@ -422,6 +416,19 @@ toastr.error('<?php echo e(Session::get("error")["body"]); ?>','<?php echo e(Ses
 toastr.warning('<?php echo e(Session::get("warning")["body"]); ?>','<?php echo e(Session::get("success")["title"]); ?>');
 		<?php endif; ?>
         <!-- toastr end -->
+
+		$('.btnMarkRead').click(function (e) {
+		    e.preventDefault();
+		    var url= '<?php echo e(URL::route('notification.read')); ?>'+"?type="+$(this).attr('data-type');
+		    var that = $(this);
+            $.getJSON(url,function (response) {
+				console.log(response);
+				that.parent().parent().closest('li').find('a>sup').text(0);
+            });
+
+
+        });
+
     });
 
 </script>

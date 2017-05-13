@@ -90,7 +90,8 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'user.show'],
             ['name' => 'user.edit'],
             ['name' => 'mail.compose'],
-            ['name' => 'mail.send']
+            ['name' => 'mail.send'],
+            ['name' => 'report.dues']
         ];
 
         foreach ($universalPermission as $permission){

@@ -76,72 +76,63 @@
 			<ul class="header-nav header-nav-options">
 				<li class="dropdown">
 					<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-						<i class="fa fa-taka">&#2547;</i><sup class="badge style-danger">4</sup>
+						<i class="fa fa-taka">&#2547;</i><sup class="badge style-danger">{{count( session('collectionNotifications'))}}</sup>
 					</a>
 					<ul class="dropdown-menu animation-expand">
-						<li class="dropdown-header">Today's Collection</li>
+						<li class="dropdown-header">Collections</li>
+						@foreach( session('collectionNotifications') as $notification)
 						<li>
 							<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-								<strong>Alex Anistor</strong><br/>
-								<small>&#2547; 45,000</small>
+								<strong>{{$notification->title}}</strong><br/>
+								<small>&#2547; {{number_format($notification->value, 2, '.', ',')}}</small>
 							</a>
 						</li>
-						<li>
-							<a class="alert alert-callout alert-info" href="javascript:void(0);">
-								<strong>Alicia Adell</strong><br/>
-								<small>&#2547; 50,000</small>
-							</a>
-						</li>
+						@endforeach
+
 						<li class="dropdown-header">Options</li>
 						<li><a href="{{URL::route('collection.index')}}">View All Collections <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
-						<li><a href="#">Mark As Read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="#" data-type="collection" class="btnMarkRead">Mark As Read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 					</ul><!--end .dropdown-menu -->
 				</li><!--end .dropdown -->
 				<li class="dropdown">
 					<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-						<i class="fa fa-2x fa-money"></i><sup class="badge style-danger">6</sup>
+						<i class="fa fa-2x fa-money"></i><sup class="badge style-danger">{{count( session('dueNotifications'))}}</sup>
 					</a>
 					<ul class="dropdown-menu animation-expand">
 						<li class="dropdown-header">This Month Dues</li>
-						<li>
-							<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-								<strong>Alex Anistor</strong><br/>
-								<small>&#2547; 2,5000</small>
-							</a>
-						</li>
-						<li>
-							<a class="alert alert-callout alert-info" href="javascript:void(0);">
-								<strong>Alicia Adell</strong><br/>
-								<small>&#2547; 5,5000</small>
-							</a>
-						</li>
+						@foreach( session('dueNotifications') as $notification)
+							<li>
+								<a class="alert alert-callout alert-warning" href="javascript:void(0);">
+									<strong>{{$notification->title}}</strong><br/>
+									<small>&#2547; {{number_format($notification->value, 2, '.', ',')}}</small>
+								</a>
+							</li>
+						@endforeach
+
 						<li class="dropdown-header">Options</li>
-						<li><a href="#">View All Dues <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
-						<li><a href="#">Mark As Read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="{{URL::route('report.dues')}}">View All Dues <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="#" data-type="due" class="btnMarkRead">Mark As Read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 					</ul><!--end .dropdown-menu -->
 				</li><!--end .dropdown -->
 
 				<li class="dropdown">
 					<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-						<i class="fa fa-2x fa-home"></i><sup class="badge style-danger">15</sup>
+						<i class="fa fa-2x fa-home"></i><sup class="badge style-danger">{{count( session('toletNotifications'))}}</sup>
 					</a>
 					<ul class="dropdown-menu animation-expand">
 						<li class="dropdown-header">To-Let</li>
-						<li>
-							<a class="alert alert-callout alert-info" href="javascript:void(0);">
-								<strong>Navana Tower</strong><br/>
-								<small>10th Floor[105]</small>
-							</a>
-						</li>
-						<li>
-							<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-								<strong>Tridhara Tower</strong><br/>
-								<small>8th Floor[850]</small>
-							</a>
-						</li>
+						@foreach( session('toletNotifications') as $notification)
+							<li>
+								<a class="alert alert-callout alert-warning" href="javascript:void(0);">
+									<strong>{{$notification->title}}</strong><br/>
+									<small>{{$notification->value}}</small>
+								</a>
+							</li>
+						@endforeach
+
 						<li class="dropdown-header">Options</li>
 						<li><a href="{{URL::route('flat.index')}}">View all To-Let <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
-						<li><a href="../../html/pages/login.html">Mark as read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="#" data-type="tolet" class="btnMarkRead">Mark as read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 					</ul><!--end .dropdown-menu -->
 				</li><!--end .dropdown -->
 
@@ -309,7 +300,7 @@
 					</ul><!--end /submenu -->
 				</li>
 				<!-- END Collection -->
-			@if(Gate::check('report.projects') || Gate::check('report.flats') || Gate::check('report.customers') || Gate::check('report.rents') || Gate::check('report.collections') || Gate::check('report.expenses') || Gate::check('report.balance'))
+			@if(Gate::check('report.projects') || Gate::check('report.dues') || Gate::check('report.flats') || Gate::check('report.customers') || Gate::check('report.rents') || Gate::check('report.collections') || Gate::check('report.expenses') || Gate::check('report.balance'))
 				<!-- BEGIN REPORT -->
 					<li class="gui-folder">
 						<a>
@@ -332,6 +323,9 @@
 							@endif
 							@if(Gate::check('report.collections'))
 								<li><a href="{{URL::Route('report.collections')}}" ><span class="title">Collections</span></a></li>
+							@endif
+								@if(Gate::check('report.dues'))
+								<li><a href="{{URL::Route('report.dues')}}" ><span class="title">Collection Dues</span></a></li>
 							@endif
 							@if(Gate::check('report.expenses'))
 								<li><a href="{{URL::Route('report.expenses')}}" ><span class="title">Expenses</span></a></li>
@@ -421,6 +415,19 @@ toastr.error('{{Session::get("error")["body"]}}','{{Session::get("success")["tit
 toastr.warning('{{Session::get("warning")["body"]}}','{{Session::get("success")["title"]}}');
 		@endif
         <!-- toastr end -->
+
+		$('.btnMarkRead').click(function (e) {
+		    e.preventDefault();
+		    var url= '{{URL::route('notification.read')}}'+"?type="+$(this).attr('data-type');
+		    var that = $(this);
+            $.getJSON(url,function (response) {
+				console.log(response);
+				that.parent().parent().closest('li').find('a>sup').text(0);
+            });
+
+
+        });
+
     });
 
 </script>

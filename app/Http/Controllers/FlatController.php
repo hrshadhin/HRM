@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Project;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Flat;
+use App\MyNotify;
 
 class FlatController extends Controller
 {
@@ -76,6 +78,14 @@ class FlatController extends Controller
         $data = $request->all();
         $data['users_id'] = auth()->user()->id;
         Flat::create($data);
+        //notification code
+        $project = Project::where('id',$data['projects_id'])->first();
+        $myNoti = new MyNotify();
+        $myNoti->title = $project->name;
+        $myNoti->value = $data['description'];
+        $myNoti->notiType = "tolet";
+        $myNoti->save();
+        //end mynoti
         $notification= array('title' => 'Data Store', 'body' => 'Flat allocated Successfully');
         return redirect()->route('flat.index')->with('success',$notification);
     }
@@ -109,6 +119,16 @@ class FlatController extends Controller
             $flat->parkingNo = $request->get('parkingNo');
         }
         $flat->save();
+        if((int)$request->get('status')==0){
+            //notification code
+            $project = Project::where('id',$flat->projects_id)->first();
+            $myNoti = new MyNotify();
+            $myNoti->title = $project->name;
+            $myNoti->value = $flat->description;
+            $myNoti->notiType = "tolet";
+            $myNoti->save();
+            //end mynoti
+        }
         $notification= array('title' => 'Data Update', 'body' => 'Flat updated Successfully');
         return redirect()->route('flat.index')->with('success',$notification);
     }

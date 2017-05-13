@@ -167,4 +167,19 @@ class ReportController extends Controller
             $collections = DB::table('collections')->sum('amount');
         return view('report.balance',compact('expenses','collections'));
     }
+
+    public function dues(Request $request)
+    {
+
+        $monthYear = $request->has('monthYear') ?  $request->get('monthYear') : date('m-Y');
+        $myPart = mb_split('-',$monthYear);
+
+        $collectionsHave = RentCollection::select('rents_id')->whereMonth('collectionDate', '=', $myPart[0])->whereYear('collectionDate', '=', $myPart[1])
+            ->pluck('rents_id');
+        $notPaidRentCustomers = Rent::with('customer')
+            ->whereNotIn('id',$collectionsHave)
+            ->get();
+        $monthYear = Carbon::createFromFormat('m-Y', $monthYear);
+        return view('report.dues',compact('dues','monthYear','notPaidRentCustomers'));
+    }
 }
