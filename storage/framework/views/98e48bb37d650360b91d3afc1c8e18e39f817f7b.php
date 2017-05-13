@@ -362,7 +362,7 @@
 
 			<div class="menubar-foot-panel">
 				<small class="no-linebreak hidden-folded">
-					<span class="opacity-75">Copyright &copy; 201</span> <strong>ShanixLab</strong>
+					<span class="opacity-75">Copyright &copy; 2017</span> <strong>ShanixLab</strong>
 				</small>
 			</div>
 		</div><!--end .menubar-scroll-panel-->
