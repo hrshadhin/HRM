@@ -1,20 +1,18 @@
-@extends('layouts.master')
-
-@section('title', 'Rent List')
-@section('extraStyle')
+<?php $__env->startSection('title', 'Rent List'); ?>
+<?php $__env->startSection('extraStyle'); ?>
   <style>
     th{
       font-weight: blod !important;
       color:#000 !important;
     }
   </style>
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header">
       <ol class="breadcrumb">
         <li class="active">Rent</li>
-        <li><a href="{{URL::Route('rent.create')}}">New rent</a></li>
+        <li><a href="<?php echo e(URL::Route('rent.create')); ?>">New rent</a></li>
       </ol>
     </div><!--end .section-header -->
     <div class="section-body">
@@ -45,52 +43,53 @@
                       </tr>
                       </thead>
                       <tbody>
-                      @foreach($rents as $rent)
+                      <?php $__currentLoopData = $rents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rent): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                         <tr>
-                          <td>{{$rent->rentNo}}</td>
-                          <td>{{$rent->project->name}}</td>
-                          <td>{{$rent->flat->description}}</td>
-                          <td>{{$rent->customer->name}} [{{$rent->customer->cellNo}}]</td>
-                          <td>{{$rent->rent}}</td>
-                          <td>{{$rent->utilityCharge}}</td>
-                          <td>{{$rent->serviceCharge}}</td>
+                          <td><?php echo e($rent->rentNo); ?></td>
+                          <td><?php echo e($rent->project->name); ?></td>
+                          <td><?php echo e($rent->flat->description); ?></td>
+                          <td><?php echo e($rent->customer->name); ?> [<?php echo e($rent->customer->cellNo); ?>]</td>
+                          <td><?php echo e($rent->rent); ?></td>
+                          <td><?php echo e($rent->utilityCharge); ?></td>
+                          <td><?php echo e($rent->serviceCharge); ?></td>
                           <td>
-                            @if($rent->status == 1)
+                            <?php if($rent->status == 1): ?>
                               <span class="text-success text-bold">Active</span>
-                            @else
+                            <?php else: ?>
                               <span class="text-warning text-bold">Inactive</span>
 
-                            @endif
+                            <?php endif; ?>
                           </td>
-                          <td>{{$rent->entryDate->format('F j,y')}}</td>
-                          <td>{{$rent->entry->name}}</td>
+                          <td><?php echo e($rent->entryDate->format('F j,y')); ?></td>
+                          <td><?php echo e($rent->entry->name); ?></td>
 
                           <td>
                             <div class="btn-group pull-right">
-                                @can('rent.destroy')
-                              <form class="myAction" method="POST" action="{{URL::route('rent.destroy',$rent->id)}}">
+                                <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('rent.destroy')): ?>
+                              <form class="myAction" method="POST" action="<?php echo e(URL::route('rent.destroy',$rent->id)); ?>">
                                 <input name="_method" type="hidden" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
                                 <button type="submit" class="btn ink-reaction btn-floating-action btn-danger btn-sm" title="Delete">
                                   <i class="fa fa-fw fa-trash"></i>
                                 </button>
                               </form>
-                                @endcan
-                                @can('rent.edit')
-                              <a title="Edit" href="{{URL::route('rent.edit',$rent->id)}}" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
-                            @endcan
-                              <a title="Details" data-url="{{URL::route('rent.show',$rent->id)}}" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i></a>
+                                <?php endif; ?>
+                                <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('rent.edit')): ?>
+                              <a title="Edit" href="<?php echo e(URL::route('rent.edit',$rent->id)); ?>" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
+                            <?php endif; ?>
+                              <a title="Details" data-url="<?php echo e(URL::route('rent.show',$rent->id)); ?>" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i></a>
 
 
                             </div>
                             <!--end .btn-group -->
                           </td>
                         </tr>
-                      @endforeach
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                       </tbody>
                     </table>
                   </div><!--end .table-responsive -->
-                  {{ $rents->links() }}
+                  <?php echo e($rents->links()); ?>
+
                 </div><!--end .card-body -->
               </div><!--end .card -->
             </div><!--end .col -->
@@ -129,14 +128,14 @@
     <!-- END OFFCANVAS DEMO RIGHT -->
   </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('extraScript')
+<?php $__env->startSection('extraScript'); ?>
   <script>
       $( document ).ready(function() {
           $('#menubarToggler').trigger('click');
 
-          window.mystorageURL = "{{URL::asset('storage')}}";
+          window.mystorageURL = "<?php echo e(URL::asset('storage')); ?>";
           $('.detailsBtn').click(function (e) {
               e.preventDefault();
               var infoUrl = $(this).attr('data-url');
@@ -160,4 +159,5 @@
 
       });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,20 +1,18 @@
-@extends('layouts.master')
-
-@section('title', 'Project List')
-@section('extraStyle')
+<?php $__env->startSection('title', 'Project List'); ?>
+<?php $__env->startSection('extraStyle'); ?>
   <style>
     th{
       font-weight: blod !important;
       color:#000 !important;
     }
   </style>
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header">
       <ol class="breadcrumb">
         <li class="active">Projects</li>
-        <li><a href="{{URL::Route('project.create')}}">Create</a></li>
+        <li><a href="<?php echo e(URL::Route('project.create')); ?>">Create</a></li>
       </ol>
     </div><!--end .section-header -->
     <div class="section-body">
@@ -42,30 +40,30 @@
                       </tr>
                       </thead>
                       <tbody>
-                      @foreach($projects as $project)
+                      <?php $__currentLoopData = $projects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $project): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                         <tr>
-                          <td class="text-center">{{$project->projectId}}</td>
-                          <td class="text-center">{{$project->projectType}}</td>
-                          <td class="text-center">{{$project->name}}</td>
-                          <td class="text-center">{{$project->entryDate->format('F j,Y')}}</td>
-                          <td class="text-center">{{$project->area->name}}</td>
-                          <td class="text-center">{{$project->address}}</td>
-                          <td class="text-center">{{$project->storied}}</td>
+                          <td class="text-center"><?php echo e($project->projectId); ?></td>
+                          <td class="text-center"><?php echo e($project->projectType); ?></td>
+                          <td class="text-center"><?php echo e($project->name); ?></td>
+                          <td class="text-center"><?php echo e($project->entryDate->format('F j,Y')); ?></td>
+                          <td class="text-center"><?php echo e($project->area->name); ?></td>
+                          <td class="text-center"><?php echo e($project->address); ?></td>
+                          <td class="text-center"><?php echo e($project->storied); ?></td>
                           <td class="text-center">
                             <div class="btn-group pull-right">
-                              @can('project.destroy')
-                              <form class="myAction" method="POST" action="{{URL::route('project.destroy',$project->id)}}">
+                              <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('project.destroy')): ?>
+                              <form class="myAction" method="POST" action="<?php echo e(URL::route('project.destroy',$project->id)); ?>">
                                 <input name="_method" type="hidden" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
                                 <button type="submit" class="btn ink-reaction btn-floating-action btn-danger btn-sm" title="Delete">
                                   <i class="fa fa-fw fa-trash"></i>
                                 </button>
                               </form>
-                              @endcan
-                                @can('project.edit')
-                              <a title="Edit" href="{{URL::route('project.edit',$project->id)}}" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
-                             @endcan
-                              <a title="Details" data-url="{{URL::route('project.show',$project->id)}}" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i>
+                              <?php endif; ?>
+                                <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('project.edit')): ?>
+                              <a title="Edit" href="<?php echo e(URL::route('project.edit',$project->id)); ?>" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
+                             <?php endif; ?>
+                              <a title="Details" data-url="<?php echo e(URL::route('project.show',$project->id)); ?>" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i>
 
                               </a>
 
@@ -73,11 +71,12 @@
                             <!--end .btn-group -->
                           </td>
                         </tr>
-                      @endforeach
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                       </tbody>
                     </table>
                   </div><!--end .table-responsive -->
-                  {{ $projects->links() }}
+                  <?php echo e($projects->links()); ?>
+
                 </div><!--end .card-body -->
               </div><!--end .card -->
             </div><!--end .col -->
@@ -118,9 +117,9 @@
     <!-- END OFFCANVAS DEMO RIGHT -->
   </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('extraScript')
+<?php $__env->startSection('extraScript'); ?>
   <script>
       $( document ).ready(function() {
           $('.detailsBtn').click(function (e) {
@@ -147,4 +146,5 @@
 
       });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

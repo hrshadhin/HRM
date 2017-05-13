@@ -35,7 +35,8 @@
 
 	<!-- BEGIN LOGIN SECTION -->
 	<section class="section-account">
-		<div class="img-backdrop" style="background-image: url('../../assets/img/rhm.jpg')"></div>
+		
+		<img class="img-backdrop img-responsive" src='../../assets/img/rhm.jpg' style="width: 100%;" />
 		<div class="spacer"></div>
 		<div class="card contain-sm style-transparent">
 			<div class="card-body">

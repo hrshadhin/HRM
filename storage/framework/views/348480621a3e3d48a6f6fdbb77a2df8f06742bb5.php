@@ -1,16 +1,14 @@
-@extends('layouts.master')
+<?php $__env->startSection('title', 'New Expense'); ?>
+<?php $__env->startSection('extraStyle'); ?>
+    <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/select2/select2.css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/bootstrap-datepicker/datepicker3.css" />
 
-@section('title', 'New Expense')
-@section('extraStyle')
-    <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/select2/select2.css" />
-    <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/bootstrap-datepicker/datepicker3.css" />
-
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <section>
         <div class="section-header">
             <ol class="breadcrumb">
-                <li><a href="{{URL::Route('expense.index')}}">Expenses</a></li>
+                <li><a href="<?php echo e(URL::Route('expense.index')); ?>">Expenses</a></li>
                 <li class="active">Create</li>
             </ol>
         </div><!--end .section-header -->
@@ -22,7 +20,7 @@
                         <div class="col-lg-12">
                             <form class="form form-validate floating-label"
                                   novalidate="novalidate"
-                                  action="{{URL::route('expense.store')}}"
+                                  action="<?php echo e(URL::route('expense.store')); ?>"
                                   method="POST"
                                   enctype="multipart/form-data">
 
@@ -31,11 +29,13 @@
                                         <header>Add New Expense</header>
                                     </div>
                                     <div class="card-body">
-                                        {{ csrf_field() }}
+                                        <?php echo e(csrf_field()); ?>
+
                                         <div class="row">
                                             <div class="col-lg-3">
                                                 <div class="form-group">
-                                                    {!! Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential'], null, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']) !!}
+                                                    <?php echo Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential'], null, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']); ?>
+
                                                     <label for="projectType">Project Type</label>
                                                     <p class="help-block">select project type</p>
                                                 </div>
@@ -51,13 +51,13 @@
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="form-group">
-                                                    <input type="text" readonly class="form-control" id="expenseNo" value="{{$expenseNo}}" name="expenseNo" required>
+                                                    <input type="text" readonly class="form-control" id="expenseNo" value="<?php echo e($expenseNo); ?>" name="expenseNo" required>
                                                     <label for="expenseNo">Expense No</label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control datepicker" value="{{$today->format('d/m/Y')}}" name="entryDate" required>
+                                                    <input type="text" class="form-control datepicker" value="<?php echo e($today->format('d/m/Y')); ?>" name="entryDate" required>
                                                     <label for="entryDate">Expense date</label>
                                                 </div>
                                             </div>
@@ -122,16 +122,16 @@
 
 
                                     <div class="form-group">
-                                        @if (count($errors) > 0)
+                                        <?php if(count($errors) > 0): ?>
                                             <div class="alert alert-danger">
                                                 <strong>Whoops!</strong> There were some problems with your input.<br><br>
                                                 <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                    @endforeach
+                                                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+                                                        <li><?php echo e($error); ?></li>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                                                 </ul>
                                             </div>
-                                        @endif
+                                        <?php endif; ?>
                                     </div>
                                 </div><!--end .card-body -->
                                 <div class="card-actionbar">
@@ -150,13 +150,13 @@
 
     </section>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('extraScript')
-    <script src="{{url('/')}}/assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-    <script src="{{url('/')}}/assets/js/libs/select2/select2.min.js"></script>
-    <script src="{{url('/')}}/assets/js/libs/jquery-validation/jquery.validate.min.js"></script>
-    <script src="{{url('/')}}/assets/js/libs/jquery-validation/additional-methods.min.js"></script>
+<?php $__env->startSection('extraScript'); ?>
+    <script src="<?php echo e(url('/')); ?>/assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="<?php echo e(url('/')); ?>/assets/js/libs/select2/select2.min.js"></script>
+    <script src="<?php echo e(url('/')); ?>/assets/js/libs/jquery-validation/jquery.validate.min.js"></script>
+    <script src="<?php echo e(url('/')); ?>/assets/js/libs/jquery-validation/additional-methods.min.js"></script>
 
     <script type="text/javascript">
         var ValidateCollectionForm = function () {
@@ -291,4 +291,6 @@
             });
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

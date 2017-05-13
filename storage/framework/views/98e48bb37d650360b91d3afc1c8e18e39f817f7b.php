@@ -82,21 +82,19 @@
 						<li class="dropdown-header">Today's Collection</li>
 						<li>
 							<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-								<img class="pull-right img-circle dropdown-avatar" src="../../assets/img/user01.jpg" alt="" />
 								<strong>Alex Anistor</strong><br/>
-								<small>$ 45,000</small>
+								<small>&#2547; 45,000</small>
 							</a>
 						</li>
 						<li>
 							<a class="alert alert-callout alert-info" href="javascript:void(0);">
-								<img class="pull-right img-circle dropdown-avatar" src="../../assets/img/user01.jpg" alt="" />
 								<strong>Alicia Adell</strong><br/>
-								<small>$ 50,000</small>
+								<small>&#2547; 50,000</small>
 							</a>
 						</li>
 						<li class="dropdown-header">Options</li>
-						<li><a href="../../html/pages/login.html">View all Collections <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
-						<li><a href="../../html/pages/login.html">Mark as read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="<?php echo e(URL::route('collection.index')); ?>">View All Collections <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="#">Mark As Read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 					</ul><!--end .dropdown-menu -->
 				</li><!--end .dropdown -->
 				<li class="dropdown">
@@ -104,49 +102,45 @@
 						<i class="fa fa-2x fa-money"></i><sup class="badge style-danger">6</sup>
 					</a>
 					<ul class="dropdown-menu animation-expand">
-						<li class="dropdown-header">Today's Reciveable</li>
+						<li class="dropdown-header">This Month Dues</li>
 						<li>
 							<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-								<img class="pull-right img-circle dropdown-avatar" src="../../assets/img/user01.jpg" alt="" />
 								<strong>Alex Anistor</strong><br/>
-								<small>$ 2,5000</small>
+								<small>&#2547; 2,5000</small>
 							</a>
 						</li>
 						<li>
 							<a class="alert alert-callout alert-info" href="javascript:void(0);">
-								<img class="pull-right img-circle dropdown-avatar" src="../../assets/img/user01.jpg" alt="" />
 								<strong>Alicia Adell</strong><br/>
-								<small>$ 5,5000</small>
+								<small>&#2547; 5,5000</small>
 							</a>
 						</li>
 						<li class="dropdown-header">Options</li>
-						<li><a href="../../html/pages/login.html">View all Dues <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
-						<li><a href="../../html/pages/login.html">Mark as read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="#">View All Dues <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="#">Mark As Read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 					</ul><!--end .dropdown-menu -->
 				</li><!--end .dropdown -->
 
 				<li class="dropdown">
 					<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-						<i class="fa fa-2x fa-building"></i><sup class="badge style-danger">15</sup>
+						<i class="fa fa-2x fa-home"></i><sup class="badge style-danger">15</sup>
 					</a>
 					<ul class="dropdown-menu animation-expand">
 						<li class="dropdown-header">To-Let</li>
 						<li>
 							<a class="alert alert-callout alert-info" href="javascript:void(0);">
-								<img class="pull-right img-circle dropdown-avatar" src="../../assets/img/building.png" alt="" />
 								<strong>Navana Tower</strong><br/>
 								<small>10th Floor[105]</small>
 							</a>
 						</li>
 						<li>
 							<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-								<img class="pull-right img-circle dropdown-avatar" src="../../assets/img/building.png" alt="" />
 								<strong>Tridhara Tower</strong><br/>
 								<small>8th Floor[850]</small>
 							</a>
 						</li>
 						<li class="dropdown-header">Options</li>
-						<li><a href="../../html/pages/login.html">View all To-Let <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+						<li><a href="<?php echo e(URL::route('flat.index')); ?>">View all To-Let <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 						<li><a href="../../html/pages/login.html">Mark as read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 					</ul><!--end .dropdown-menu -->
 				</li><!--end .dropdown -->
@@ -211,7 +205,7 @@
 			<ul id="main-menu" class="gui-controls">
 
 				<!-- BEGIN DASHBOARD -->
-				<li>
+				<li class="dd">
 					<a href="<?php echo e(URL::Route('user.dashboard')); ?>" >
 						<div class="gui-icon"><i class="md md-home"></i></div>
 						<span class="title">Dashboard</span>
@@ -219,7 +213,25 @@
 				</li><!--end /menu-li -->
 				<!-- END DASHBOARD -->
 
-
+			<?php if(Gate::check('user.create') || Gate::check('user.index')): ?>
+				<!-- BEGIN user -->
+					<li class="gui-folder">
+						<a>
+							<div class="gui-icon"><i class="md md-account-child"></i></div>
+							<span class="title">Administration</span>
+						</a>
+						<!--start submenu -->
+						<ul>
+							<?php if(Gate::check('user.create')): ?>
+								<li><a href="<?php echo e(URL::Route('user.create')); ?>" ><span class="title">New user</span></a></li>
+							<?php endif; ?>
+							<?php if(Gate::check('user.create') ): ?>
+								<li><a href="<?php echo e(URL::Route('user.index')); ?>" ><span class="title">All users</span></a></li>
+							<?php endif; ?>
+						</ul><!--end /submenu -->
+					</li><!--end /menu-li -->
+					<!-- END user -->
+			<?php endif; ?>
 				<!-- BEGIN PROJECT -->
 				<li class="gui-folder">
 					<a>
@@ -263,7 +275,7 @@
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="md md-markunread-mailbox"></i></div>
-						<span class="title">Manage Rent</span>
+						<span class="title">Rent</span>
 					</a>
 					<!--start submenu -->
 					<ul>
@@ -276,7 +288,7 @@
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="fa fa-taka">&#2547;</i></div>
-						<span class="title">Manage Collection</span>
+						<span class="title">Collection</span>
 					</a>
 					<!--start submenu -->
 					<ul>
@@ -289,7 +301,7 @@
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="fa fa-money"></i></div>
-						<span class="title">Manage Expense</span>
+						<span class="title">Expense</span>
 					</a>
 					<!--start submenu -->
 					<ul>
@@ -332,25 +344,7 @@
 					</li><!--end /menu-li -->
 					<!-- END REPORT -->
 				<?php endif; ?>
-				<?php if(Gate::check('user.create') || Gate::check('user.index')): ?>
-				<!-- BEGIN user -->
-				<li class="gui-folder">
-					<a>
-						<div class="gui-icon"><i class="md md-account-child"></i></div>
-						<span class="title">Manage Users</span>
-					</a>
-					<!--start submenu -->
-					<ul>
-						<?php if(Gate::check('user.create')): ?>
-							<li><a href="<?php echo e(URL::Route('user.create')); ?>" ><span class="title">New</span></a></li>
-						<?php endif; ?>
-						<?php if(Gate::check('user.create') ): ?>
-							<li><a href="<?php echo e(URL::Route('user.index')); ?>" ><span class="title">All</span></a></li>
-						<?php endif; ?>
-					</ul><!--end /submenu -->
-				</li><!--end /menu-li -->
-				<!-- END user -->
-				<?php endif; ?>
+
 				<?php if(Gate::check('mail.compose')): ?>
 				<!-- BEGIN mail -->
 					<li class="gui-folder">

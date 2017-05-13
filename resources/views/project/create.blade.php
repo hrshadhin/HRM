@@ -29,7 +29,7 @@
 
                 <div class="card">
                   <div class="card-head style-primary">
-                    <header>Create a project</header>
+                    <header>Create A Project</header>
                   </div>
                   <div class="card-body">
                     <div class="form-group">

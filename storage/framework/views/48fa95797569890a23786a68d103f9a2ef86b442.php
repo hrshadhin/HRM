@@ -1,20 +1,18 @@
-@extends('layouts.master')
-
-@section('title', 'Expense List')
-@section('extraStyle')
+<?php $__env->startSection('title', 'Expense List'); ?>
+<?php $__env->startSection('extraStyle'); ?>
   <style>
     th{
       font-weight: blod !important;
       color:#000 !important;
     }
   </style>
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header">
       <ol class="breadcrumb">
         <li class="active">Expenses</li>
-        <li><a href="{{URL::Route('expense.create')}}">New expense</a></li>
+        <li><a href="<?php echo e(URL::Route('expense.create')); ?>">New expense</a></li>
       </ol>
     </div><!--end .section-header -->
     <div class="section-body">
@@ -42,37 +40,38 @@
                       </tr>
                       </thead>
                       <tbody>
-                      @foreach($expenses as $expense)
+                      <?php $__currentLoopData = $expenses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $expense): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                         <tr>
-                          <td class="text-center">{{$expense->expenseNo}}</td>
-                          <td class="text-center">{{$expense->entryDate->format('d/m/Y')}}</td>
-                          <td class="text-center">{{$expense->project->name}}</td>
-                          <td class="text-center">{{$expense->amount}}</td>                      
-                          <td class="text-center">{{$expense->note}}</td>
-                          <td class="text-center">{{$expense->created_at->format('d/m/y h:i A')}}</td>
-                          <td class="text-center">{{$expense->entry->name}}</td>
+                          <td class="text-center"><?php echo e($expense->expenseNo); ?></td>
+                          <td class="text-center"><?php echo e($expense->entryDate->format('d/m/Y')); ?></td>
+                          <td class="text-center"><?php echo e($expense->project->name); ?></td>
+                          <td class="text-center"><?php echo e($expense->amount); ?></td>                      
+                          <td class="text-center"><?php echo e($expense->note); ?></td>
+                          <td class="text-center"><?php echo e($expense->created_at->format('d/m/y h:i A')); ?></td>
+                          <td class="text-center"><?php echo e($expense->entry->name); ?></td>
                           <td>
                             <div class="btn-group pull-right">
-                                @can('expense.destroy')
-                              <form class="myAction" method="POST" action="{{URL::route('expense.destroy',$expense->id)}}">
+                                <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('expense.destroy')): ?>
+                              <form class="myAction" method="POST" action="<?php echo e(URL::route('expense.destroy',$expense->id)); ?>">
                                 <input name="_method" type="hidden" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
                                 <button type="submit" class="btn ink-reaction btn-floating-action btn-danger btn-sm" title="Delete">
                                   <i class="fa fa-fw fa-trash"></i>
                                 </button>
                               </form>
-                                @endcan
-                              <a title="Details" data-url="{{URL::route('expense.show',$expense->id)}}" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i></a>
+                                <?php endif; ?>
+                              <a title="Details" data-url="<?php echo e(URL::route('expense.show',$expense->id)); ?>" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i></a>
 
                             </div>
                             <!--end .btn-group -->
                           </td>
                         </tr>
-                      @endforeach
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                       </tbody>
                     </table>
                   </div><!--end .table-responsive -->
-                  {{ $expenses->links() }}
+                  <?php echo e($expenses->links()); ?>
+
                 </div><!--end .card-body -->
               </div><!--end .card -->
             </div><!--end .col -->
@@ -119,9 +118,9 @@
     <!-- END OFFCANVAS DEMO RIGHT -->
   </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('extraScript')
+<?php $__env->startSection('extraScript'); ?>
   <script>
       $( document ).ready(function() {
           $('.detailsBtn').click(function (e) {
@@ -163,4 +162,5 @@
 
       });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

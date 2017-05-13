@@ -10,7 +10,39 @@
     font-size: 30px
 }
 
+.header-nav-options .dropdown .dropdown-menu {
+    top: 64px;
+}
+.dropdown-header {
+    display: block;
+    padding: 3px 20px;
+    font-size: 12px;
+    line-height: 1.846153846;
+    color: #16c1c1;
+    white-space: nowrap;
+    opacity: 1!important;
+}
+table thead th {
+    font-weight: 900;
+    font-size: 16px;
+    text-align: center;
+}
+table tbody tr td {
+    text-align: center;
+}
+table tfoot tr td {
+    text-align: center;
+}
 
+.gui-icon {
+    font-size: 30px;
+}
+li.gui-folder span.title{
+    font-size: 26px;
+}
+li.dd span.title{
+    font-size: 26px;
+}
 @media print
 {
     body * {

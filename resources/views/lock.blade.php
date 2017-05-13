@@ -28,8 +28,10 @@
 
 	<!-- BEGIN LOCKED SECTION -->
 	<section class="section-account">
-		<div class="img-backdrop" style="background-image: url('{{URL::asset('assets')}}/img/rhm.jpg')"></div>
-		<div class="spacer"></div>
+		{{--<div class="img-backdrop" style="background-image: url('{{URL::asset('assets')}}/img/rhm.jpg')"></div>--}}
+		<img class="img-backdrop img-responsive" src='../../assets/img/rhm.jpg' style="width: 100%;height: 280px;"  />
+
+		<div class="spacer" style="height: 280px;"></div>
 		<div class="card contain-xs style-transparent" style="margin-top: -23px;">
 			<div class="card-body">
 				<div class="row">

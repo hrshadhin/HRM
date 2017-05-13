@@ -38,7 +38,7 @@
                         <th width="15%" class="text-center">Type</th>
                         <th width="15%" class="text-center">Notes</th>
                         <th width=10%" class="text-center">Entry At</th>
-                        <th width="5%" class="text-center">By</th>
+                        <th width="10%" class="text-center">Entry By</th>
                         <th width="5%" class="text-center">Action</th>
                       </tr>
                       </thead>
@@ -67,7 +67,7 @@
                           <td class="text-center">{{$collection->entry->name}}</td>
                           <td>
                             <div class="btn-group pull-right">
-                              @can('cullection.destroy')
+                              @can('collection.destroy')
                               <form class="myAction" method="POST" action="{{URL::route('collection.destroy',$collection->id)}}">
                                 <input name="_method" type="hidden" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
