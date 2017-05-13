@@ -24,10 +24,12 @@
 											<div class="card">
 												<div class="card-body no-padding">
 													<div class="alert alert-callout alert-info no-margin">
-														<strong class="text-xl"><i class="fa-taka">&#2547</i> 32,829</strong><br/>
-														<span class="opacity-50">Collections</span>
+														<strong class="text-xl"><i class="fa-taka">&#2547</i> <?php echo e(number_format($collections, 2, '.', ',')); ?></strong><br/>
+														<span class="opacity-100">Collections</span>
 														<div class="stick-bottom-left-right">
-															<div class="height-2 sparkline-revenue" data-line-color="#bdc1c1"></div>
+															<div class="progress progress-hairline no-margin">
+																<div class="progress-bar progress-bar-info" style="width:100%"></div>
+															</div>
 														</div>
 													</div>
 												</div><!--end .card-body -->
@@ -40,10 +42,12 @@
 											<div class="card">
 												<div class="card-body no-padding">
 													<div class="alert alert-callout alert-warning no-margin">
-														<strong class="text-xl"><i class="fa-taka">&#2547</i> 4,32,901</strong><br/>
-														<span class="opacity-50">Due</span>
-														<div class="stick-bottom-right">
-															<div class="height-1 sparkline-visits" data-bar-color="#e5e6e6"></div>
+														<strong class="text-xl"><i class="fa-taka">&#2547</i> <?php echo e(number_format($totalDue, 2, '.', ',')); ?></strong><br/>
+														<span class="opacity-100">Due</span>
+														<div class="stick-bottom-left-right">
+															<div class="progress progress-hairline no-margin">
+																<div class="progress-bar progress-bar-warning" style="width:100%"></div>
+															</div>
 														</div>
 													</div>
 												</div><!--end .card-body -->
@@ -56,11 +60,11 @@
 											<div class="card">
 												<div class="card-body no-padding">
 													<div class="alert alert-callout alert-success no-margin">
-														<strong class="text-xl"><i class="fa-taka">&#2547</i> 4,65,730</strong><br/>
-														<span class="opacity-50">Total</span>
+														<strong class="text-xl"><i class="fa-taka">&#2547</i> <?php echo e(number_format($total, 2, '.', ',')); ?></strong><br/>
+														<span class="opacity-100">Total</span>
 														<div class="stick-bottom-left-right">
 															<div class="progress progress-hairline no-margin">
-																<div class="progress-bar progress-bar-success" style="width:43%"></div>
+																<div class="progress-bar progress-bar-success" style="width:100%"></div>
 															</div>
 														</div>
 													</div>
@@ -97,73 +101,25 @@
 											<div class="card">
 												<div class="card-head">
 													<header>New Renters</header>
-
 												</div><!--end .card-head -->
 												<div class="card-body no-padding height-9 scroll">
 													<ul class="list divider-full-bleed">
+														<?php $__currentLoopData = $newRenters; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $renter): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
 														<li class="tile">
 															<div class="tile-content">
 																<div class="tile-icon">
-																	<img src="../../assets/img/avatar.png" alt="" />
+																	<img src="<?php echo e(URL::asset('storage')); ?>/<?php echo e($renter->customer->photo); ?>" alt="" />
 																</div>
-																<div class="tile-text">Ann Laurens</div>
+																<div class="tile-text"><?php echo e($renter->customer->name); ?></div>
 															</div>
-															<a class="btn btn-flat ink-reaction">
+															<a class="btn btn-flat ink-reaction" href="<?php echo e(URL::route('customer.show',$renter->customer->id)); ?>">
 																<i class="md md-arrow-forward text-default-light"></i>
 															</a>
 														</li>
-														<li class="tile">
-															<div class="tile-content">
-																<div class="tile-icon">
-																	<img src="../../assets/img/avatar.png" alt="" />
-																</div>
-																<div class="tile-text">Alex Nelson</div>
-															</div>
-															<a class="btn btn-flat ink-reaction">
-																<i class="md md-arrow-forward text-default-light"></i>
-															</a>
-														</li>
-														<li class="tile">
-															<div class="tile-content">
-																<div class="tile-icon">
-																	<img src="../../assets/img/avatar.png" alt="" />
-																</div>
-																<div class="tile-text">Mary Peterson</div>
-															</div>
-															<a class="btn btn-flat ink-reaction">
-																<i class="md md-arrow-forward text-default-light"></i>
-															</a>
-														</li>
-														<li class="tile">
-															<div class="tile-content">
-																<div class="tile-icon">
-																	<img src="../../assets/img/avatar.png" alt="" />
-																</div>
-																<div class="tile-text">Philip Ericsson</div>
-															</div>
-															<a class="btn btn-flat ink-reaction">
-																<i class="md md-arrow-forward text-default-light"></i>
-															</a>
-														</li>
-														<li class="tile">
-															<div class="tile-content">
-																<div class="tile-icon">
-																	<img src="../../assets/img/avatar.png" alt="" />
-																</div>
-																<div class="tile-text">Jim Peters</div>
-															</div>
-															<a class="btn btn-flat ink-reaction">
-																<i class="md md-arrow-forward text-default-light"></i>
-															</a>
-														</li>
-														<li class="tile">
-															<div class="tile-content">
-															<a href="#">View all <span class="pull-right"><i class="fa fa-arrow-right"></i></span>
-															</a>
-														</div>
-														</li>
-
+														<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
 													</ul>
+													<a href="<?php echo e(URL::route('rent.index')); ?>" class="pull-right text-info">View all <i class="md md-arrow-forward text-default-light"></i></a>
+
 												</div><!--end .card-body -->
 											</div><!--end .card -->
 										</div><!--end .col -->
@@ -196,7 +152,138 @@
 <script src="<?php echo e(url('/')); ?>/assets/js/libs/d3/d3.v3.js"></script>
 <script src="<?php echo e(url('/')); ?>/assets/js/libs/rickshaw/rickshaw.min.js"></script>
 <script src="<?php echo e(url('/')); ?>/assets/js/core/demo/Demo.js"></script>
-<script src="<?php echo e(url('/')); ?>/assets/js/core/demo/DemoDashboard.js"></script>
+
+	<script>
+		(function (namespace, $) {
+		"use strict";
+
+		var DemoDashboard = function () {
+		// Create reference to this instance
+		var o = this;
+		// Initialize app when document is ready
+		$(document).ready(function () {
+		o.initialize();
+		});
+
+		};
+		var p = DemoDashboard.prototype;
+
+		// =========================================================================
+		// MEMBERS
+		// =========================================================================
+
+		p.rickshawSeries = [[], []];
+		p.rickshawGraph = null;
+		p.rickshawRandomData = null;
+		p.rickshawTimer = null;
+
+		// =========================================================================
+		// INIT
+		// =========================================================================
+
+		p.initialize = function () {
+		this._initFlotRegistration();
+		};
+
+
+		// =========================================================================
+		// FLOT
+		// =========================================================================
+
+		p._initFlotRegistration = function () {
+		var o = this;
+		var chart = $("#flot-registrations");
+
+		// Elements check
+		if (!$.isFunction($.fn.plot) || chart.length === 0) {
+		return;
+		}
+
+		// Chart data
+		var data = [
+		{
+		label: 'Collections',
+		data: [
+		    <?php $__currentLoopData = $collectionsAll; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $collection): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+		[moment(new Date('<?php echo e($collection->date); ?>')).valueOf(), <?php echo e($collection->amounts); ?>],
+			<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
+		],
+		last: true
+		}
+		];
+
+		// Chart options
+		var labelColor = chart.css('color');
+		var options = {
+		colors: chart.data('color').split(','),
+		series: {
+		shadowSize: 0,
+		lines: {
+		show: true,
+		lineWidth: 2
+		},
+		points: {
+		show: true,
+		radius: 3,
+		lineWidth: 2
+		}
+		},
+		legend: {
+		show: false
+		},
+		xaxis: {
+		mode: "time",
+		timeformat: "%b %y",
+		color: 'rgba(0, 0, 0, 0)',
+		font: {color: labelColor}
+		},
+		yaxis: {
+		font: {color: labelColor}
+		},
+		grid: {
+		borderWidth: 0,
+		color: labelColor,
+		hoverable: true
+		}
+		};
+		chart.width('100%');
+
+		// Create chart
+		var plot = $.plot(chart, data, options);
+
+		// Hover function
+		var tip, previousPoint = null;
+		chart.bind("plothover", function (event, pos, item) {
+		if (item) {
+		if (previousPoint !== item.dataIndex) {
+		previousPoint = item.dataIndex;
+
+		var x = item.datapoint[0];
+		var y = item.datapoint[1];
+		var tipLabel = '<strong>' + $(this).data('title') + '</strong>';
+		var tipContent = y + " " + item.series.label.toLowerCase() + " on " + moment(x).format('DD/MM/YYYY');
+
+		if (tip !== undefined) {
+		$(tip).popover('destroy');
+		}
+		tip = $('<div></div>').appendTo('body').css({left: item.pageX, top: item.pageY - 5, position: 'absolute'});
+		tip.popover({html: true, title: tipLabel, content: tipContent, placement: 'top'}).popover('show');
+		}
+		}
+		else {
+		if (tip !== undefined) {
+		$(tip).popover('destroy');
+		}
+		previousPoint = null;
+		}
+		});
+		};
+
+		// =========================================================================
+		namespace.DemoDashboard = new DemoDashboard;
+		}(this.materialadmin, jQuery)); // pass in (namespace, jQuery):
+
+	</script>
 
 <?php $__env->stopSection(); ?>
 

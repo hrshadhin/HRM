@@ -45,7 +45,7 @@ class Rent extends Model
         return $this->belongsTo('App\Flat','flats_id')->select(['id','description']);
     }
     public function customer() {
-        return $this->belongsTo('App\Customer','customers_id')->select(['id','name','cellNo','permanentAddress']);
+        return $this->belongsTo('App\Customer','customers_id')->select(['id','name','cellNo','permanentAddress','photo']);
     }
     public function entry() {
         return $this->belongsTo('App\User','users_id')->select(['id','name']);
