@@ -47,3 +47,8 @@ Route::group(['middleware' => 'role'], function () {
     Route::post('/mail-send','DashboardController@mailSend')->name('mail.send');
 
 });
+
+Route::get('/make-link',function(){
+    App::make('files')->link(storage_path('app/public'), public_path('storage'));
+    return 'Done link';
+});

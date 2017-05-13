@@ -78,10 +78,11 @@
                 </div><!--end .card-head -->
                 <div class="card-body style-default-bright top-zero">
                   <div class="row">
-                    <div class="col-xs-6">
-                      <h1 class="text-light"><img src="/assets/img/logo.png" height="80px" width="100px" alt="">HRS Builders</h1>
-                    </div>
-                    <div class="col-xs-4 text-right">
+                    <div class="col-xs-7">
+                      <img src="/assets/img/logo.png" height="80px" width="100px" alt="">
+                      <span class="text-left" style="font-size:16px">Shamsul Alamin Real Estate Ltd.</span>
+                   </div>
+                    <div class="col-xs-3 text-right">
                       <h1 class="text-light text-default-light"><strong>Collections</strong></h1>
                     </div>
                     <div class="col-xs-2 text-right">
