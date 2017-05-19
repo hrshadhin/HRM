@@ -32,10 +32,14 @@ class Flat extends Model
     ];
 
     public function project() {
-        return $this->belongsTo('App\Project','projects_id');
+        return $this->belongsTo('App\Project','projects_id')->withTrashed();
     }
     public function entry() {
-        return $this->belongsTo('App\User','users_id');
+        return $this->belongsTo('App\User','users_id')->withTrashed();
+    }
+    public function rents()
+    {
+        return $this->hasMany('App\Rent','flats_id');
     }
 
     function setEntryDateAttribute($value)

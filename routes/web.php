@@ -53,4 +53,10 @@ Route::get('/make-link',function(){
     App::make('files')->link(storage_path('app/public'), public_path('storage'));
     return 'Done link';
 });
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('view:clear');
+    $exitCode = Artisan::call('route:clear');
+    return 'clear cache';
+});
 Route::get('/notification-read','DashboardController@deleteNotification')->name('notification.read');

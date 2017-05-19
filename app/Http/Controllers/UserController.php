@@ -88,22 +88,22 @@ class UserController extends Controller
      */
     public function index()
     {
-         $users = User::with('entry')->get();
+         $users = User::withTrashed()->with('entry')->get();
         return view('user.index',compact('users'));
     }
 
     public function destroy($id,Request $request)
     {
-        $user = User::findOrFail($id);
+        $user = User::withTrashed()->findOrFail($id);
         if(trim($request->get('whatToDo')) == "Inactive"){
-            $user->deleted_at = Carbon::now();
+            $user->delete();
 
         }
         else{
-            $user->deleted_at = null;
+            $user->restore();
 
         }
-        $user->save();
+
         $notification= array('title' => 'Data Remove', 'body' => 'User status updated Successfully');
         return redirect()->route('user.index')->with('success',$notification);
     }

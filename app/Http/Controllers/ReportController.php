@@ -163,8 +163,8 @@ class ReportController extends Controller
     {
 
 
-            $expenses = DB::table('expenses')->sum('amount');
-            $collections = DB::table('collections')->sum('amount');
+            $expenses = DB::table('expenses')->where('deleted_at',null)->sum('amount');
+            $collections = DB::table('collections')->where('deleted_at',null)->sum('amount');
         return view('report.balance',compact('expenses','collections'));
     }
 

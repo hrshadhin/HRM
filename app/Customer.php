@@ -51,8 +51,19 @@ class Customer extends Model
 
     ];
     public function entry() {
-        return $this->belongsTo('App\User','users_id')->select(['id','name']);
+        return $this->belongsTo('App\User','users_id')->withTrashed()->select(['id','name']);
     }
+
+
+    public function rents()
+    {
+        return $this->hasMany('App\Rent','customers_id');
+    }
+    public function collections()
+    {
+        return $this->hasMany('App\RentCollection','customers_id');
+    }
+
     function setDobAttribute($value)
     {
         if(strlen($value)){

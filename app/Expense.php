@@ -26,13 +26,13 @@ class Expense extends Model
     ];
 
     public function project() {
-        return $this->belongsTo('App\Project','projects_id')->select(['id','name']);
+        return $this->belongsTo('App\Project','projects_id')->withTrashed()->select(['id','name']);
     }
     public function item() {
         return $this->hasMany('App\ExpenseItem','expenses_id');
     }
     public function entry() {
-        return $this->belongsTo('App\User','users_id')->select(['id','name']);
+        return $this->belongsTo('App\User','users_id')->withTrashed()->select(['id','name']);
     }
 
     function setEntryDateAttribute($value)

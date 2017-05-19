@@ -108,7 +108,7 @@
 														<li class="tile">
 															<div class="tile-content">
 																<div class="tile-icon">
-																	<img src="<?php echo e(URL::asset('storage')); ?>/<?php echo e($renter->customer->photo); ?>" alt="" />
+																	<img src="<?php echo e(URL::asset('storage')); ?>/<?php if($renter->customer->photo): ?><?php echo e($renter->customer->photo); ?> <?php else: ?><?php echo e('customers/avatar.png'); ?><?php endif; ?>" alt="" />
 																</div>
 																<div class="tile-text"><?php echo e($renter->customer->name); ?></div>
 															</div>
