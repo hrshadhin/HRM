@@ -60,3 +60,4 @@ Route::get('/clear-cache', function() {
     return 'clear cache';
 });
 Route::get('/notification-read','DashboardController@deleteNotification')->name('notification.read');
+Route::get('/notification','DashboardController@fetchAll')->name('notification.fetch.all');

@@ -124,7 +124,7 @@ class RentController extends Controller
         $flat->save();
         if($flat->status == 0){
             //notification code
-            $project = Project::where('id',$flat->projects_id)->first();
+            $project = Project::withTrash()->where('id',$flat->projects_id)->first();
             $myNoti = new MyNotify();
             $myNoti->title = $project->name;
             $myNoti->value = $flat->description;

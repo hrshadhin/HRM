@@ -32,31 +32,6 @@ class DashboardController extends Controller
             DB::raw("DATE_FORMAT(collectionDate,'%m-%d-%Y') as date")
         )->groupBy('collectionDate')->get();
 
-        //crate due notification
-        $haveDueNotification = MyNotify::where('notiType','due')->count();
-        if(!$haveDueNotification){
-            $notPaidRentCustomers = Rent::with('customer')
-                ->whereNotIn('id',$collectionsHave)
-                ->get();
-            foreach ($notPaidRentCustomers as $rent){
-                //notification code
-                $myNoti = new MyNotify();
-                $myNoti->title = $rent->customer->name;
-                $myNoti->value = $rent->rent+$rent->serviceCharge+$rent->utilityCharge;
-                $myNoti->notiType = "due";
-                $myNoti->save();
-                //end mynoti
-            }
-        }
-        //
-
-        $collectionNotifications = MyNotify::where('notiType','collection')->orderBy('created_at','asc')->take(5)->get();
-        $dueNotifications = MyNotify::where('notiType','due')->orderBy('created_at','asc')->take(5)->get();
-        $toletNotifications = MyNotify::where('notiType','tolet')->orderBy('created_at','asc')->take(5)->get();
-        session(['collectionNotifications' => $collectionNotifications]);
-        session(['dueNotifications' => $dueNotifications]);
-        session(['toletNotifications' => $toletNotifications]);
-        //'collectionNotifications','dueNotifications','toletNotifications'
         return view('dashboard',compact('collections','totalDue','total','newRenters','collectionsAll'));
     }
     public function mailCompose(){
@@ -85,5 +60,58 @@ class DashboardController extends Controller
 
 
             return ['message'=>'5 notificaton clean'];
+    }
+
+    public function fetchAll(){
+        //crate due notification
+        if(!\Session::has('collectionNotifications') || !count(session('collectionNotifications'))){
+            $collectionNotifications = MyNotify::where('notiType','collection')->orderBy('created_at','asc')->take(5)->get();
+            session(['collectionNotifications' => $collectionNotifications]);
+
+        }else{
+            $collectionNotifications = session('collectionNotifications');
+        }
+        if(!\Session::has('dueNotifications') || !count(session('dueNotifications'))){
+            $haveDueNotification = MyNotify::where('notiType','due')->count();
+            if(!$haveDueNotification){
+                $collectionsHave = RentCollection::select('rents_id')->whereMonth('collectionDate', '=', date('m'))->whereYear('collectionDate', '=', date('Y'))
+                    ->pluck('rents_id');
+                $notPaidRentCustomers = Rent::with('customer')
+                    ->whereNotIn('id',$collectionsHave)
+                    ->get();
+                foreach ($notPaidRentCustomers as $rent){
+                    //notification code
+                    $myNoti = new MyNotify();
+                    $myNoti->title = $rent->customer->name;
+                    $myNoti->value = $rent->rent+$rent->serviceCharge+$rent->utilityCharge;
+                    $myNoti->notiType = "due";
+                    $myNoti->save();
+                    //end mynoti
+                }
+            }
+            $dueNotifications = MyNotify::where('notiType','due')->orderBy('created_at','asc')->take(5)->get();
+            session(['dueNotifications' => $dueNotifications]);
+
+        }else{
+            $dueNotifications = session('dueNotifications');
+        }
+        if(!\Session::has('toletNotifications') || !count(session('toletNotifications'))){
+            $toletNotifications = MyNotify::where('notiType','tolet')->orderBy('created_at','asc')->take(5)->get();
+            session(['toletNotifications' => $toletNotifications]);
+
+        }else{
+            $toletNotifications = session('toletNotifications');
+        }
+
+        if(count($collectionNotifications) || count($dueNotifications) || count($toletNotifications)){
+            $hasAnyNotification = 1;
+        }
+
+       return [
+           'collection' => $collectionNotifications,
+           'due' => $dueNotifications,
+           'tolet' => $toletNotifications,
+           'hasNotify' => $hasAnyNotification
+       ];
     }
 }

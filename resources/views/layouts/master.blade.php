@@ -74,21 +74,14 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="headerbar-right">
 			<ul class="header-nav header-nav-options">
+				<div id="myNoti" class="hide">
+				</div>
 				<li class="dropdown">
 					<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-						<i class="fa fa-taka">&#2547;</i><sup class="badge style-danger">{{count( session('collectionNotifications'))}}</sup>
+						<i class="fa fa-taka">&#2547;</i><sup class="badge style-danger" id="notiColBadge">0</sup>
 					</a>
-					<ul class="dropdown-menu animation-expand">
+					<ul class="dropdown-menu animation-expand" id="notiCol">
 						<li class="dropdown-header">Collections</li>
-						@foreach( session('collectionNotifications') as $notification)
-						<li>
-							<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-								<strong>{{$notification->title}}</strong><br/>
-								<small>&#2547; {{number_format($notification->value, 2, '.', ',')}}</small>
-							</a>
-						</li>
-						@endforeach
-
 						<li class="dropdown-header">Options</li>
 						<li><a href="{{URL::route('collection.index')}}">View All Collections <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 						<li><a href="#" data-type="collection" class="btnMarkRead">Mark As Read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
@@ -96,19 +89,10 @@
 				</li><!--end .dropdown -->
 				<li class="dropdown">
 					<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-						<i class="fa fa-2x fa-money"></i><sup class="badge style-danger">{{count( session('dueNotifications'))}}</sup>
+						<i class="fa fa-2x fa-money"></i><sup class="badge style-danger" id="notiDueBadge">0</sup>
 					</a>
-					<ul class="dropdown-menu animation-expand">
+					<ul class="dropdown-menu animation-expand" id="notiDue">
 						<li class="dropdown-header">This Month Dues</li>
-						@foreach( session('dueNotifications') as $notification)
-							<li>
-								<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-									<strong>{{$notification->title}}</strong><br/>
-									<small>&#2547; {{number_format($notification->value, 2, '.', ',')}}</small>
-								</a>
-							</li>
-						@endforeach
-
 						<li class="dropdown-header">Options</li>
 						<li><a href="{{URL::route('report.dues')}}">View All Dues <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 						<li><a href="#" data-type="due" class="btnMarkRead">Mark As Read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
@@ -117,18 +101,10 @@
 
 				<li class="dropdown">
 					<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-						<i class="fa fa-2x fa-home"></i><sup class="badge style-danger">{{count( session('toletNotifications'))}}</sup>
+						<i class="fa fa-2x fa-home"></i><sup class="badge style-danger" id="notiToBadge">0</sup>
 					</a>
-					<ul class="dropdown-menu animation-expand">
+					<ul class="dropdown-menu animation-expand" id="notiTo">
 						<li class="dropdown-header">To-Let</li>
-						@foreach( session('toletNotifications') as $notification)
-							<li>
-								<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-									<strong>{{$notification->title}}</strong><br/>
-									<small>{{$notification->value}}</small>
-								</a>
-							</li>
-						@endforeach
 
 						<li class="dropdown-header">Options</li>
 						<li><a href="{{URL::route('flat.index')}}">View all To-Let <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
@@ -222,7 +198,7 @@
 					</li><!--end /menu-li -->
 					<!-- END user -->
 			@endif
-				<!-- BEGIN PROJECT -->
+			<!-- BEGIN PROJECT -->
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="md md-account-balance"></i></div>
@@ -324,7 +300,7 @@
 							@if(Gate::check('report.collections'))
 								<li><a href="{{URL::Route('report.collections')}}" ><span class="title">Collections</span></a></li>
 							@endif
-								@if(Gate::check('report.dues'))
+							@if(Gate::check('report.dues'))
 								<li><a href="{{URL::Route('report.dues')}}" ><span class="title">Collection Dues</span></a></li>
 							@endif
 							@if(Gate::check('report.expenses'))
@@ -336,9 +312,9 @@
 						</ul><!--end /submenu -->
 					</li><!--end /menu-li -->
 					<!-- END REPORT -->
-				@endif
+			@endif
 
-				@if(Gate::check('mail.compose'))
+			@if(Gate::check('mail.compose'))
 				<!-- BEGIN mail -->
 					<li class="gui-folder">
 						<a href="{{URL::Route('mail.compose')}}">
@@ -380,6 +356,62 @@
 <script src="{{url('/')}}/assets/js/core/source/AppForm.js"></script>
 <script src="{{url('/')}}/assets/js/core/source/AppVendor.js"></script>
 <script type="text/javascript">
+	var makeNotificationItem = function(notification,typeClass){
+        var notiItem = '<li class="'+typeClass+'">';
+        notiItem+= '<a class="alert alert-callout alert-warning" href="javascript:void(0);">';
+        notiItem+= '<strong>'+notification.title+'</strong><br/>';
+        notiItem+= '<small>&#2547; '+parseFloat(notification.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')+'</small>';
+        notiItem+= '</a>';
+        notiItem+= '</li>';
+        return notiItem;
+	};
+    var addNotification = function(listElement,typeClass,notifications){
+        $('#'+listElement+' li.'+typeClass).remove();
+        $.each(notifications,function (index,notification) {
+			var notiItem = makeNotificationItem(notification,typeClass);
+			$('#'+listElement+' li:first-child').after(notiItem);
+        });
+    };
+    var fetchAllNotifications = function () {
+        var url= '{{URL::route('notification.fetch.all')}}';
+        var assetsURL = '{{URL::asset('assets')}}';
+        var soundLink = assetsURL+'/'+'sound/notification';
+        $.getJSON(url,function (notifications) {
+            //console.log(notifications);
+            if(notifications.hasNotify){
+                //collection notification
+                var lenCollection = notifications.collection.length;
+                if(lenCollection){
+                    addNotification('notiCol','notiColItem',notifications.collection);
+                }
+                $('#notiColBadge').text(lenCollection);
+
+                //due notification
+                var lenDue = notifications.due.length;
+                if(lenDue){
+                    addNotification('notiDue','notiDueItem',notifications.due);
+                }
+                $('#notiDueBadge').text(lenDue);
+
+                //tolet notification
+                var lenTolet = notifications.tolet.length;
+                if(lenTolet){
+                    addNotification('notiTo','notiToItem',notifications.tolet);
+                }
+                $('#notiToBadge').text(lenTolet);
+
+                //make sound
+                var soundElement ='<audio autoplay="autoplay">';
+                soundElement +='<source src="' + soundLink + '.mp3" type="audio/mpeg" />';
+                soundElement +='<source src="' + soundLink + '.ogg" type="audio/ogg" />';
+                soundElement +='<embed hidden="true" autostart="true" loop="false" src="' + soundLink +'.mp3" />';
+                soundElement +='</audio>';
+                $('#myNoti').empty();
+                $('#myNoti').append(soundElement);
+
+            }
+        });
+    };
     $( document ).ready(function() {
         var pgurl = window.location.href.substr(window.location.href);
         $("#main-menu li a").each(function(){
@@ -416,17 +448,33 @@ toastr.warning('{{Session::get("warning")["body"]}}','{{Session::get("success")[
 		@endif
         <!-- toastr end -->
 
-		$('.btnMarkRead').click(function (e) {
-		    e.preventDefault();
-		    var url= '{{URL::route('notification.read')}}'+"?type="+$(this).attr('data-type');
-		    var that = $(this);
+        $('.btnMarkRead').click(function (e) {
+            e.preventDefault();
+            var notiType = $(this).attr('data-type');
+            var url= '{{URL::route('notification.read')}}'+"?type="+$(this).attr('data-type');
+            var that = $(this);
             $.getJSON(url,function (response) {
-				console.log(response);
-				that.parent().parent().closest('li').find('a>sup').text(0);
+                //console.log(response);
+                that.parent().parent().closest('li').find('a>sup').text(0);
+                if(notiType=="collection"){
+                    that.parent().parent().find('li.notiColItem').remove();
+                }
+                if(notiType=="due"){
+                    that.parent().parent().find('li.notiDueItem').remove();
+                }
+                if(notiType=="tolet"){
+                    that.parent().parent().find('li.notiToItem').remove();
+                }
             });
-
-
         });
+
+        window.setInterval(function(){
+            var d = new Date();
+
+            console.log(d);
+            fetchAllNotifications();
+
+        }, 30000);
 
     });
 
