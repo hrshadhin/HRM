@@ -475,7 +475,8 @@ toastr.warning('<?php echo e(Session::get("warning")["body"]); ?>','<?php echo e
             console.log(d);
             fetchAllNotifications();
 
-        }, 30000);
+        }, (1000*60*5));
+        //fetchAllNotifications();
 
     });
 

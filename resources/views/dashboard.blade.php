@@ -156,6 +156,10 @@
 <script src="{{url('/')}}/assets/js/core/demo/Demo.js"></script>
 
 	<script>
+		var myDateFormater = function(mydate){
+		    var datesPart = mydate.split('-');
+            return datesPart[0]+'-01-'+datesPart[1];
+		};
 		(function (namespace, $) {
 		"use strict";
 
@@ -207,7 +211,7 @@
 		label: 'Collections',
 		data: [
 		    @foreach($collectionsAll as $collection)
-		[moment(new Date('{{$collection->date}}')).valueOf(), {{$collection->amounts}}],
+		[moment(myDateFormater('{{$collection->month}}'), "MM-DD-YYYY").valueOf(), {{$collection->amounts}}],
 			@endforeach
 		],
 		last: true
@@ -263,7 +267,7 @@
 		var x = item.datapoint[0];
 		var y = item.datapoint[1];
 		var tipLabel = '<strong>' + $(this).data('title') + '</strong>';
-		var tipContent = y + " " + item.series.label.toLowerCase() + " on " + moment(x).format('DD/MM/YYYY');
+		var tipContent = y + " " + item.series.label.toLowerCase() + " on " + moment(x).format('MMMM YYYY');
 
 		if (tip !== undefined) {
 		$(tip).popover('destroy');

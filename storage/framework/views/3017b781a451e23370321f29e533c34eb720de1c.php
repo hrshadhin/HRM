@@ -154,6 +154,10 @@
 <script src="<?php echo e(url('/')); ?>/assets/js/core/demo/Demo.js"></script>
 
 	<script>
+		var myDateFormater = function(mydate){
+		    var datesPart = mydate.split('-');
+            return datesPart[0]+'-01-'+datesPart[1];
+		};
 		(function (namespace, $) {
 		"use strict";
 
@@ -205,7 +209,7 @@
 		label: 'Collections',
 		data: [
 		    <?php $__currentLoopData = $collectionsAll; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $collection): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
-		[moment(new Date('<?php echo e($collection->date); ?>')).valueOf(), <?php echo e($collection->amounts); ?>],
+		[moment(myDateFormater('<?php echo e($collection->month); ?>'), "MM-DD-YYYY").valueOf(), <?php echo e($collection->amounts); ?>],
 			<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
 		],
 		last: true
@@ -261,7 +265,7 @@
 		var x = item.datapoint[0];
 		var y = item.datapoint[1];
 		var tipLabel = '<strong>' + $(this).data('title') + '</strong>';
-		var tipContent = y + " " + item.series.label.toLowerCase() + " on " + moment(x).format('DD/MM/YYYY');
+		var tipContent = y + " " + item.series.label.toLowerCase() + " on " + moment(x).format('MMMM YYYY');
 
 		if (tip !== undefined) {
 		$(tip).popover('destroy');

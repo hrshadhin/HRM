@@ -29,8 +29,8 @@ class DashboardController extends Controller
         $newRenters = Rent::orderBy('entryDate','desc')->with('customer')->take(5)->get();
         $collectionsAll =  RentCollection::select(
             DB::raw('sum(amount) as amounts'),
-            DB::raw("DATE_FORMAT(collectionDate,'%m-%d-%Y') as date")
-        )->groupBy('collectionDate')->get();
+            DB::raw("DATE_FORMAT(collectionDate,'%m-%Y') as month")
+        )->groupBy('month')->get();
 
         return view('dashboard',compact('collections','totalDue','total','newRenters','collectionsAll'));
     }
@@ -58,7 +58,6 @@ class DashboardController extends Controller
                 session(['toletNotifications' => []]);
             }
 
-
             return ['message'=>'5 notificaton clean'];
     }
 
@@ -71,6 +70,7 @@ class DashboardController extends Controller
         }else{
             $collectionNotifications = session('collectionNotifications');
         }
+
         if(!\Session::has('dueNotifications') || !count(session('dueNotifications'))){
             $haveDueNotification = MyNotify::where('notiType','due')->count();
             if(!$haveDueNotification){

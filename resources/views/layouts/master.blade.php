@@ -474,7 +474,8 @@ toastr.warning('{{Session::get("warning")["body"]}}','{{Session::get("success")[
             console.log(d);
             fetchAllNotifications();
 
-        }, 30000);
+        }, (1000*60*5));
+        //fetchAllNotifications();
 
     });
 
