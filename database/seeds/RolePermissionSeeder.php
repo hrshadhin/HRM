@@ -52,26 +52,20 @@ class RolePermissionSeeder extends Seeder
         $adminAndSupervisorPermissions = [
             ['name' => 'collection.edit'],
             ['name' => 'collection.update'],
-            ['name' => 'collection.destroy'],
-            ['name' => 'customer.destroy'],
             ['name' => 'customer.update'],
             ['name' => 'customer.ajax'],
             ['name' => 'customer.edit'],
             ['name' => 'expense.update'],
-            ['name' => 'expense.destroy'],
             ['name' => 'expense.edit'],
-            ['name' => 'flat.destroy'],
             ['name' => 'flat.update'],
             ['name' => 'flat.edit'],
             ['name' => 'flat.byproject'],
             ['name' => 'project.bytype'],
-            ['name' => 'project.destroy'],
             ['name' => 'project.update'],
             ['name' => 'project.edit'],
             ['name' => 'customer.byproject'],
             ['name' => 'flat.bycustomer'],
             ['name' => 'rent.update'],
-            ['name' => 'rent.destroy'],
             ['name' => 'rent.edit'],
             ['name' => 'report.balance'],
             ['name' => 'report.collections'],
@@ -89,6 +83,12 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'user.destroy'],
             ['name' => 'user.show'],
             ['name' => 'user.edit'],
+            ['name' => 'collection.destroy'],
+            ['name' => 'customer.destroy'],
+            ['name' => 'expense.destroy'],
+            ['name' => 'flat.destroy'],
+            ['name' => 'project.destroy'],
+            ['name' => 'rent.destroy'],
             ['name' => 'mail.compose'],
             ['name' => 'mail.send'],
             ['name' => 'report.dues']
@@ -96,6 +96,17 @@ class RolePermissionSeeder extends Seeder
 
         foreach ($universalPermission as $permission){
             Permission::create($permission);
+        }
+
+        foreach ($adminAndSupervisorPermissions as $permission){
+            Permission::create($permission);
+        }
+
+        foreach ($adminOnlyPermissions as $permission){
+            Permission::create($permission);
+        }
+
+        foreach ($universalPermission as $permission){
             $adminRole->givePermissionTo($permission['name']);
             $supervisorRole->givePermissionTo($permission['name']);
             $operatorRole->givePermissionTo($permission['name']);
@@ -103,15 +114,14 @@ class RolePermissionSeeder extends Seeder
         }
 
         foreach ($adminAndSupervisorPermissions as $permission){
-            Permission::create($permission);
             $adminRole->givePermissionTo($permission['name']);
             $supervisorRole->givePermissionTo($permission['name']);
         }
 
         foreach ($adminOnlyPermissions as $permission){
-            Permission::create($permission);
             $adminRole->givePermissionTo($permission['name']);
         }
+
         $adminUser = User::create(
             [
                 'name' => 'admin',
