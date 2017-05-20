@@ -145,7 +145,7 @@ class ReportController extends Controller
 
 //        $project = $request->has('project') ? $request->get('project') : 'All';
         $isSubmit = $request->has('isSubmit') ? 1 : 0;
-        $project = $request->get('project');
+        $project = $request->has('project') ? $request->get('project') : 0;
         $monthYear = $request->has('monthYear') ?  $request->get('monthYear') : date('m-Y');
         $myPart = mb_split('-',$monthYear);
 //        $customer = $request->has('customer') ? $request->get('customer') : 'All';
@@ -154,7 +154,7 @@ class ReportController extends Controller
 //        $toDate = $request->has('toDate') ? Carbon::createFromFormat('d/m/Y', $request->get('toDate'))->format('Y-m-d') : Carbon::today()->format('Y-m-d');
         $reportData = [];
         $projectName = '';
-        if($isSubmit){
+        if($isSubmit and $project){
             $projectInfo = Project::where('id',$project)->first();
             $projectName = $projectInfo->name;
          $flats = Flat::where('projects_id',$project)->get();
