@@ -23,6 +23,7 @@ Route::group(['middleware' => 'role'], function () {
     Route::get('/profile','UserController@profile')->name('user.profile');
     Route::get('/logout','UserController@logout')->name('user.logout');
     Route::get('/lock','UserController@lock')->name('user.lock');
+    Route::resource('area','AreaController');
     Route::resource('project','ProjectController');
     Route::get('/project-by-type/{ptype}','ProjectController@projectByType')->name('project.bytype');
     Route::resource('flat','FlatController');

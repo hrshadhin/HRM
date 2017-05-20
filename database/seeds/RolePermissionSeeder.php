@@ -94,6 +94,9 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'rent.destroy'],
             ['name' => 'mail.compose'],
             ['name' => 'mail.send']
+//            ['name' => 'area.index'],
+//            ['name' => 'area.store'],
+//            ['name' => 'area.destroy']
         ];
 
         foreach ($universalPermission as $permission){

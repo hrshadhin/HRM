@@ -1,4 +1,4 @@
-<?php $__env->startSection('title', 'flat List'); ?>
+<?php $__env->startSection('title', 'Project List'); ?>
 <?php $__env->startSection('extraStyle'); ?>
   <style>
     th{
@@ -11,8 +11,8 @@
   <section>
     <div class="section-header">
       <ol class="breadcrumb">
-        <li class="active">Flat</li>
-        <li><a href="<?php echo e(URL::Route('flat.create')); ?>">Allocate</a></li>
+        <li class="active">Projects</li>
+        <li><a href="<?php echo e(URL::Route('project.create')); ?>">Create</a></li>
       </ol>
     </div><!--end .section-header -->
     <div class="section-body">
@@ -22,67 +22,50 @@
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-head style-primary">
-                  <header>Flat List</header>
+                  <header>Projects List</header>
                 </div>
                 <div class="card-body no-padding">
                   <div class="table-responsive no-margin">
                     <table class="table table-striped no-margin">
                       <thead>
                       <tr>
-                        <th width="10%" class="text-center">Project</th>
-                        <th width="10%" class="text-center">Floor</th>
-                        <th width="5%" class="text-center">Type</th>
-                        <th width="10%" class="text-center">Size</th>
-                        <th width="10%" class="text-center">Parking</th>
-                        <th width="20%" class="text-center">Description</th>
-                        <th width="5%" class="text-center">status</th>
-                        <th width="10%" class="text-center">Entry Date</th>
-                        <th width="10%" class="text-center">Entry By</th>
-                        <th width="10%" class="text-center">Action</th>
+                        <th width="10%" >ID</th>
+                        <th width="10%" >Type</th>
+                        <th width="15%" >Name</th>
+                        <th width="10%" >Entry Date</th>
+                        <th width="10%" >Area</th>
+                        <th width="15%" >Address</th>
+                        <th width="15%" >Storied</th>
+                        <th width="15%" >Action</th>
                       </tr>
                       </thead>
                       <tbody>
-                      <?php $__currentLoopData = $flats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $flat): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+                      <?php $__currentLoopData = $projects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $project): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                         <tr>
-                          <td><?php echo e($flat->project->name); ?></td>
-                          <td><?php echo e(floorLevel($flat->floor)); ?></td>
-                          <td><?php echo e(flatType($flat->type)); ?></td>
-                          <td><?php echo e($flat->size); ?></td>
-                          <td>
-                            <?php if($flat->parking == "Yes"): ?>
-                              <?php echo e($flat->parkingNo); ?>
-
-                              <?php else: ?>
-                              --
-                              <?php endif; ?>
-                          </td>
-                          <td><?php echo e($flat->description); ?></td>
-                          <td>
-                            <?php if($flat->status == 1): ?>
-                              <span class="text-warning text-bold">Rented</span>
-                            <?php else: ?>
-                              <span class="text-success text-bold">Vacant</span>
-
-                            <?php endif; ?>
-                          </td>
-                          <td><?php echo e($flat->entryDate->format('F j,Y')); ?></td>
-                          <td><?php echo e($flat->entry->name); ?></td>
-
-                          <td>
+                          <td class="text-center"><?php echo e($project->projectId); ?></td>
+                          <td class="text-center"><?php echo e($project->projectType); ?></td>
+                          <td class="text-center"><?php echo e($project->name); ?></td>
+                          <td class="text-center"><?php echo e($project->entryDate->format('F j,Y')); ?></td>
+                          <td class="text-center"><?php echo e($project->area->name); ?></td>
+                          <td class="text-center"><?php echo e($project->address); ?></td>
+                          <td class="text-center"><?php echo e($project->storied); ?></td>
+                          <td class="text-center">
                             <div class="btn-group pull-right">
-                                <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('flat.destroy')): ?>
-                              <form class="myAction" method="POST" action="<?php echo e(URL::route('flat.destroy',$flat->id)); ?>">
+                              <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('project.destroy')): ?>
+                              <form class="myAction" method="POST" action="<?php echo e(URL::route('project.destroy',$project->id)); ?>">
                                 <input name="_method" type="hidden" value="DELETE">
                                 <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
                                 <button type="submit" class="btn ink-reaction btn-floating-action btn-danger btn-sm" title="Delete">
                                   <i class="fa fa-fw fa-trash"></i>
                                 </button>
                               </form>
-                                <?php endif; ?>
-                                <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('flat.edit')): ?>
-                              <a title="Edit" href="<?php echo e(URL::route('flat.edit',$flat->id)); ?>" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
+                              <?php endif; ?>
+                                <?php if (app('Illuminate\Contracts\Auth\Access\Gate')->check('project.edit')): ?>
+                              <a title="Edit" href="<?php echo e(URL::route('project.edit',$project->id)); ?>" class="btn ink-reaction btn-floating-action btn-info btn-sm myAction"><i class="fa fa-edit"></i></a>
+                             <?php endif; ?>
+                              <a title="Details" data-url="<?php echo e(URL::route('project.show',$project->id)); ?>" href="#" class="btn ink-reaction btn-floating-action btn-primary btn-sm myAction detailsBtn"><i class="fa fa-list"></i>
+
                               </a>
-                               <?php endif; ?>
 
                             </div>
                             <!--end .btn-group -->
@@ -92,7 +75,7 @@
                       </tbody>
                     </table>
                   </div><!--end .table-responsive -->
-                  <?php echo e($flats->links()); ?>
+                  <?php echo e($projects->links()); ?>
 
                 </div><!--end .card-body -->
               </div><!--end .card -->

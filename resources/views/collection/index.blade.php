@@ -101,7 +101,21 @@
 @section('extraScript')
   <script>
       $( document ).ready(function() {
-
+          $('form.myAction').click(function (e) {
+              e.preventDefault();
+              var that = this;
+              swal({
+                  title: 'Are you sure?',
+                  text: "If you delete this, related data will be deleted also!",
+                  type: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+              }).then(function () {
+                  that.submit();
+              })
+          });
 
       });
   </script>

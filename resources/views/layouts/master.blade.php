@@ -12,6 +12,7 @@
 	<!-- BEGIN STYLESHEETS -->
 	<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css'/>
 	<link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/bootstrap.css" />
+	<link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/sweetalert2.min.css" />
 	<link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/materialadmin.css" />
 	<link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/font-awesome.min.css" />
 	<link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/material-design-iconic-font.min.css" />
@@ -208,6 +209,7 @@
 					<ul>
 						<li><a href="{{URL::Route('project.create')}}" ><span class="title">New</span></a></li>
 						<li><a href="{{URL::Route('project.index')}}" ><span class="title">All</span></a></li>
+						<li><a href="{{URL::Route('area.index')}}" ><span class="title">Area List</span></a></li>
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
 				<!-- END PROJECT -->
@@ -351,6 +353,7 @@
 <script src="{{url('/')}}/assets/js/libs/autosize/jquery.autosize.min.js"></script>
 <script src="{{url('/')}}/assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script>
 <script src="{{url('/')}}/assets/js/libs/toastr.js"></script>
+<script src="{{url('/')}}/assets/js/libs/sweetalert2.min.js"></script>
 
 <script src="{{url('/')}}/assets/js/core/source/App.js"></script>
 <script src="{{url('/')}}/assets/js/core/source/AppNavigation.js"></script>

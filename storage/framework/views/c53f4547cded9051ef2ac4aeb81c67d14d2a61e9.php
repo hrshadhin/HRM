@@ -8,7 +8,7 @@
   <section>
     <div class="section-header">
       <ol class="breadcrumb">
-        <li><a href="<?php echo e(URL::Route('flat.index')); ?>">Flats</a></li>
+        <li><a href="<?php echo e(URL::Route('project.index')); ?>">Projects</a></li>
         <li class="active">Create</li>
       </ol>
     </div><!--end .section-header -->
@@ -20,13 +20,14 @@
             <div class="col-lg-12">
               <form class="form form-validate floating-label"
                     novalidate="novalidate"
-                    action="<?php echo e(URL::route('flat.store')); ?>"
+                    action="<?php echo e(URL::route('project.store')); ?>"
                     method="POST"
-                    enctype="multipart/form-data">
+                    enctype="multipart/form-data"
+              >
 
                 <div class="card">
                   <div class="card-head style-primary">
-                    <header>Flat Allocation</header>
+                    <header>Create A Project</header>
                   </div>
                   <div class="card-body">
                     <div class="form-group">
@@ -36,49 +37,82 @@
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <?php echo Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential','Residential & Commerical' => 'Residential & Commerical'], null, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']); ?>
-
-                          <label for="projectType">Project Type</label>
-                          <p class="help-block"></p>
+                          <input type="text" class="form-control"  name="projectId" data-rule-minlength="2" maxlength="255" required>
+                          <label for="projectId">Project Id</label>
+                          <p class="help-block">min: 2 / max: 255 letters</p>
                         </div>
                       </div>
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <select id="projects_id" class="form-control select2-list" name="projects_id" required>
-                            <option value=""></option>
+                          <select id="projectType" class="form-control select2-list" name="projectType" required>
+                            <option value="Commerical">Commerical</option>
+                            <option value="Residential">Residential</option>
+                            <option value="Residential & Commerical">Residential & Commerical</option>
                           </select>
-                          <label for="projectType">Project</label>
-                          <p  id="projects_id-error" class="help-block">select a project</p>
+                          <label for="projectType">Project Type</label>
+                          <p class="help-block"></p>
                         </div>
                       </div>
                     </div>
                     <div class="row">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <input type="text" class="form-control"  name="name" data-rule-minlength="2" maxlength="255" required>
+                          <label for="name">Project Name</label>
+                          <p class="help-block">min: 2 / max: 255 letters</p>
+                        </div>
+                      </div>
                       <div class="col-lg-6">
                         <div class="form-group">
                           <input type="text" class="form-control datepicker" value="<?php echo e($today->format('d/m/Y')); ?>" name="entryDate" required>
                           <label for="dateOfEntry">Date of entry</label>
                         </div>
                       </div>
+                    </div>
+                    <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <?php echo Form::select('floor', $floors, null, ['id' =>'floor', 'class' => 'form-control select2-list', 'required' => 'required']); ?>
+                          <?php echo Form::select('areas_id', $areas, null, ['class' => 'form-control select2-list', 'required' => 'required']); ?>
 
-                          <label for="floor">Floor</label>
+                          <label for="name">Area</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <textarea class="form-control"  name="address" rows="1" data-rule-minlength="2" maxlength="500" required></textarea>
+                          <label for="address">Address</label>
+                          <p class="help-block">min: 2 / max: 500 letters</p>
                         </div>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <?php echo Form::select('type', $types, null, ['id' =>'floorType' ,'class' => 'form-control select2-list', 'required' => 'required']); ?>
-
-                          <label for="floor">Flat Type</label>
+                          <textarea class="form-control"  name="description" rows="1"  maxlength="1000"></textarea>
+                          <label for="description">Description</label>
+                          <p class="help-block">min: 2 / max: 1000 letters</p>
                         </div>
                       </div>
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <input type="text" id="flatSize" class="form-control"  name="size" data-rule-number="true" required>
-                          <label for="size">Flat size(Sft.)</label>
+                          <input type="text" class="form-control"  name="storied"  data-rule-minlength="2" maxlength="255" required>
+                          <label for="storied">Building Storied</label>
+                          <p class="help-block">min: 2 / max: 255 letters</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <input type="text" class="form-control"  name="noOfUnits" data-rule-number="true" required>
+                          <label for="noOfUnits">No of units</label>
+                          <p class="help-block">Numbers only</p>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <input type="text" class="form-control"  name="noOfFloor" data-rule-number="true" required>
+                          <label for="noOfFloor">No of floor</label>
                           <p class="help-block">Numbers only</p>
                         </div>
                       </div>
@@ -86,30 +120,45 @@
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <span class="radio-inline radio-styled radio-info">
-                            <input type="radio"  name="parking" checked value="No"><span>No</span>
-                          </span>
-                          <span class="radio-inline radio-styled radio-info">
-                            <input type="radio"  name="parking" value="Yes"><span>Yes</span>
-                          </span>
-                          <label for="parking">Parking</label>
-
+                          <input type="text" class="form-control"  name="noOfCarParking" data-rule-number="true" required>
+                          <label for="noOfCarParking">No of car parking</label>
+                          <p class="help-block">Numbers only</p>
                         </div>
                       </div>
-                      <div class="col-lg-6" id="haveParking" style="display: none">
+                      <div class="col-lg-6">
                         <div class="form-group">
-                          <input type="text" class="form-control"  name="parkingNo" data-rule-number="true" required>
-                          <label for="parkingNo">Parking no</label>
+                          <input type="text" class="form-control"  name="unitSize" data-rule-number="true" required>
+                          <label for="unitSize">Units Size(Sft.)</label>
                           <p class="help-block">Numbers only</p>
                         </div>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-lg-12">
+                      <div class="col-lg-6">
                         <div class="form-group">
-                          <textarea class="form-control" id="description"  placeholder="Description" name="description" rows="1"  maxlength="1000"></textarea>
-                          <p class="help-block">Description</p>
+
+                          <span class="radio-inline radio-styled radio-info">
+                            <input type="radio" name="lift" checked="true" value="Yes"><span>Yes</span>
+                          </span>
+                          <span class="radio-inline radio-styled radio-info">
+                            <input type="radio" name="lift" value="No"><span>No</span>
+                          </span>
+                          <label for="lift">Lift</label>
+
                         </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+
+                          <span class="radio-inline radio-styled radio-info">
+                            <input type="radio" name="generator" checked="true" value="Yes"><span>Yes</span>
+                          </span>
+                        <span class="radio-inline radio-styled radio-info">
+                            <input type="radio" name="generator" value="No"><span>No</span>
+                          </span>
+
+                        <label for="generator">Generator</label>
                       </div>
                     </div>
 
@@ -151,45 +200,8 @@
   <script src="<?php echo e(url('/')); ?>/assets/js/libs/jquery-validation/additional-methods.min.js"></script>
 
   <script type="text/javascript">
-      var generateDescription = function () {
-          var desc = "";
-          var floor = $('#floor option:selected').text();
-          var floorType = $('#floorType option:selected').text();
-          var floorSize = $('#flatSize').val();
-          if(floor){
-              desc += floor;
-          }
-          if(floorType){
-              desc += ","+floorType;
-          }
-          if(floorSize){
-              desc += ","+floorSize+" Sft";
-          }
-          //console.log(desc);
-          $('#description').val(desc);
-      };
       $( document ).ready(function() {
           $('select').select2();
-          $('#projectType').change(function () {
-              $.getJSON("/project-by-type/"+$(this).val(),function (response) {
-                  if(response.length){
-                      $("#projects_id").empty();
-                      var option = '<option value=""></option>';
-                      $("#projects_id").append(option);
-                      $.each(response,function (index,project) {
-                          var option = '<option value="'+project.id+'">'+project.value+'</option>';
-                          $("#projects_id").append(option);
-                      });
-
-                  }
-                  else {
-                      $("#projects_id").empty();
-                      var option = '<option value=""></option>';
-                      $("#projects_id").append(option);
-                  }
-                  $('#projects_id').select2();
-              });
-          });
           $('.datepicker').datepicker({
               format: 'dd/mm/yyyy',
               autoclose: true,
@@ -197,42 +209,7 @@
 
           });
           $('.radio-styled').click(function () {
-              $(this).children('input').attr('checked', true);
-              if($(this).children('input').val() == "Yes"){
-                  $('#haveParking').show();
-              }
-              else{
-                  $('#haveParking').hide();
-              }
-          });
-          generateDescription();
-          $('#floor').change(function () {
-              generateDescription();
-
-          });
-          $('#floorType').change(function () {
-              generateDescription();
-
-          });
-          $('#flatSize').on('input propertychange paste',function () {
-              generateDescription();
-          });
-          $('form').submit(function (e) {
-              e.preventDefault();
-              if($('#projects_id').val()){
-                  if($('#flatSize').val()){
-                      this.submit();
-
-                  }
-                  else{
-                      $('#flatSize').parent().addClass('has-error');
-                      $('#flatSize').focus();
-                  }
-              }
-              else{
-                  $('#projects_id').parent().addClass('has-error');
-                  $('#projects_id').focus();
-              }
+             $(this).children('input').attr('checked', true);
           });
       });
   </script>
