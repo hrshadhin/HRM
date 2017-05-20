@@ -81,13 +81,13 @@
                                                     </div>
                                                     <div class="col-lg-3">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control datepicker" value="{{$today->format('d/m/Y')}}" name="deedStart" required>
-                                                            <label for="deedStart">Period start date</label>
+                                                            <input type="text" class="form-control datepicker2" value="" name="deedStart" required>
+                                                            <label for="deedStart">Period start month</label>
                                                         </div>
                                                     </div> <div class="col-lg-3">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control datepicker" value="" name="deedEnd" required>
-                                                            <label for="deedEnd">Period end date</label>
+                                                            <input type="text" class="form-control datepicker2" value="" name="deedEnd" required>
+                                                            <label for="deedEnd">Period end month</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3">
@@ -300,6 +300,14 @@
             });
             $('.datepicker').datepicker({
                 format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight : true
+
+            });
+            $('.datepicker2').datepicker({
+                format: 'mm-yyyy',
+                viewMode: "months",
+                minViewMode: "months",
                 autoclose: true,
                 todayHighlight : true
 

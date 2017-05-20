@@ -172,7 +172,7 @@ class ReportController extends Controller
                         $rdata = [
                             'location' => $flat->description,
                             'customer' => $rent->customer->name,
-                            'period' => $rent->deedStart->format('d/m/Y').' to '.$rent->deedEnd->format('d/m/Y'),
+                            'period' => $rent->deedStart->format('F,Y').' to '.$rent->deedEnd->format('F,Y'),
                             'rent' => $rent->rent,
                             'advanceMoney' => $rent->advanceMoney,
                             'monthlyDeduction' => $rent->monthlyDeduction,
@@ -186,7 +186,7 @@ class ReportController extends Controller
                         $rdata = [
                             'location' => $flat->description,
                             'customer' => $rent->customer->name,
-                            'period' => $rent->deedStart->format('d/m/Y').' to '.$rent->deedEnd->format('d/m/Y'),
+                            'period' => $rent->deedStart->format('F,Y').' to '.$rent->deedEnd->format('F,Y'),
                             'rent' => $rent->rent,
                             'advanceMoney' => $rent->advanceMoney,
                             'monthlyDeduction' => $rent->monthlyDeduction,

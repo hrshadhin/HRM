@@ -67,10 +67,10 @@ class Rent extends Model
     }
     function setDeedStartAttribute($value)
     {
-        $this->attributes['deedStart'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+        $this->attributes['deedStart'] = Carbon::createFromFormat('m-Y', $value)->format('Y-m-d');
     }
     function setDeedEndAttribute($value)
     {
-        $this->attributes['deedEnd'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+        $this->attributes['deedEnd'] = Carbon::createFromFormat('m-Y', $value)->format('Y-m-d');
     }
 }
