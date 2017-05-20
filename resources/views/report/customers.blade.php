@@ -60,12 +60,12 @@
                 </div><!--end .card-head -->
                 <div class="card-body style-default-bright top-zero">
                   <div class="row">
-                    <div class="col-xs-7">
+                    <div class="col-xs-5">
                       <img src="/assets/img/logo.png" height="80px" width="100px" alt="">
                       <span class="text-left" style="font-size:16px">Shamsul Alamin Real Estate Ltd.</span>
                     </div>
-                    <div class="col-xs-3 text-right">
-                      <h1 class="text-light text-default-light"><strong>Customers</strong></h1>
+                    <div class="col-xs-5 text-left">
+                      <h3 class="text-light text-default-light"><strong>Customers @if($status != "All")[ @if($status == "No") Inactive @else Active @endif] @endif</strong></h3>
                     </div>
                     <div class="col-xs-2 text-right">
                       <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
@@ -84,7 +84,9 @@
                           <th style="width:20%" class="text-center">Mailing Address</th>
                           <th style="width:10%" class="text-center">Contact Person</th>
                           <th style="width:10%" class="text-center">C.P Mobile</th>
+                          @if($status == "All")
                           <th style="width:5%" class="text-center">Status</th>
+                          @endif
                           <th style="width:10%" class="text-center">Entry</th>
                         </tr>
                         </thead>
@@ -98,6 +100,7 @@
                             <td class="text-center">{{$customer->mailingAddress}}</td>
                             <td class="text-center">{{$customer->contactPerson}}</td>
                             <td class="text-center">{{$customer->contactPersonCellNo}}</td>
+                            @if($status == "All")
                             <td class="text-center">
                               @if($customer->active == "No")
                                 <span class="text-warning text-bold">Inactive</span>
@@ -106,6 +109,7 @@
 
                               @endif
                             </td>
+                            @endif
 
                             <td class="text-center">{{$customer->entryDate->format('d/m/Y')}}</td>
                           </tr>

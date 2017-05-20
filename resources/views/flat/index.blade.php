@@ -60,9 +60,9 @@
                           <td>{{$flat->description}}</td>
                           <td>
                             @if($flat->status == 1)
-                              <span class="text-warning text-bold">Booked</span>
+                              <span class="text-warning text-bold">Rented</span>
                             @else
-                              <span class="text-success text-bold">Empty</span>
+                              <span class="text-success text-bold">Vacant</span>
 
                             @endif
                           </td>

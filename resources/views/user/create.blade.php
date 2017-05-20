@@ -67,7 +67,7 @@
                                             <div class="alert alert-warning">
                                                 <p class="text-danger"><i class="fa fa-info-circle text-info"></i><strong> N.B </strong> If you don't need to give extra permission to the user then don't check any permissions. Because "User Role" has its own pre-set permissions </p>
                                                 <p><i class="fa fa-hand-o-right text-info"></i> <strong>Admin </strong>can do all things in this system</p>
-                                                <p><i class="fa fa-hand-o-right text-info"></i> <strong>Supervisor </strong>can do all things except "manage user" in this system</p>
+                                                <p><i class="fa fa-hand-o-right text-info"></i> <strong>Supervisor </strong>can do all things except "manage user" and delete any data in this system</p>
                                                 <p><i class="fa fa-hand-o-right text-info"></i> <strong>Operation </strong>can create and view only. this user can't view reports</p>
                                             </div>
                                         </div>

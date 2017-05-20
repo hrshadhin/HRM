@@ -37,20 +37,20 @@
                     {{ method_field('PATCH') }}
                   </div>
                   <div class="row">
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <select name="status" id="" class="form-control select2-list" required>
-                          @if($flat->status==0)
-                          <option value="0" selected>Empty</option>
-                          <option value="1">Booked</option>
-                          @else
-                            <option value="0" >Empty</option>
-                            <option value="1" selected>Booked</option>
-                          @endif
-                        </select>
-                        <label for="status">Status</label>
-                      </div>
-                    </div>
+                    {{--<div class="col-lg-4">--}}
+                      {{--<div class="form-group">--}}
+                        {{--<select name="status" id="" class="form-control select2-list" required>--}}
+                          {{--@if($flat->status==0)--}}
+                          {{--<option value="0" selected>Empty</option>--}}
+                          {{--<option value="1">Booked</option>--}}
+                          {{--@else--}}
+                            {{--<option value="0" >Empty</option>--}}
+                            {{--<option value="1" selected>Booked</option>--}}
+                          {{--@endif--}}
+                        {{--</select>--}}
+                        {{--<label for="status">Status</label>--}}
+                      {{--</div>--}}
+                    {{--</div>--}}
                     <div class="col-lg-4">
                       <div class="form-group">
                           <span class="radio-inline radio-styled radio-info">

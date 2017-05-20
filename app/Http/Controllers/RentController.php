@@ -44,11 +44,15 @@ class RentController extends Controller
             'flats_id' => 'required',
             'customers_id' => 'required',
             'entryDate' => 'required',
+            'deedStart' => 'required',
+            'deedEnd' => 'required',
             'rentNo' => 'required',
             'rent' => 'required|numeric',
             'perSftRent' => 'required|numeric',
             'securityMoney' => 'required|numeric',
             'advanceMoney' => 'required|numeric',
+            'monthlyDeduction' => 'required|numeric',
+            'monthlyDeductionTax' => 'required|numeric',
             'utilityCharge' => 'required|numeric',
             'serviceCharge' => 'required|numeric',
             'delayCharge' => 'required|numeric',
@@ -92,10 +96,13 @@ class RentController extends Controller
     {
         //validate form
         $this->validate($request, [
+            'deedEnd' => 'required',
             'rent' => 'required|numeric',
             'perSftRent' => 'required|numeric',
             'securityMoney' => 'required|numeric',
             'advanceMoney' => 'required|numeric',
+            'monthlyDeduction' => 'required|numeric',
+            'monthlyDeductionTax' => 'required|numeric',
             'utilityCharge' => 'required|numeric',
             'serviceCharge' => 'required|numeric',
             'delayCharge' => 'required|numeric',
@@ -124,7 +131,7 @@ class RentController extends Controller
         $flat->save();
         if($flat->status == 0){
             //notification code
-            $project = Project::withTrash()->where('id',$flat->projects_id)->first();
+            $project = Project::where('id',$flat->projects_id)->first();
             $myNoti = new MyNotify();
             $myNoti->title = $project->name;
             $myNoti->value = $flat->description;
@@ -170,8 +177,8 @@ class RentController extends Controller
         return $rentedCustomers;
 
     }
-    public function flatsByCustomer ($customerId){
-        $rents = Rent::with('flat')->where('customers_id',$customerId)->where('status',1)->get();
+    public function flatsByCustomer ($customerId,$projectId){
+        $rents = Rent::with('flat')->where('customers_id',$customerId)->where('projects_id',$projectId)->where('status',1)->get();
         $rentedFlats = [];
         foreach ($rents as $rent){
             $rentFlat = [

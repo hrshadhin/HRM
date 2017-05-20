@@ -24,12 +24,12 @@
                 </div><!--end .card-head -->
                 <div class="card-body style-default-bright top-zero">
                   <div class="row">
-                    <div class="col-xs-7">
+                    <div class="col-xs-5">
                       <img src="/assets/img/logo.png" height="80px" width="100px" alt="">
                       <span class="text-left" style="font-size:16px">Shamsul Alamin Real Estate Ltd.</span>
                    </div>
-                    <div class="col-xs-3 text-right">
-                      <h1 class="text-light text-default-light"><strong>Balance</strong></h1>
+                    <div class="col-xs-5 text-left">
+                      <h3 class="text-light text-default-light"><strong>Balance</strong></h3>
                     </div>
                     <div class="col-xs-2 text-right">
                       <div class="pull-right">Print:{{ date('d/m/Y') }} </div>

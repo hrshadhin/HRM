@@ -19,8 +19,9 @@ class CreateRentcollectionTable extends Migration
             $table->unsignedInteger('rents_id');
             $table->string('collectionNo',50);
             $table->decimal('amount',18,2);
-            $table->decimal('monthlyDeduction',18,2);
-            $table->decimal('monthlyDeductionTax',18,2);
+//            $table->decimal('monthlyDeduction',18,2);
+//            $table->decimal('monthlyDeductionTax',18,2);
+            $table->smallInteger('isDeduction')->default('0');//1 for yes 0 no
             $table->enum('collectionType',['Cash','Cheque','P.O']);
             $table->string('chequeNo')->nullable();
             $table->string('bankName')->nullable();

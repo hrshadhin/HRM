@@ -37,7 +37,7 @@
                       </div>
                       <div class="col-lg-4">
                         <div class="form-group">
-                          {!! Form::select('status', ['All' => 'All', '0' => 'Empty','1' =>'Booked'], $status, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          {!! Form::select('status', ['All' => 'All', '0' => 'Vacant','1' =>'Rented'], $status, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
                           <label for="">Status</label>
                         </div>
                       </div>
@@ -66,12 +66,14 @@
                 </div><!--end .card-head -->
                 <div class="card-body style-default-bright top-zero">
                   <div class="row">
-                    <div class="col-xs-7">
+                    <div class="col-xs-5">
                       <img src="/assets/img/logo.png" height="80px" width="100px" alt="">
                       <span class="text-left" style="font-size:16px">Shamsul Alamin Real Estate Ltd.</span>
                     </div>
-                    <div class="col-xs-3 text-right">
-                      <h1 class="text-light text-default-light"><strong>Flats</strong></h1>
+                    <div class="col-xs-5 text-left">
+                      <h3 class="text-light text-default-light"><strong>@if($project !="All" and count($flats)){{$flats[0]->project->name}} @endif Flats
+                          @if($status !="All" ) [ @if($status==1) Rented @else Vacant @endif] @endif
+                        </strong></h3>
                     </div>
                     <div class="col-xs-2 text-right">
                       <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
@@ -83,19 +85,25 @@
                       <table class="table table-striped">
                         <thead>
                         <tr>
-                          <th style="width:40%" class="text-center">Project</th>
-                          <th style="width:10%" class="text-center">Floor</th>
-                          <th style="width:10%" class="text-center">Type</th>
-                          <th style="width:10%" class="text-center">Size(sft.)</th>
-                          <th style="width:10%" class="text-center">Parking</th>
-                          <th style="width:10%" class="text-center">Staus</th>
-                          <th style="width:10%" class="text-center">Entry</th>
+                          @if($project =="All")
+                          <th class="text-center">Project</th>
+                          @endif
+                          <th class="text-center">Floor</th>
+                          <th class="text-center">Type</th>
+                          <th class="text-center">Size(sft.)</th>
+                          <th class="text-center">Parking</th>
+                          @if($status =="All" )
+                          <th class="text-center">Staus</th>
+                          @endif
+                          <th class="text-center">Entry</th>
                         </tr>
                         </thead>
                         <tbody>
                           @foreach($flats as $flat)
                             <tr>
+                              @if($project =="All")
                               <td class="text-center">{{$flat->project->name}}</td>
+                              @endif
                               <td class="text-center">{{floorLevel($flat->floor)}}</td>
                               <td  class="text-center">{{flatType($flat->type)}}</td>
                               <td  class="text-center">{{$flat->size}}</td>
@@ -106,14 +114,16 @@
                                   --
                                 @endif
                               </td>
+                              @if($status =="All" )
                               <td class="text-center">
                                 @if($flat->status == 1)
-                                  <span class="text-warning text-bold">Booked</span>
+                                  <span class="text-warning text-bold">Rented</span>
                                 @else
-                                  <span class="text-success text-bold">Empty</span>
+                                  <span class="text-success text-bold">Vacant</span>
 
                                 @endif
                               </td>
+                              @endif
 
                               <td class="text-center">{{$flat->entryDate->format('d/m/Y')}}</td>
                             </tr>
@@ -121,7 +131,7 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                          <td colspan="6" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
+                          <td colspan="@if($project =="All" and $status =="All")6 @endif @if($project == "All" or $status =="All")5 @else 4 @endif" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
                           <td class="text-right"><strong class="text-lg text-default-dark">{{count($flats)}}</strong></td>
                         </tr>
                         </tfoot>

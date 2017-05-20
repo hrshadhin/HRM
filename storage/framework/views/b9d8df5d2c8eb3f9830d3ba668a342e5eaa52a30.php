@@ -29,6 +29,7 @@ th{
                   <table class="table table-striped no-margin">
                     <thead>
                       <tr>
+                        <th class="text-center" >Type</th>
                         <th class="text-center" >Photo</th>
                         <th class="text-center" >Name</th>
                         <th class="text-center" >Mobile No</th>
@@ -41,6 +42,10 @@ th{
                     <tbody>
                       <?php $__currentLoopData = $customers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $customer): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                       <tr>
+                        <td>
+                          <?php echo e($customer->customerType); ?>
+
+                        </td>
                         <td>
                       <img src="<?php echo e(URL::asset('storage')); ?>/<?php if($customer->photo): ?><?php echo e($customer->photo); ?> <?php else: ?><?php echo e('customers/avatar.png'); ?><?php endif; ?>" alt="" class="" width="80px" height="70px">
                         </td>

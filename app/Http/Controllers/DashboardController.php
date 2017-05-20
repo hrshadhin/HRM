@@ -20,6 +20,7 @@ class DashboardController extends Controller
         $collectionsHave = RentCollection::select('rents_id')->whereMonth('collectionDate', '=', date('m'))->whereYear('collectionDate', '=', date('Y'))
             ->pluck('rents_id');
          $notPaidRent = Rent::select(DB::raw('sum(rent) AS total_rent'),DB::raw('sum(serviceCharge) AS total_service'),DB::raw('sum(utilityCharge) AS total_utility'))
+        ->where('status',1)
         ->whereNotIn('id',$collectionsHave)
             ->first();
          $totalDue = $notPaidRent->total_rent + $notPaidRent->total_service + $notPaidRent->totalutility;
@@ -77,6 +78,7 @@ class DashboardController extends Controller
                 $collectionsHave = RentCollection::select('rents_id')->whereMonth('collectionDate', '=', date('m'))->whereYear('collectionDate', '=', date('Y'))
                     ->pluck('rents_id');
                 $notPaidRentCustomers = Rent::with('customer')
+                    ->where('status',1)
                     ->whereNotIn('id',$collectionsHave)
                     ->get();
                 foreach ($notPaidRentCustomers as $rent){

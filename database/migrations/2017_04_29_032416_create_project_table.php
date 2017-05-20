@@ -16,7 +16,7 @@ class CreateProjectTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('projectId',255);
-            $table->enum('projectType',['Commerical','Residential']);
+            $table->enum('projectType',['Commerical','Residential','Residential & Commerical']);
             $table->string('name',255);
             $table->date('entryDate');
             $table->unsignedInteger('users_id');

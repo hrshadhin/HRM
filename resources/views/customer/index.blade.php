@@ -31,6 +31,7 @@ th{
                   <table class="table table-striped no-margin">
                     <thead>
                       <tr>
+                        <th class="text-center" >Type</th>
                         <th class="text-center" >Photo</th>
                         <th class="text-center" >Name</th>
                         <th class="text-center" >Mobile No</th>
@@ -43,6 +44,9 @@ th{
                     <tbody>
                       @foreach($customers as $customer)
                       <tr>
+                        <td>
+                          {{$customer->customerType}}
+                        </td>
                         <td>
                       <img src="{{URL::asset('storage')}}/@if($customer->photo){{$customer->photo}} @else{{'customers/avatar.png'}}@endif" alt="" class="" width="80px" height="70px">
                         </td>

@@ -29,7 +29,7 @@
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          {!! Form::select('ptype', ['All' => 'All', 'Commerical' => 'Commerical','Residential' =>'Residential'], $projectType, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          {!! Form::select('ptype', ['All' => 'All', 'Commerical' => 'Commerical','Residential' =>'Residential', 'Residential & Commerical' => 'Residential & Commerical'], $projectType, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']) !!}
                           <label for="projectType">Project Type</label>
                         </div>
                       </div>
@@ -60,44 +60,47 @@
                 </div><!--end .card-head -->
                 <div class="card-body style-default-bright top-zero">
                   <div class="row">
-                    <div class="col-xs-7">
+                    <div class="col-xs-5">
                       <img src="/assets/img/logo.png" height="80px" width="100px" alt="">
                       <span class="text-left" style="font-size:16px">Shamsul Alamin Real Estate Ltd.</span>
                     </div>
-                    <div class="col-xs-3 text-right">
-                      <h1 class="text-light text-default-light"><strong>Projects</strong></h1>
+                    <div class="col-xs-5 text-left">
+                      <h3 class="text-light text-default-light"><strong>Projects @if($projectType !="All") [{{$projectType}}] @endif</strong></h3>
                     </div>
                     <div class="col-xs-2 text-right">
                       <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
                     </div>
                   </div><!--end .row -->
                   {{--<div class="row">--}}
-                    {{--<div class="col-xs-4">--}}
-                      {{--<div class="well">--}}
-                        {{--<strong>HRS Builders LTD.</strong><br>--}}
-                        {{--House 89/B, Road 4, <br>--}}
-                        {{--Kemal Ataturk Avenue Banani,  Dhaka 1213<br>--}}
-                        {{--<abbr title="Phone">Phone:</abbr> (88) 02-58810300--}}
-                      {{--</div>--}}
-                    {{--</div><!--end .col -->--}}
-                    {{--<div class="col-xs-4">--}}
+                  {{--<div class="col-xs-4">--}}
+                  {{--<div class="well">--}}
+                  {{--<strong>HRS Builders LTD.</strong><br>--}}
+                  {{--House 89/B, Road 4, <br>--}}
+                  {{--Kemal Ataturk Avenue Banani,  Dhaka 1213<br>--}}
+                  {{--<abbr title="Phone">Phone:</abbr> (88) 02-58810300--}}
+                  {{--</div>--}}
+                  {{--</div><!--end .col -->--}}
+                  {{--<div class="col-xs-4">--}}
 
-                    {{--</div><!--end .col -->--}}
-                    {{--<div class="col-xs-4">--}}
-                      {{--<div class="well">--}}
-                        {{--<div class="clearfix">--}}
-                          {{--<div class="pull-left">Print DATE : </div>--}}
-                          {{--<div class="pull-right"> {{ date('F j,Y') }} </div>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
-                    {{--</div><!--end .col -->--}}
+                  {{--</div><!--end .col -->--}}
+                  {{--<div class="col-xs-4">--}}
+                  {{--<div class="well">--}}
+                  {{--<div class="clearfix">--}}
+                  {{--<div class="pull-left">Print DATE : </div>--}}
+                  {{--<div class="pull-right"> {{ date('F j,Y') }} </div>--}}
+                  {{--</div>--}}
+                  {{--</div>--}}
+                  {{--</div><!--end .col -->--}}
                   {{--</div><!--end .row -->--}}
                   <div class="row">
                     <div class="col-md-12">
                       <table class="table table-striped">
                         <thead>
                         <tr>
-                          <th style="width:5%" class="text-center">Type</th>
+                          @if($projectType !="All")
+                          @else
+                            <th style="width:5%" class="text-center">Type</th>
+                          @endif
                           <th style="width:20%" class="text-center">Name</th>
                           <th style="width:5%" class="text-center">Area</th>
                           <th style="width:20%" class="text-center">Address</th>
@@ -111,25 +114,28 @@
                         </tr>
                         </thead>
                         <tbody>
-                          @foreach($projects as $project)
-                            <tr>
+                        @foreach($projects as $project)
+                          <tr>
+                            @if($projectType !="All")
+                            @else
                               <td class="text-center">{{$project->projectType}}</td>
-                              <td class="text-center">{{$project->name}}</td>
-                              <td  class="text-center">{{$project->area->name}}</td>
-                              <td  class="text-center">{{$project->address}}</td>
-                              <td  class="text-center">{{$project->storied}}</td>
-                              <td class="text-center">{{$project->noOfUnits}}</td>
-                              <td class="text-center">{{$project->noOfFloor}}</td>
-                              <td class="text-center">{{$project->noOfCarParking}}</td>
-                              <td class="text-center">{{$project->lift}}</td>
-                              <td class="text-center">{{$project->generator}}</td>
-                              <td class="text-center">{{$project->entryDate->format('d/m/Y')}}</td>
-                            </tr>
-                          @endforeach
+                            @endif
+                            <td class="text-center">{{$project->name}}</td>
+                            <td  class="text-center">{{$project->area->name}}</td>
+                            <td  class="text-center">{{$project->address}}</td>
+                            <td  class="text-center">{{$project->storied}}</td>
+                            <td class="text-center">{{$project->noOfUnits}}</td>
+                            <td class="text-center">{{$project->noOfFloor}}</td>
+                            <td class="text-center">{{$project->noOfCarParking}}</td>
+                            <td class="text-center">{{$project->lift}}</td>
+                            <td class="text-center">{{$project->generator}}</td>
+                            <td class="text-center">{{$project->entryDate->format('d/m/Y')}}</td>
+                          </tr>
+                        @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
-                          <td colspan="10" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
+                          <td colspan=" @if($projectType !="All") 9 @else 10 @endif" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
                           <td class="text-right"><strong class="text-lg text-default-dark">{{count($projects)}}</strong></td>
                         </tr>
                         </tfoot>

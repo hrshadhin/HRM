@@ -39,7 +39,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            {!! Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential'], null, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']) !!}
+                                                            {!! Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential', 'Residential & Commerical' => 'Residential & Commerical'], null, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']) !!}
                                                             <label for="projectType">Project Type</label>
                                                             <p class="help-block">select project type</p>
                                                         </div>
@@ -156,10 +156,21 @@
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-lg-12">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <p style="padding-top: 30px;">
+                                                                <label class="checkbox-styled checkbox-primary">
+                                                                    <input type="checkbox" name="isDeduction" class="name" >
+                                                                    <span class="text-bold text-black"> Is Deduction</span>
+                                                                </label>
+                                                            </p>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-8">
                                                         <div class="form-group">
                                                             <textarea name="note" id="" class="form-control" rows="2"></textarea>
-                                                            <label for="note">Notes</label>
+                                                            <label for="note">Remarks</label>
                                                             <p class="help-block">Max:1000 letters</p>
                                                         </div>
                                                     </div>
@@ -175,12 +186,14 @@
                                                     <div class="card-body">
                                                         <ul class="list-divided">
                                                             <li>Rent : <strong><span class="opacity-90" id="rentAmount"></span></strong></li>
-                                                            <li>Utility Charge : <strong><span class="opacity-90" id="utilityCharge"></span></strong></li>
                                                             <li>Service Charge : <strong><span class="opacity-90" id="serviceCharge"></span></strong></li>
-                                                            <li>Delay Charge : <strong><span class="opacity-90" id="delayCharge"></span></strong></li>
                                                             <li>Security Money : <strong><span class="opacity-90" id="securityMoney"></span></strong></li>
                                                             <li>Advance Money : <strong><span class="opacity-90" id="advanceMoney"></span></strong></li>
-                                                            <li>Note :<br/><span class="opacity-90" id="note"></span></li>
+                                                            <li>Deduction Advance TK: <strong><span class="opacity-90" id="monthlyDeduction"></span></strong></li>
+                                                            <li>Deduction Tax TK : <strong><span class="opacity-90" id="monthlyDeductionTax"></span></strong></li>
+                                                            <li>Utility Charge : <strong><span class="opacity-90" id="utilityCharge"></span></strong></li>
+                                                            <li>Delay Charge : <strong><span class="opacity-90" id="delayCharge"></span></strong></li>
+                                                            <li>Remarks :<br/><span class="opacity-90" id="note"></span></li>
                                                       </ul>
                                                     </div>
                                                 </div>
@@ -404,7 +417,7 @@
             });
 
             $('#customers_id').change(function () {
-                $.getJSON("/rent/flats/"+$(this).val(),function (response) {
+                $.getJSON("/rent/flats/"+$(this).val()+'/'+$('#projects_id').val(),function (response) {
                     if(response.length){
                         $("#flats_id").empty();
                         var option = '<option value=""></option>';
@@ -431,6 +444,8 @@
                         $('#utilityCharge').text(response.utilityCharge);
                         $('#serviceCharge').text(response.serviceCharge);
                         $('#delayCharge').text(response.delayCharge);
+                        $('#monthlyDeduction').text(response.monthlyDeduction);
+                        $('#monthlyDeductionTax').text(response.monthlyDeductionTax);
                         $('#note').text(response.note ? response.note : '');
 
                     }

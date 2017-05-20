@@ -138,7 +138,7 @@
                       <div class="row">
                         <div class="col-lg-6">
                           <div class="form-group">
-                            <input type="text" class="form-control" value="{{old('nidNo')}}"  name="nidNo" maxlength="50">
+                            <input type="text" id="nidNo" class="form-control" value="{{old('nidNo')}}"  name="nidNo" maxlength="50" required>
                             <label for="nidNo">National ID No</label>
                             <p class="help-block"> max: 50 letters</p>
                           </div>
@@ -155,7 +155,7 @@
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <textarea class="form-control"  name="mailingAddress" maxlength="500">{{old('mailingAddress')}}</textarea>
+                            <textarea class="form-control"  name="mailingAddress" maxlength="500" required>{{old('mailingAddress')}}</textarea>
                             <label for="mailingAddress">Mailing Address</label>
                             <p class="help-block">max: 500 letters</p>
                           </div>
@@ -178,6 +178,15 @@
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
+                            <select id="customerType" class="form-control select2-list" name="customerType" required>
+                              <option value="Person">Person</option>
+                              <option value="Company">Company</option>
+                            </select>
+                            <label>Customer Type</label>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
                             <div class="input-group">
                               <div class="input-group-content">
                                 <input type="file" class="form-control" name="photo">
@@ -198,17 +207,7 @@
                             <label>Passport(pdf,image)</label>
                           </div>
                         </div>
-                        <div class="col-lg-4">
-                          <div class="form-group">
-                            <div class="input-group">
-                              <div class="input-group-content">
-                                <input type="file" class="form-control" name="birthCertificate">
-                              </div>
-                              <span class="input-group-addon"><i class="fa fa-2x fa-file info"></i></span>
-                            </div>
-                            <label>Birth Certificate(pdf,image)</label>
-                          </div>
-                        </div>
+
                       </div>
                     </div>
                     <div class="tab-pane" id="second2">

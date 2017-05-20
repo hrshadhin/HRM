@@ -46,6 +46,7 @@ class CreateCurstomerTable extends Migration
             $table->string('cNote',1000)->nullable();
 
             $table->enum('active',['Yes','No']);
+            $table->enum('customerType',['Person','Company']);
             $table->date('entryDate');
             $table->unsignedInteger('users_id');
             $table->timestamps();

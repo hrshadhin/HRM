@@ -74,6 +74,9 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'report.flats'],
             ['name' => 'report.projects'],
             ['name' => 'report.rents'],
+            ['name' => 'report.rentalStatus'],
+            ['name' => 'report.dues']
+
         ];
 
         $adminOnlyPermissions = [
@@ -90,8 +93,7 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'project.destroy'],
             ['name' => 'rent.destroy'],
             ['name' => 'mail.compose'],
-            ['name' => 'mail.send'],
-            ['name' => 'report.dues']
+            ['name' => 'mail.send']
         ];
 
         foreach ($universalPermission as $permission){

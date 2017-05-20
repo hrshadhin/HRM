@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Flat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -23,6 +24,7 @@ class CustomerController extends Controller
         //validate form
         $this->validate($request, [
             'name' => 'required|max:100|min:4',
+            'customerType' => 'required',
             'cellNo' => 'required|max:11|min:11|unique:customers',
             'phoneNo' => 'max:15',
             'email' => 'max:100',
@@ -31,12 +33,11 @@ class CustomerController extends Controller
             'fatherName'=> 'max:100',
             'motherName'=> 'max:100',
             'spouseName'=> 'max:100',
-            'nidNo' => 'max:50',
+            'nidNo' => 'required|max:50',
             'passportNo' => 'max:50',
-            'mailingAddress' => 'max:500',
+            'mailingAddress' => 'required|max:500',
             'presentAddress' => 'max:500',
             'permanentAddress' => 'required|max:500',
-            'birthCertificate' => 'mimes:jpeg,bmp,png,gif,svg,pdf',
             'passport' => 'mimes:jpeg,bmp,png,gif,svg,pdf',
             'photo' => 'mimes:jpeg,bmp,png,gif,svg',
             'companyName' => 'max:100',
@@ -136,6 +137,17 @@ class CustomerController extends Controller
             $data['passport'] = request()->file('passport')->store('customers');
         }
 
+        if($data['active']=="No"){
+            $rents = $customer->rents()->get();
+            foreach ($rents as $rent){
+                $flat = Flat::where('id',$rent->id)->first();
+                $flat->status=0;
+                $rent->status=0;
+                $rent->save();
+                $flat->save();
+
+            }
+        }
         $customer->fill($data)->update();
         $notification= array('title' => 'Data Update', 'body' => 'Customer updated Successfully');
         return redirect()->route('customer.index')->with('success',$notification);

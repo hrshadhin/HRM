@@ -133,6 +133,111 @@ class ReportController extends Controller
         return view('report.collections',compact('collections','project','customer','projects','customers','fromDate','toDate','reportTitle'));
     }
 
+    public function rentaStatus(Request $request)
+    {
+        $projects = Project::select('id','name')->pluck('name','id');
+//        $projects->prepend('All','All');
+//        $projects->prepend('None','None');
+
+//        $customers = Customer::select('id','name')->pluck('name','id');
+//        $customers->prepend('All','All');
+//        $customers->prepend('None','None');
+
+//        $project = $request->has('project') ? $request->get('project') : 'All';
+        $isSubmit = $request->has('isSubmit') ? 1 : 0;
+        $project = $request->get('project');
+        $monthYear = $request->has('monthYear') ?  $request->get('monthYear') : date('m-Y');
+        $myPart = mb_split('-',$monthYear);
+//        $customer = $request->has('customer') ? $request->get('customer') : 'All';
+
+//        $fromDate = $request->has('fromDate') ? Carbon::createFromFormat('d/m/Y', $request->get('fromDate') )->format('Y-m-d') : Carbon::today()->subDays(10)->format('Y-m-d');
+//        $toDate = $request->has('toDate') ? Carbon::createFromFormat('d/m/Y', $request->get('toDate'))->format('Y-m-d') : Carbon::today()->format('Y-m-d');
+        $reportData = [];
+        $projectName = '';
+        if($isSubmit){
+            $projectInfo = Project::where('id',$project)->first();
+            $projectName = $projectInfo->name;
+         $flats = Flat::where('projects_id',$project)->get();
+         foreach ($flats as $flat){
+             if($flat->status==1){
+                 $rent = Rent::where('flats_id',$flat->id)->where('status',1)->with('customer')->first();
+                if(count($rent)){
+                    $collection = RentCollection::select('amount','note')
+                        ->where('rents_id',$rent->id)
+                        ->whereMonth('collectionDate', '=', $myPart[0])
+                        ->whereYear('collectionDate', '=', $myPart[1])
+                        ->first();
+                    if(count($collection)){
+
+                        $rdata = [
+                            'location' => $flat->description,
+                            'customer' => $rent->customer->name,
+                            'period' => $rent->deedStart->format('d/m/Y').' to '.$rent->deedEnd->format('d/m/Y'),
+                            'rent' => $rent->rent,
+                            'advanceMoney' => $rent->advanceMoney,
+                            'monthlyDeduction' => $rent->monthlyDeduction,
+                            'monthlyDeductionTax' => $rent->monthlyDeductionTax,
+                            'serviceCharge' => $rent->serviceCharge,
+                            'netPayment' => $collection->amount,
+                            'remarks' => $collection->note,
+                        ];
+                    }
+                    else{
+                        $rdata = [
+                            'location' => $flat->description,
+                            'customer' => $rent->customer->name,
+                            'period' => $rent->deedStart->format('d/m/Y').' to '.$rent->deedEnd->format('d/m/Y'),
+                            'rent' => $rent->rent,
+                            'advanceMoney' => $rent->advanceMoney,
+                            'monthlyDeduction' => $rent->monthlyDeduction,
+                            'monthlyDeductionTax' => $rent->monthlyDeductionTax,
+                            'serviceCharge' => $rent->serviceCharge,
+                            'netPayment' => 0.00,
+                            'remarks' => $rent->note,
+                        ];
+                    }
+
+                }
+                else{
+                    $rdata = [
+                        'location' => $flat->description,
+                        'customer' => 'Vacant',
+                        'period' => '-',
+                        'rent' => 0.00,
+                        'advanceMoney' => '-',
+                        'monthlyDeduction' => '-',
+                        'monthlyDeductionTax' => '-',
+                        'serviceCharge' => 0.00,
+                        'netPayment' => 0.00,
+                        'remarks' => '-'
+                    ];
+                }
+
+             }
+             else{
+                 $rdata = [
+                   'location' => $flat->description,
+                     'customer' => 'Vacant',
+                     'period' => '-',
+                     'rent' => 0.00,
+                     'advanceMoney' => '-',
+                     'monthlyDeduction' => '-',
+                     'monthlyDeductionTax' => '-',
+                     'serviceCharge' => 0.00,
+                     'netPayment' => 0.00,
+                     'remarks' => '-'
+                 ];
+             }
+
+             array_push($reportData,$rdata);
+         }
+        }
+//        $fromDate = Carbon::createFromFormat('Y-m-d', $fromDate)->format('d/m/Y');
+//        $toDate = Carbon::createFromFormat('Y-m-d', $toDate)->format('d/m/Y');
+        $monthYear = Carbon::createFromFormat('m-Y', $monthYear);
+        return view('report.overall',compact('reportData','project','projects','monthYear','projectName'));
+    }
+
     public function expenses(Request $request)
     {
         $projects = Project::select('id','name')->pluck('name','id');
@@ -177,6 +282,7 @@ class ReportController extends Controller
         $collectionsHave = RentCollection::select('rents_id')->whereMonth('collectionDate', '=', $myPart[0])->whereYear('collectionDate', '=', $myPart[1])
             ->pluck('rents_id');
         $notPaidRentCustomers = Rent::with('customer')
+            ->where('status',1)
             ->whereNotIn('id',$collectionsHave)
             ->get();
         $monthYear = Carbon::createFromFormat('m-Y', $monthYear);

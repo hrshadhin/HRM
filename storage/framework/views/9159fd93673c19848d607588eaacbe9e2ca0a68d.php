@@ -36,7 +36,7 @@
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <?php echo Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential'], null, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']); ?>
+                          <?php echo Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential','Residential & Commerical' => 'Residential & Commerical'], null, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']); ?>
 
                           <label for="projectType">Project Type</label>
                           <p class="help-block"></p>
@@ -220,11 +220,18 @@
           $('form').submit(function (e) {
               e.preventDefault();
               if($('#projects_id').val()){
-                  this.submit();
+                  if($('#flatSize').val()){
+                      this.submit();
+
+                  }
+                  else{
+                      $('#flatSize').parent().addClass('has-error');
+                      $('#flatSize').focus();
+                  }
               }
               else{
                   $('#projects_id').parent().addClass('has-error');
-                  $('#projects_id').focus;
+                  $('#projects_id').focus();
               }
           });
       });

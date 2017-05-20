@@ -41,6 +41,29 @@
 							<li class="tile">
 								<a class="tile-content ink-reaction">
 									<div class="tile-icon">
+										<i class="ma md-info"></i>
+									</div>
+									<div class="tile-text">
+										<?php echo e($customer->customerType); ?>
+
+										<small>Customer Type</small>
+									</div>
+								</a>
+							</li>
+							<li class="tile">
+								<a class="tile-content ink-reaction">
+									<div class="tile-icon">
+										<i class="ma md-info"></i>
+									</div>
+									<div class="tile-text">
+										<?php if($customer->dob): ?><?php echo e($customer->dob); ?><?php endif; ?>
+										<small>Date of Birth</small>
+									</div>
+								</a>
+							</li>
+							<li class="tile">
+								<a class="tile-content ink-reaction">
+									<div class="tile-icon">
 										<i class="ma md-stay-current-portrait"></i>
 									</div>
 									<div class="tile-text">
@@ -374,17 +397,6 @@
 									</div>
 									<div class="tile-text">
 										<small>Passport digital copy</small>
-									</div>
-								</a>
-							</li>
-							<li class="divider-inset"></li>
-							<li class="tile">
-								<a class="tile-content ink-reaction" href="<?php if($customer->birthCertificate): ?><?php echo e(URL::asset('storage')); ?>/<?php echo e($customer->birthCertificate); ?><?php endif; ?>">
-									<div class="tile-icon">
-										<i class="md md-attachment"></i>
-									</div>
-									<div class="tile-text">
-										<small>Birth certificate digital copy</small>
 									</div>
 								</a>
 							</li>

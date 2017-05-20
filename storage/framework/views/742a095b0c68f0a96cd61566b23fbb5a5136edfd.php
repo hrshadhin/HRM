@@ -59,9 +59,9 @@
                           <td><?php echo e($flat->description); ?></td>
                           <td>
                             <?php if($flat->status == 1): ?>
-                              <span class="text-warning text-bold">Booked</span>
+                              <span class="text-warning text-bold">Rented</span>
                             <?php else: ?>
-                              <span class="text-success text-bold">Empty</span>
+                              <span class="text-success text-bold">Vacant</span>
 
                             <?php endif; ?>
                           </td>

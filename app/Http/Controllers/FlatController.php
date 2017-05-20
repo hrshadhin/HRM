@@ -109,11 +109,9 @@ class FlatController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'status' => 'required',
-            'parking' => 'required'          
+            'parking' => 'required'
         ]);
         $flat = Flat::findOrFail($id);
-        $flat->status = $request->get('status');
         $flat->parking = $request->get('parking');
         if($request->get('parking')=="Yes"){
             $flat->parkingNo = $request->get('parkingNo');

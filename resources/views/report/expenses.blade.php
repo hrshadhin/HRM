@@ -73,12 +73,12 @@
                 </div><!--end .card-head -->
                 <div class="card-body style-default-bright top-zero">
                   <div class="row">
-                    <div class="col-xs-7">
+                    <div class="col-xs-5">
                       <img src="/assets/img/logo.png" height="80px" width="100px" alt="">
                       <span class="text-left" style="font-size:16px">Shamsul Alamin Real Estate Ltd.</span>
                     </div>
-                    <div class="col-xs-3 text-right">
-                      <h1 class="text-light text-default-light"><strong>Expenses</strong></h1>
+                    <div class="col-xs-5 text-left">
+                      <h3 class="text-light text-default-light"><strong>Expenses @if($project !="All" and count($expenses)) [{{ $expenses[0]->project->name }}] @endif </strong></h3>
                     </div>
                     <div class="col-xs-2 text-right">
                       <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
@@ -91,26 +91,28 @@
                           <div class="text-center text-bold text-default-dark"> Reports Of {{ $reportTitle }} </div>
                         </div>
                       </div>
-                  </div>
+                    </div>
                     <div class="col-xs-6">
                       <div class="well">
                         <div class="clearfix">
                           <div class="text-center text-bold text-default-dark"> <strong>From</strong> {{ $fromDate }} <strong>To</strong> {{ $toDate }} </div>
                         </div>
                       </div>
-                  </div>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12">
                       <table class="table table-striped">
                         <thead>
                         <tr>
-                          <th width="5%" class="text-center">#SL</th>
-                          <th width="25%" class="text-center">Project</th>
-                          <th width="20%" class="text-center">Amount(&#2547;)</th>
-                          <th width="30%" class="text-center">Notes</th>
-                          <th width=10%" class="text-center">Entry At</th>
-                          <th width="5%" class="text-center">By</th>
+                          <th class="text-center">#SL</th>
+                          @if($project =="All")
+                            <th  class="text-center">Project</th>
+                          @endif
+                          <th colspan="@if($project !="All")2 @endif" class="text-center">Amount(&#2547;)</th>
+                          <th  class="text-center">Notes</th>
+                          <th class="text-center">Entry At</th>
+                          <th class="text-center">Entry By</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -118,9 +120,11 @@
                         @foreach($expenses as $expense)
                           <tr>
                             <td class="text-center">{{$expense->expenseNo}}</td>
-                            <td class="text-center">{{$expense->project->name}}</td>
-                            <td class="text-center">{{$expense->amount}}
-                            @php ($grandTotal += $expense->amount)
+                            @if($project =="All")
+                              <td class="text-center">{{$expense->project->name}}</td>
+                            @endif
+                            <td colspan="@if($project !="All")2 @endif" class="text-center">{{$expense->amount}}
+                              @php ($grandTotal += $expense->amount)
                             </td>
                             <td class="text-center">{{$expense->note}}</td>
                             <td class="text-center">{{$expense->created_at->format('d/m/y h:i A')}}</td>
@@ -131,10 +135,8 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                          <td class="text-center"><strong class="text-lg text-default-dark">{{count($expenses)}}</strong></td>
                           <td class="text-center"><strong class="text-lg text-default-dark">Total</strong></td>
-                          <td class="text-center"><strong class="text-lg text-default-dark">&#2547;{{$grandTotal}}</strong></td>
-                          <td colspan="3"></td>
+                          <td  colspan="@if($project !="All")2 @endif" class="text-center"><strong class="text-lg text-default-dark">&#2547;{{$grandTotal}}</strong></td>
                         </tr>
                         </tfoot>
                       </table>

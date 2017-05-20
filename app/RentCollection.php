@@ -35,6 +35,7 @@ class RentCollection extends Model
         'collectionDate',
         'fromAdvance',
         'users_id',
+        'isDeduction',
     ];
 
 
@@ -51,5 +52,15 @@ class RentCollection extends Model
     function setCollectionDateAttribute($value)
     {
         $this->attributes['collectionDate'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+    }
+    function setIsDeductionAttribute($value)
+    {
+        if($value=='on'){
+            $this->attributes['isDeduction'] = 1;
+
+        }
+        else{
+            $this->attributes['isDeduction'] = 0;
+        }
     }
 }

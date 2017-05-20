@@ -1,3 +1,6 @@
+.form-group .form-control ~ label {
+   opacity: 1;
+}
 .myAction{
     float: right !important;
     display: inline; !important;

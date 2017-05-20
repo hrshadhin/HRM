@@ -276,7 +276,7 @@
 					</ul><!--end /submenu -->
 				</li>
 				<!-- END Collection -->
-			@if(Gate::check('report.projects') || Gate::check('report.dues') || Gate::check('report.flats') || Gate::check('report.customers') || Gate::check('report.rents') || Gate::check('report.collections') || Gate::check('report.expenses') || Gate::check('report.balance'))
+			@if(Gate::check('report.projects') || Gate::check('report.rentalStatus') || Gate::check('report.dues') || Gate::check('report.flats') || Gate::check('report.customers') || Gate::check('report.rents') || Gate::check('report.collections') || Gate::check('report.expenses') || Gate::check('report.balance'))
 				<!-- BEGIN REPORT -->
 					<li class="gui-folder">
 						<a>
@@ -309,6 +309,9 @@
 							@if(Gate::check('report.balance'))
 								<li><a href="{{URL::Route('report.balance')}}" ><span class="title">Account Balance</span></a></li>
 							@endif
+								@if(Gate::check('report.rentalStatus'))
+									<li><a href="{{URL::Route('report.rentalStatus')}}" ><span class="title">Rental Status</span></a></li>
+								@endif
 						</ul><!--end /submenu -->
 					</li><!--end /menu-li -->
 					<!-- END REPORT -->
@@ -360,7 +363,13 @@
         var notiItem = '<li class="'+typeClass+'">';
         notiItem+= '<a class="alert alert-callout alert-warning" href="javascript:void(0);">';
         notiItem+= '<strong>'+notification.title+'</strong><br/>';
-        notiItem+= '<small>&#2547; '+parseFloat(notification.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')+'</small>';
+        if(typeClass != "notiToItem") {
+            notiItem += '<small>&#2547; ' + parseFloat(notification.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + '</small>';
+        }
+        else{
+            notiItem += '<small>'+ notification.value + '</small>';
+
+        }
         notiItem+= '</a>';
         notiItem+= '</li>';
         return notiItem;

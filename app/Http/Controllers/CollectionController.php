@@ -53,22 +53,22 @@ class CollectionController extends Controller
         $this->validate($request,$rules);
         $data = $request->all();
         $data['users_id'] = auth()->user()->id;
-        //advance money d
-        if($data['collectionType']=="Cash"){
-            $rent = Rent::where('id',$data['rents_id'])->first();
-            $paidAmount = floatval($data['amount']);
-
+//        //advance money d
+//        if($data['collectionType']=="Cash"){
+//            $rent = Rent::where('id',$data['rents_id'])->first();
+//            $paidAmount = floatval($data['amount']);
+//
+//            RentCollection::create($data);
+//            if($rent->advanceMoney >= $paidAmount){
+//                $rent->advanceMoney -= $paidAmount;
+//                $data['fromAdvance'] = 1;
+//                $rent->save();
+//            }
+//
+//        }
+//        else{
             RentCollection::create($data);
-            if($rent->advanceMoney >= $paidAmount){
-                $rent->advanceMoney -= $paidAmount;
-                $data['fromAdvance'] = 1;
-                $rent->save();
-            }
-
-        }
-        else{
-            RentCollection::create($data);
-        }
+        //}
         //notification code
         $customer = Customer::where('id',$data['customers_id'])->first();
         $myNoti = new MyNotify();

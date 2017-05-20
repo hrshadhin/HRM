@@ -35,7 +35,7 @@
                                         <div class="row">
                                             <div class="col-lg-3">
                                                 <div class="form-group">
-                                                    {!! Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential'], null, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']) !!}
+                                                    {!! Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential', 'Residential & Commerical' => 'Residential & Commerical'], null, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']) !!}
                                                     <label for="projectType">Project Type</label>
                                                     <p class="help-block">select project type</p>
                                                 </div>

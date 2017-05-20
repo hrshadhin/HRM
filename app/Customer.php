@@ -48,6 +48,7 @@ class Customer extends Model
         'active',
         'entryDate',
         'users_id',
+        'customerType',
 
     ];
     public function entry() {

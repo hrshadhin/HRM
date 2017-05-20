@@ -38,7 +38,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <?php echo Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential'], null, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']); ?>
+                                                            <?php echo Form::select('projectType', ['' => '', 'Commerical' => 'Commerical','Residential' =>'Residential', 'Residential & Commerical' => 'Residential & Commerical'], null, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']); ?>
 
                                                             <label for="projectType">Project Type</label>
                                                             <p class="help-block">select project type</p>
@@ -74,13 +74,24 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-3">
                                                         <div class="form-group">
                                                             <input type="text" class="form-control datepicker" value="<?php echo e($today->format('d/m/Y')); ?>" name="entryDate" required>
-                                                            <label for="dateOfEntry">Date of entry</label>
+                                                            <label for="dateOfEntry">Rent date</label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control datepicker" value="<?php echo e($today->format('d/m/Y')); ?>" name="deedStart" required>
+                                                            <label for="deedStart">Period start date</label>
+                                                        </div>
+                                                    </div> <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control datepicker" value="" name="deedEnd" required>
+                                                            <label for="deedEnd">Period end date</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
                                                         <div class="form-group">
                                                             <input type="text" readonly class="form-control" id="rentNo" value="<?php echo e($rentNo); ?>" name="rentNo" required>
                                                             <label for="rentNo">Rent No</label>
@@ -98,7 +109,8 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <input type="number" readonly id="rentAmountPerSft" class="form-control" min="0" name="perSftRent" data-rule-number="true" required>
+                                                            <input type="number"  id="rentAmountPerSft" class="form-control" min="0" name="perSftRent" data-rule-number="true" required>
+                                                            <label for="rentAmount">Per Sft. rent</label>
                                                             <p class="help-block">Rent per Sft.</p>
                                                         </div>
                                                     </div>
@@ -113,22 +125,6 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <input type="number" id="advanceMoney" class="form-control" min="0" name="advanceMoney" data-rule-number="true" required>
-                                                            <label for="advanceMoney">Advance money</label>
-                                                            <p class="help-block">Numbers only</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <input type="number" id="utilityCharge" class="form-control" min="0" name="utilityCharge" data-rule-number="true" required>
-                                                            <label for="utilityCharge">Utility Charge</label>
-                                                            <p class="help-block">Numbers only</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
                                                             <input type="number" id="serviceCharge" class="form-control" min="0" name="serviceCharge" data-rule-number="true" required>
                                                             <label for="serviceCharge">Service Charge</label>
                                                             <p class="help-block">Numbers only</p>
@@ -136,17 +132,49 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-4">
                                                         <div class="form-group">
-                                                            <input type="number" id="delayCharge" class="form-control" min="0" name="delayCharge" data-rule-number="true" required>
+                                                            <input type="number" id="advanceMoney" class="form-control" min="0" value="0.00" name="advanceMoney" data-rule-number="true" required>
+                                                            <label for="advanceMoney">Advance TK</label>
+                                                            <p class="help-block">Numbers only</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <input type="number" id="monthlyDeduction" class="form-control" min="0" value="0.00" name="monthlyDeduction" data-rule-number="true" required>
+                                                            <label for="monthlyDeduction">Deduction Advance TK</label>
+                                                            <p class="help-block">Numbers only</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <input type="number" id="monthlyDeductionTax" class="form-control" value="0.00" min="0" name="monthlyDeductionTax" data-rule-number="true" required>
+                                                            <label for="monthlyDeductionTax">Deduction Tax TK</label>
+                                                            <p class="help-block">Numbers only</p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <input type="number" id="utilityCharge" class="form-control" min="0" value="0.00" name="utilityCharge" data-rule-number="true" required>
+                                                            <label for="utilityCharge">Utility Charge</label>
+                                                            <p class="help-block">Numbers only</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <input type="number" id="delayCharge" class="form-control" min="0" value="0.00" name="delayCharge" data-rule-number="true">
                                                             <label for="delayCharge">Delay Charge</label>
                                                             <p class="help-block">Numbers only</p>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-4">
                                                         <div class="form-group">
-                                                            <textarea class="form-control" id="description"  placeholder="note" name="note" rows="1"  maxlength="1000"></textarea>
-                                                            <p class="help-block">Description</p>
+                                                            <textarea class="form-control" id="description"  name="note" rows="1"  maxlength="1000"></textarea>
+                                                            <p class="help-block">description</p>
+                                                            <label for="description">Remarks</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -197,7 +225,7 @@
                                                         <ul class="list-divided">
                                                             <ul class="list-divided">
                                                                 <li><strong>Permanent Addrees</strong><br/><span class="opacity-90" id="parmanentAddress"></span></li>
-                                                                <li><strong>Contact Persion</strong><br/><span class="opacity-90" id="contactPerson"></span></li>
+                                                                <li><strong>Contact Person</strong><br/><span class="opacity-90" id="contactPerson"></span></li>
                                                                 <li><strong>Contact Person Mobible</strong><br/><span class="opacity-90" id="contactPersonCellNo"></span></li>
                                                             </ul>
                                                         </ul>
@@ -246,6 +274,8 @@
     <script type="text/javascript">
 
         $( document ).ready(function() {
+            $('#menubarToggler').trigger('click');
+
             $('select').select2();
             $('#projectType').change(function () {
                 $("#flats_id").empty();
@@ -342,7 +372,7 @@
                 if(!$('#projectType').val()){
                     isValid = false;
                     $('#projectType').parent().addClass('has-error');
-                    $('#projectType').focus;
+                    $('#projectType').focus();
                 }
                 else{
                     $('#projectType').parent().removeClass('has-error');
@@ -350,7 +380,7 @@
                 if(!$('#projects_id').val()){
                     isValid = false;
                     $('#projects_id').parent().addClass('has-error');
-                    $('#projects_id').focus;
+                    $('#projects_id').focus();
                 }
                 else{
                     $('#projects_id').parent().removeClass('has-error');
@@ -359,7 +389,7 @@
                 if(!$('#flats_id').val()){
                     isValid = false;
                     $('#flats_id').parent().addClass('has-error');
-                    $('#flats_id').focus;
+                    $('#flats_id').focus();
                 }
                 else{
                      $('#flats_id').parent().removeClass('has-error');
@@ -367,7 +397,7 @@
                 if(!$('#customers_id').val()){
                     isValid = false;
                     $('#customers_id').parent().addClass('has-error');
-                    $('#customers_id').focus;
+                    $('#customers_id').focus();
                 }
                 else{
                      $('#customers_id').parent().removeClass('has-error');
@@ -375,7 +405,7 @@
                 if(!$('#rentAmountPerSft').val()){
                     isValid = false;
                     $('#rentAmountPerSft').parent().addClass('has-error');
-                    $('#rentAmountPerSft').focus;
+                    $('#rentAmountPerSft').focus();
                 }
                 else{
                      $('#rentAmountPerSft').parent().removeClass('has-error');

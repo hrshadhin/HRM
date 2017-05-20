@@ -31,7 +31,7 @@ Route::group(['middleware' => 'role'], function () {
     Route::get('/customer-ajax/{customerId}','CustomerController@customerAjax')->name('customer.ajax');
     Route::resource('rent','RentController');
     Route::get('/rent/customers/{projectId}','RentController@customerByProject')->name('customer.byproject');
-    Route::get('/rent/flats/{customerId}','RentController@flatsByCustomer')->name('flat.bycustomer');
+    Route::get('/rent/flats/{customerId}/{projectId}','RentController@flatsByCustomer')->name('flat.bycustomer');
     Route::resource('collection','CollectionController');
     Route::resource('expense','ExpenseController');
 
@@ -43,6 +43,8 @@ Route::group(['middleware' => 'role'], function () {
     Route::get('/report/dues','ReportController@dues')->name('report.dues');
     Route::get('/report/expenses','ReportController@expenses')->name('report.expenses');
     Route::get('/report/balance','ReportController@balance')->name('report.balance');
+    Route::get('/report/rental-status','ReportController@rentaStatus')->name('report.rentalStatus');
+
 
     Route::get('/mail-compose','DashboardController@mailCompose')->name('mail.compose');
     Route::post('/mail-send','DashboardController@mailSend')->name('mail.send');

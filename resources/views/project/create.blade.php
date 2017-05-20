@@ -48,6 +48,7 @@
                           <select id="projectType" class="form-control select2-list" name="projectType" required>
                             <option value="Commerical">Commerical</option>
                             <option value="Residential">Residential</option>
+                            <option value="Residential & Commerical">Residential & Commerical</option>
                           </select>
                           <label for="projectType">Project Type</label>
                           <p class="help-block"></p>

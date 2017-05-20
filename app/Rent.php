@@ -12,7 +12,7 @@ class Rent extends Model
 {
     use SoftDeletes;
 
-    protected $dates = ['entryDate'];
+    protected $dates = ['entryDate','deedStart','deedEnd'];
     /**
      * The attributes that are mass assignable.
      *
@@ -27,11 +27,16 @@ class Rent extends Model
         'rent',
         'securityMoney',
         'advanceMoney',
+        'monthlyDeduction',
+        'monthlyDeductionTax',
+        'advanceMoney',
         'utilityCharge',
         'serviceCharge',
         'delayCharge',
         'note',
         'deepPaper',
+        'deedStart',
+        'deedEnd',
         'othersPaper',
         'status', // 1 for active 0 for inactive
         'entryDate',
@@ -59,5 +64,13 @@ class Rent extends Model
     function setEntryDateAttribute($value)
     {
         $this->attributes['entryDate'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+    }
+    function setDeedStartAttribute($value)
+    {
+        $this->attributes['deedStart'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+    }
+    function setDeedEndAttribute($value)
+    {
+        $this->attributes['deedEnd'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
     }
 }
