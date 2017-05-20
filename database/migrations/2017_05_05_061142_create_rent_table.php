@@ -21,16 +21,20 @@ class CreateRentTable extends Migration
             $table->string('rentNo',50);
             $table->decimal('perSftRent',18,2);
             $table->decimal('rent',18,2);
+            $table->decimal('serviceCharge',18,2);
             $table->decimal('securityMoney',18,2);
             $table->decimal('advanceMoney',18,2);
+            $table->decimal('monthlyDeduction',18,2);
+            $table->decimal('monthlyDeductionTax',18,2);
             $table->decimal('utilityCharge',18,2);
-            $table->decimal('serviceCharge',18,2);
             $table->decimal('delayCharge',18,2);
             $table->text('note')->nullable();
             $table->string('deepPaper')->nullable();
             $table->string('othersPaper')->nullable();
             $table->tinyInteger('status')->default('1'); // 1 for active 0 for inactive
             $table->date('entryDate');
+            $table->date('deedStart');
+            $table->date('deedEnd');
             $table->unsignedInteger('users_id');
             $table->timestamps();
             $table->softDeletes();
