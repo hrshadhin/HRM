@@ -48,15 +48,15 @@
                       <div class="form-group">
                         <select id="projectType" class="form-control select2-list" name="projectType" required>
                           @if($project->projectType=="Commerical")
-                          <option value="Commerical">Commerical</option>
+                          <option value="Commerical" selected>Commerical</option>
                           <option value="Residential">Residential</option>
                           <option value="Residential & Commerical">Residential & Commerical</option>
                           @elseif($project->projectType=="Residential")
-                            <option value="Residential">Residential</option>
+                            <option value="Residential" selected>Residential</option>
                             <option value="Commerical">Commerical</option>
                             <option value="Residential & Commerical">Residential & Commerical</option>
-                          @@else
-                            <option value="Residential & Commerical">Residential & Commerical</option>
+                          @else
+                            <option value="Residential & Commerical" selected>Residential & Commerical</option>
                             <option value="Residential">Residential</option>
                             <option value="Commerical">Commerical</option>
                           @endif
