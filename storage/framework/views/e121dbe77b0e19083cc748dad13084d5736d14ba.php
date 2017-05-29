@@ -1,6 +1,7 @@
 <?php $__env->startSection('title', 'Project List'); ?>
 <?php $__env->startSection('extraStyle'); ?>
-  <style>
+    <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/select2/select2.css" />
+    <style>
     th{
       font-weight: blod !important;
       color:#000 !important;
@@ -25,6 +26,42 @@
                   <header>Projects List</header>
                 </div>
                 <div class="card-body no-padding">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="filters" action="" method="GET" enctype="text/plain">
+                                <fieldset>
+                                    <legend>Filters</legend>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="project name" name="name" value="<?php echo e($name); ?>">
+                                            <input type="hidden" id="pageHidden" name="page" value="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <?php echo Form::select('projectType', ['All' => 'All', 'Commerical' => 'Commerical','Residential' =>'Residential', 'Residential & Commerical' => 'Residential & Commerical'], $projectType, ['id' => 'projectType' ,'class' => 'form-control select2-list', 'required' => 'required']); ?>
+
+                                        </div>
+                                    </div>
+
+                                      <div class="col-md-3">
+                                        <div class="form-group">
+                                            <?php echo Form::select('areas_id', $areas, $area, ['class' => 'form-control select2-list', 'required' => 'required']); ?>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <button class="btn btn-primary ink-reaction"><i class="md md-search"></i>Refresh</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+
+                        </div>
+
+                    </div>
                   <div class="table-responsive no-margin">
                     <table class="table table-striped no-margin">
                       <thead>
@@ -120,8 +157,19 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('extraScript'); ?>
-  <script>
-      $( document ).ready(function() {
+    <script src="<?php echo e(url('/')); ?>/assets/js/libs/select2/select2.min.js"></script>
+
+    <script>
+        $('select').select2();
+
+        $( document ).ready(function() {
+          $('#menubarToggler').trigger('click');
+          $('.pagination li>a').click(function (e) {
+              e.preventDefault();
+              $('#pageHidden').val($(this).text());
+              $('form.filters').submit();
+
+          });
           $('.detailsBtn').click(function (e) {
               e.preventDefault();
               var infoUrl = $(this).attr('data-url');
@@ -143,7 +191,6 @@
               $('body').addClass(' offcanvas-expanded');
               $('body').attr('style','padding-right:15px;');
           });
-
           $('form.myAction').click(function (e) {
               e.preventDefault();
               var that = this;

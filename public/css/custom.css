@@ -78,3 +78,26 @@ li.dd span.title{
         padding-top: 0px !important;
     }
 }
+
+fieldset {
+    background: #ffffff;
+    border: 2px solid #0aa89e;
+    border-radius: 5px;
+    margin: 20px 20px 20px 20px;
+    padding: 25px;
+    position: relative;
+}
+fieldset legend {
+    background: inherit;
+    font-family: "Lato", sans-serif;
+    color: #007AFF;
+    font-size: 15px;
+    left: 10px;
+    padding: 0 10px;
+    position: absolute;
+    top: -12px;
+    font-weight: 400;
+    width: auto !important;
+    border: none !important;
+    margin: 0;
+}

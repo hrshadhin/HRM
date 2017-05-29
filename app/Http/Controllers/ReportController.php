@@ -6,6 +6,7 @@ use App\Expense;
 use App\Flat;
 use Illuminate\Http\Request;
 //use PDF;
+use App\Area;
 use App\Project;
 use App\Customer;
 use App\Rent;
@@ -17,18 +18,30 @@ class ReportController extends Controller
 {
     public function projects(Request $request)
     {
-        $projectType = $request->has('ptype') ? $request->get('ptype') : 'All';
-        if(!$projectType || $projectType=="All") {
-            $projects = Project::with('area')->orderBy('entryDate', 'desc')->get();
-        }
-        else{
-            $projects = Project::where('projectType',$projectType)->with('area')->orderBy('entryDate', 'desc')->get();
+        $areas = Area::pluck('name','id');
+        $areas->prepend('All','All');
+        $name = $request->has('name') ? $request->input('name') : "";
+        $projectType = $request->has('projectType') ? $request->input('projectType') : null;
+        $area = $request->has('areas_id') ? $request->input('areas_id') : null;
 
+        $query = Project::query();
+        if(strlen($name)){
+            $query = $query->where('name','like','%'.$name.'%');
         }
+        if($projectType && $projectType != "All"){
+            $query = $query->where('projectType',$projectType);
+        }
+
+        if($area && $area != "All"){
+            $query = $query->where('areas_id',$area);
+        }
+
+        $projects = $query->with('area')->orderBy('entryDate', 'desc')->get();
+
 //       $pdf = PDF::loadView('report.projects',compact('projects'));
 //		$fileName='Projects.pdf';
 //		return $pdf->stream($fileName);
-        return view('report.projects',compact('projects','projectType'));
+        return view('report.projects',compact('projects','projectType','area','name','areas'));
     }
     public function flats(Request $request)
     {
@@ -53,15 +66,21 @@ class ReportController extends Controller
     public function customers(Request $request)
     {
         $status = $request->has('status') ? $request->get('status') : 'All';
-
+        $name = $request->has('name') ? $request->get('name') : "";
+        $mobileNo = $request->has('mobileNo') ? $request->get('mobileNo') : "";
+        $query = Customer::query();
+        if(strlen($name)){
+            $query = $query->where('name','like','%'.$name.'%');
+        }
+        if(strlen($mobileNo)){
+            $query = $query->Where('cellNo',$mobileNo);
+        }
         if($status != "All") {
-            $customers = Customer::where('active',$status)->orderBy('entryDate','desc')->with('entry')->get();
+            $query = $query->Where('active',$status);
         }
-        else{
-            $customers = Customer::orderBy('entryDate','desc')->with('entry')->get();
-
-        }
-        return view('report.customers',compact('customers','status'));
+        $query = $query->orderBy('entryDate','desc')->with('entry');
+        $customers = $query->get();
+        return view('report.customers',compact('customers','status','name','mobileNo'));
     }
 
     public function rents(Request $request)
@@ -108,10 +127,10 @@ class ReportController extends Controller
 
         $reportTitle = "all projects and customers";
         if($project !="None" && $project != "All") {
-                $projectInfo = Project::where('id',$project)->first();
-                $reportTitle = $projectInfo->name;
-                $rent_ids = Rent::select('id')->where('projects_id',$project)->pluck('id');
-                $collections = RentCollection::whereIn('rents_id',$rent_ids)
+            $projectInfo = Project::where('id',$project)->first();
+            $reportTitle = $projectInfo->name;
+            $rent_ids = Rent::select('id')->where('projects_id',$project)->pluck('id');
+            $collections = RentCollection::whereIn('rents_id',$rent_ids)
                 ->where('collectionDate','>=',$fromDate)->where('collectionDate','<=',$toDate)
                 ->orderBy('collectionDate','desc')->with('customer')->with('entry')->get();
         }
@@ -157,43 +176,59 @@ class ReportController extends Controller
         if($isSubmit and $project){
             $projectInfo = Project::where('id',$project)->first();
             $projectName = $projectInfo->name;
-         $flats = Flat::where('projects_id',$project)->get();
-         foreach ($flats as $flat){
-             if($flat->status==1){
-                 $rent = Rent::where('flats_id',$flat->id)->where('status',1)->with('customer')->first();
-                if(count($rent)){
-                    $collection = RentCollection::select('amount','note')
-                        ->where('rents_id',$rent->id)
-                        ->whereMonth('collectionDate', '=', $myPart[0])
-                        ->whereYear('collectionDate', '=', $myPart[1])
-                        ->first();
-                    if(count($collection)){
+            $flats = Flat::where('projects_id',$project)->get();
+            foreach ($flats as $flat){
+                if($flat->status==1){
+                    $rent = Rent::where('flats_id',$flat->id)->where('status',1)->with('customer')->first();
+                    if(count($rent)){
+                        $collection = RentCollection::select('amount','note')
+                            ->where('rents_id',$rent->id)
+                            ->whereMonth('collectionDate', '=', $myPart[0])
+                            ->whereYear('collectionDate', '=', $myPart[1])
+                            ->first();
+                        if(count($collection)){
 
-                        $rdata = [
-                            'location' => $flat->description,
-                            'customer' => $rent->customer->name,
-                            'period' => $rent->deedStart->format('F,Y').' to '.$rent->deedEnd->format('F,Y'),
-                            'rent' => $rent->rent,
-                            'advanceMoney' => $rent->advanceMoney,
-                            'monthlyDeduction' => $rent->monthlyDeduction,
-                            'monthlyDeductionTax' => $rent->monthlyDeductionTax,
-                            'serviceCharge' => $rent->serviceCharge,
-                            'netPayment' => $collection->amount,
-                            'remarks' => $collection->note,
-                        ];
+                            $rdata = [
+                                'location' => $flat->description,
+                                'customer' => $rent->customer->name,
+                                'period' => $rent->deedStart->format('F,Y').' to '.$rent->deedEnd->format('F,Y'),
+                                'rent' => $rent->rent,
+                                'advanceMoney' => $rent->advanceMoney,
+                                'monthlyDeduction' => $rent->monthlyDeduction,
+                                'monthlyDeductionTax' => $rent->monthlyDeductionTax,
+                                'serviceCharge' => $rent->serviceCharge,
+                                'netPayment' => $collection->amount,
+                                'remarks' => $collection->note,
+                            ];
+                        }
+                        else{
+                            $rdata = [
+                                'location' => $flat->description,
+                                'customer' => $rent->customer->name,
+                                'period' => $rent->deedStart->format('F,Y').' to '.$rent->deedEnd->format('F,Y'),
+                                'rent' => $rent->rent,
+                                'advanceMoney' => $rent->advanceMoney,
+                                'monthlyDeduction' => $rent->monthlyDeduction,
+                                'monthlyDeductionTax' => $rent->monthlyDeductionTax,
+                                'serviceCharge' => $rent->serviceCharge,
+                                'netPayment' => 0.00,
+                                'remarks' => $rent->note,
+                            ];
+                        }
+
                     }
                     else{
                         $rdata = [
                             'location' => $flat->description,
-                            'customer' => $rent->customer->name,
-                            'period' => $rent->deedStart->format('F,Y').' to '.$rent->deedEnd->format('F,Y'),
-                            'rent' => $rent->rent,
-                            'advanceMoney' => $rent->advanceMoney,
-                            'monthlyDeduction' => $rent->monthlyDeduction,
-                            'monthlyDeductionTax' => $rent->monthlyDeductionTax,
-                            'serviceCharge' => $rent->serviceCharge,
+                            'customer' => 'Vacant',
+                            'period' => '-',
+                            'rent' => 0.00,
+                            'advanceMoney' => '-',
+                            'monthlyDeduction' => '-',
+                            'monthlyDeductionTax' => '-',
+                            'serviceCharge' => 0.00,
                             'netPayment' => 0.00,
-                            'remarks' => $rent->note,
+                            'remarks' => '-'
                         ];
                     }
 
@@ -213,24 +248,8 @@ class ReportController extends Controller
                     ];
                 }
 
-             }
-             else{
-                 $rdata = [
-                   'location' => $flat->description,
-                     'customer' => 'Vacant',
-                     'period' => '-',
-                     'rent' => 0.00,
-                     'advanceMoney' => '-',
-                     'monthlyDeduction' => '-',
-                     'monthlyDeductionTax' => '-',
-                     'serviceCharge' => 0.00,
-                     'netPayment' => 0.00,
-                     'remarks' => '-'
-                 ];
-             }
-
-             array_push($reportData,$rdata);
-         }
+                array_push($reportData,$rdata);
+            }
         }
 //        $fromDate = Carbon::createFromFormat('Y-m-d', $fromDate)->format('d/m/Y');
 //        $toDate = Carbon::createFromFormat('Y-m-d', $toDate)->format('d/m/Y');
@@ -268,8 +287,8 @@ class ReportController extends Controller
     {
 
 
-            $expenses = DB::table('expenses')->where('deleted_at',null)->sum('amount');
-            $collections = DB::table('collections')->where('deleted_at',null)->sum('amount');
+        $expenses = DB::table('expenses')->where('deleted_at',null)->sum('amount');
+        $collections = DB::table('collections')->where('deleted_at',null)->sum('amount');
         return view('report.balance',compact('expenses','collections'));
     }
 

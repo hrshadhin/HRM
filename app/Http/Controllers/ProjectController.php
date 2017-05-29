@@ -44,10 +44,28 @@ class ProjectController extends Controller
         return redirect()->route('project.index')->with('success',$notification);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::orderBy('id','asc')->with('area')->paginate(10);
-        return view('project.index',compact('projects'));
+        $areas = Area::pluck('name','id');
+        $areas->prepend('All','All');
+        $name = $request->has('name') ? $request->input('name') : "";
+        $projectType = $request->has('projectType') ? $request->input('projectType') : null;
+        $area = $request->has('areas_id') ? $request->input('areas_id') : null;
+
+        $query = Project::query();
+        if(strlen($name)){
+            $query = $query->where('name','like','%'.$name.'%');
+        }
+        if($projectType && $projectType != "All"){
+            $query = $query->where('projectType',$projectType);
+        }
+
+        if($area && $area != "All"){
+            $query = $query->where('areas_id',$area);
+        }
+
+        $projects = $query->orderBy('id','asc')->with('area')->paginate(10);
+        return view('project.index',compact('projects','name','projectType','area','areas'));
     }
 
     public function show($id)

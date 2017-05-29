@@ -68,10 +68,23 @@ class CustomerController extends Controller
         return redirect()->route('customer.index')->with('success',$notification);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::orderBy('id','asc')->paginate(10);
-        return view('customer.index',compact('customers'));
+        $name = $request->has('name') ? $request->input('name') : "";
+        $mobileNo = $request->has('mobileNo') ? $request->input('mobileNo') : "";
+        $query = Customer::query();
+
+        if(strlen($name)){
+            $query = $query->where('name','like','%'.$name.'%');
+        }
+        if(strlen($mobileNo)){
+            $query = $query->Where('cellNo',$mobileNo);
+        }
+
+
+        $customers = $query->orderBy('id','asc')->paginate(10);
+
+        return view('customer.index',compact('customers','name','mobileNo','page'));
     }
 
     public function edit($id)
