@@ -1,11 +1,9 @@
-@extends('layouts.master')
-
-@section('title', 'Report-Collections')
-@section('extraStyle')
-  <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/select2/select2.css" />
-  <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/bootstrap-datepicker/datepicker3.css" />
-@endsection
-@section('content')
+<?php $__env->startSection('title', 'Report-Collections'); ?>
+<?php $__env->startSection('extraStyle'); ?>
+  <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/select2/select2.css" />
+  <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/bootstrap-datepicker/datepicker3.css" />
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header no-print">
       <ol class="breadcrumb">
@@ -19,7 +17,7 @@
             <div class="col-lg-12">
               <form class="form form-validate floating-label"
                     novalidate="novalidate"
-                    action="{{URL::route('report.dues')}}"
+                    action="<?php echo e(URL::route('report.dues')); ?>"
                     method="GET"
                     enctype="multipart/form-data">
 
@@ -29,27 +27,27 @@
                   </div>
                   <div class="card-body">
                     <div class="row">
-                      {{--<div class="col-lg-3">--}}
-                        {{--<div class="form-group">--}}
-                          {{--{!! Form::select('project', $projects, $project, ['id' => 'projects_id', 'class' => 'form-control select2-list', 'required' => 'required']) !!}--}}
-                          {{--<label for="">Project</label>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
-                      {{--<div class="col-lg-3">--}}
-                        {{--<div class="form-group">--}}
-                          {{--{!! Form::select('customer', $customers, $customer, ['id' => 'customers_id', 'class' => 'form-control select2-list', 'required' => 'required']) !!}--}}
-                          {{--<label for="">Customer</label>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
-                      {{--<div class="col-lg-2">--}}
-                        {{--<div class="form-group">--}}
-                          {{--<input type="text" class="form-control datepicker" value="{{$fromDate}}" name="fromDate" required>--}}
-                          {{--<label for="entryDate">From date</label>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
+                      
+                        
+                          
+                          
+                        
+                      
+                      
+                        
+                          
+                          
+                        
+                      
+                      
+                        
+                          
+                          
+                        
+                      
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <input type="text" class="form-control datepicker" value="{{$monthYear->format('m-Y')}}" name="monthYear" required>
+                          <input type="text" class="form-control datepicker" value="<?php echo e($monthYear->format('m-Y')); ?>" name="monthYear" required>
                           <label for="montyYear">Month</label>
                         </div>
                       </div>
@@ -86,14 +84,14 @@
                       <h3 class="text-light text-default-light"><strong>Collection Due</strong></h3>
                     </div>
                     <div class="col-xs-2 text-right">
-                      <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
+                      <div class="pull-right">Print:<?php echo e(date('d/m/Y')); ?> </div>
                     </div>
                   </div><!--end .row -->
                   <div class="row">
                     <div class="col-xs-6">
                       <div class="well">
                         <div class="clearfix">
-                          <div class="text-center text-bold text-default-dark"> Reports due colelction of {{$monthYear->format('F,Y')}} </div>
+                          <div class="text-center text-bold text-default-dark"> Reports due colelction of <?php echo e($monthYear->format('F,Y')); ?> </div>
                         </div>
                       </div>
                   </div>
@@ -111,29 +109,32 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @php ($grandTotalR = 0)
-                        @php ($grandTotalS = 0)
-                        @php ($grandTotalU = 0)
-                        @foreach($notPaidRentCustomers as $rent)
+                        <?php ($grandTotalR = 0); ?>
+                        <?php ($grandTotalS = 0); ?>
+                        <?php ($grandTotalU = 0); ?>
+                        <?php $__currentLoopData = $notPaidRentCustomers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rent): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                           <tr>
-                            <td class="text-center">{{$rent->customer->name}} [{{$rent->customer->cellNo}}]</td>
-                            <td class="text-center">{{$rent->rent}}
-                            <td class="text-center">{{$rent->serviceCharge}}
-                            <td class="text-center">{{$rent->utilityCharge}}
-                              @php ($grandTotalR += $rent->rent)
-                              @php ($grandTotalS += $rent->serviceCharge)
-                              @php ($grandTotalU += $rent->utilityCharge)
+                            <td class="text-center"><?php echo e($rent->customer->name); ?> [<?php echo e($rent->customer->cellNo); ?>]</td>
+                            <td class="text-center"><?php echo e($rent->rent); ?>
+
+                            <td class="text-center"><?php echo e($rent->serviceCharge); ?>
+
+                            <td class="text-center"><?php echo e($rent->utilityCharge); ?>
+
+                              <?php ($grandTotalR += $rent->rent); ?>
+                              <?php ($grandTotalS += $rent->serviceCharge); ?>
+                              <?php ($grandTotalU += $rent->utilityCharge); ?>
                             </td>
 
                           </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                         </tbody>
                         <tfoot>
                         <tr>
                           <td class="text-center"><strong class="text-lg text-default-dark">Total</strong></td>
-                          <td class="text-center"><strong class="text-lg text-default-dark">&#2547;{{$grandTotalR}}</strong></td>
-                          <td class="text-center"><strong class="text-lg text-default-dark">&#2547;{{$grandTotalS}}</strong></td>
-                          <td class="text-center"><strong class="text-lg text-default-dark">&#2547;{{$grandTotalU}}</strong></td>
+                          <td class="text-center"><strong class="text-lg text-default-dark">&#2547;<?php echo e($grandTotalR); ?></strong></td>
+                          <td class="text-center"><strong class="text-lg text-default-dark">&#2547;<?php echo e($grandTotalS); ?></strong></td>
+                          <td class="text-center"><strong class="text-lg text-default-dark">&#2547;<?php echo e($grandTotalU); ?></strong></td>
                         </tr>
                         </tfoot>
                       </table>
@@ -149,11 +150,11 @@
     </div>
 
   </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('extraScript')
-  <script src="{{url('/')}}/assets/js/libs/select2/select2.min.js"></script>
-  <script src="{{url('/')}}/assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<?php $__env->startSection('extraScript'); ?>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/select2/select2.min.js"></script>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 
   <script type="text/javascript">
       $( document ).ready(function() {
@@ -170,4 +171,6 @@
 
       });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

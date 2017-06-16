@@ -74,7 +74,7 @@
                   <div class="row">
                     <div class="col-xs-5">
                       <img src="/assets/img/logo.png" height="80px" width="100px" alt="">
-                      <span class="text-left" style="font-size:16px">Shamsul Alamin Real Estate Ltd.</span>
+                      <span class="text-left" style="font-size:16px">Shamsul Alamin Group</span>
                     </div>
                     <div class="col-xs-5 text-left">
                       <h3 class="text-light text-default-light"><strong>Projects @if($projectType !="All") [{{$projectType}}] @endif</strong></h3>

@@ -1,8 +1,6 @@
-@extends('layouts.master')
+<?php $__env->startSection('title', 'Report-Balance'); ?>
 
-@section('title', 'Report-Balance')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header no-print">
       <ol class="breadcrumb">
@@ -32,22 +30,22 @@
                       <h3 class="text-light text-default-light"><strong>Balance</strong></h3>
                     </div>
                     <div class="col-xs-2 text-right">
-                      <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
+                      <div class="pull-right">Print:<?php echo e(date('d/m/Y')); ?> </div>
                     </div>
                   </div><!--end .row -->
                   <div class="row text-center">
                     <div class="col-xs-4">
 
-                      <h1 class="text-light text-default-light">Total Collection</h1> <h2>&#2547;{{ $collections }} </h2>
+                      <h1 class="text-light text-default-light">Total Collection</h1> <h2>&#2547;<?php echo e($collections); ?> </h2>
 
                   </div>
                     <div class="col-xs-4">
 
-                      <h1 class="text-light text-default-light">Total Expense</h1> <h2>&#2547;{{$expenses}}</h2>
+                      <h1 class="text-light text-default-light">Total Expense</h1> <h2>&#2547;<?php echo e($expenses); ?></h2>
 
                   </div> <div class="col-xs-4">
 
-                      <h1 class="text-light text-default-light">Balance</h1> <h2>&#2547;{{$collections - $expenses}}</h2>
+                      <h1 class="text-light text-default-light">Balance</h1> <h2>&#2547;<?php echo e($collections - $expenses); ?></h2>
 
                   </div>
                   </div>
@@ -62,4 +60,6 @@
     </div>
 
   </section>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

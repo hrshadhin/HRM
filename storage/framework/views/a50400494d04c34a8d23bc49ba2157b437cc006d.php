@@ -1,11 +1,9 @@
-@extends('layouts.master')
+<?php $__env->startSection('title', 'Report-Rents'); ?>
+<?php $__env->startSection('extraStyle'); ?>
+  <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/select2/select2.css" />
 
-@section('title', 'Report-Rents')
-@section('extraStyle')
-  <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/select2/select2.css" />
-
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header no-print">
       <ol class="breadcrumb">
@@ -19,7 +17,7 @@
             <div class="col-lg-12">
               <form class="form form-validate floating-label"
                     novalidate="novalidate"
-                    action="{{URL::route('report.rents')}}"
+                    action="<?php echo e(URL::route('report.rents')); ?>"
                     method="GET"
                     enctype="multipart/form-data">
 
@@ -31,13 +29,15 @@
                     <div class="row">
                       <div class="col-lg-4">
                         <div class="form-group">
-                          {!! Form::select('project', $projects, $project, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          <?php echo Form::select('project', $projects, $project, ['class' => 'form-control select2-list', 'required' => 'required']); ?>
+
                           <label for="">Project</label>
                         </div>
                       </div>
                       <div class="col-lg-4">
                         <div class="form-group">
-                          {!! Form::select('status', ['All' => 'All', '0' => 'Inactive','1' =>'Active'], $status, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          <?php echo Form::select('status', ['All' => 'All', '0' => 'Inactive','1' =>'Active'], $status, ['class' => 'form-control select2-list', 'required' => 'required']); ?>
+
                           <label for="">Status</label>
                         </div>
                       </div>
@@ -71,11 +71,11 @@
                       <span class="text-left" style="font-size:16px">Shamsul Alamin Group</span>
                     </div>
                     <div class="col-xs-5 text-left">
-                      <h3 class="text-light text-default-light"><strong>@if($project !="All" and count($rents)){{$rents[0]->project->name}} @endif Rents
-                          @if($status !="All" ) [ @if($status==1) Active @else Inactive @endif] @endif</strong></h3>
+                      <h3 class="text-light text-default-light"><strong><?php if($project !="All" and count($rents)): ?><?php echo e($rents[0]->project->name); ?> <?php endif; ?> Rents
+                          <?php if($status !="All" ): ?> [ <?php if($status==1): ?> Active <?php else: ?> Inactive <?php endif; ?>] <?php endif; ?></strong></h3>
                     </div>
                     <div class="col-xs-2 text-right">
-                      <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
+                      <div class="pull-right">Print:<?php echo e(date('d/m/Y')); ?> </div>
                     </div>
                   </div><!--end .row -->
 
@@ -84,52 +84,52 @@
                       <table class="table table-striped">
                         <thead>
                         <tr>
-                          @if($project =="All")
+                          <?php if($project =="All"): ?>
                             <th class="text-center">Project</th>
-                          @endif
+                          <?php endif; ?>
                           <th class="text-center">Customer Name</th>
                           <th class="text-center">C. Mobile</th>
                           <th class="text-center">C. P.Address</th>
                           <th class="text-center">Project</th>
                           <th class="text-center">Flat</th>
                           <th class="text-center">Rent(&#2547;)</th>
-                          @if($status =="All" )
+                          <?php if($status =="All" ): ?>
                           <th class="text-center">Status</th>
-                          @endif
+                          <?php endif; ?>
                           <th class="text-center">Entry</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($rents as $rent)
+                        <?php $__currentLoopData = $rents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rent): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                           <tr>
-                            @if($project =="All")
-                              <td class="text-center">{{$rent->project->name}}</td>
-                            @endif
-                            <td class="text-center">{{$rent->customer->name}}</td>
-                            <td class="text-center">{{$rent->customer->cellNo}}</td>
-                            <td class="text-center">{{$rent->customer->permanentAddress}}</td>
-                            <td class="text-center">{{$rent->project->name}}</td>
-                            <td class="text-center">{{$rent->flat->description}}</td>
-                            <td class="text-center">{{$rent->rent}}</td>
-                              @if($status =="All" )
+                            <?php if($project =="All"): ?>
+                              <td class="text-center"><?php echo e($rent->project->name); ?></td>
+                            <?php endif; ?>
+                            <td class="text-center"><?php echo e($rent->customer->name); ?></td>
+                            <td class="text-center"><?php echo e($rent->customer->cellNo); ?></td>
+                            <td class="text-center"><?php echo e($rent->customer->permanentAddress); ?></td>
+                            <td class="text-center"><?php echo e($rent->project->name); ?></td>
+                            <td class="text-center"><?php echo e($rent->flat->description); ?></td>
+                            <td class="text-center"><?php echo e($rent->rent); ?></td>
+                              <?php if($status =="All" ): ?>
                             <td class="text-center">
-                              @if($rent->status == 0)
+                              <?php if($rent->status == 0): ?>
                                 <span class="text-warning text-bold">Inactive</span>
-                              @else
+                              <?php else: ?>
                                 <span class="text-success text-bold">Active</span>
 
-                              @endif
+                              <?php endif; ?>
                             </td>
-                              @endif
+                              <?php endif; ?>
 
-                            <td class="text-center">{{$rent->entryDate->format('d/m/Y')}}</td>
+                            <td class="text-center"><?php echo e($rent->entryDate->format('d/m/Y')); ?></td>
                           </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                         </tbody>
                         <tfoot>
                         <tr>
-                          <td colspan="@if($project =="All" and $status =="All")8 @endif @if($project == "All" or $status =="All")7 @else 6 @endif" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
-                          <td class="text-right"><strong class="text-lg text-default-dark">{{count($rents)}}</strong></td>
+                          <td colspan="<?php if($project =="All" and $status =="All"): ?>8 <?php endif; ?> <?php if($project == "All" or $status =="All"): ?>7 <?php else: ?> 6 <?php endif; ?>" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
+                          <td class="text-right"><strong class="text-lg text-default-dark"><?php echo e(count($rents)); ?></strong></td>
                         </tr>
                         </tfoot>
                       </table>
@@ -145,10 +145,10 @@
     </div>
 
   </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('extraScript')
-  <script src="{{url('/')}}/assets/js/libs/select2/select2.min.js"></script>
+<?php $__env->startSection('extraScript'); ?>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/select2/select2.min.js"></script>
 
   <script type="text/javascript">
       $( document ).ready(function() {
@@ -157,4 +157,6 @@
 
       });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

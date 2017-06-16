@@ -1,11 +1,9 @@
-@extends('layouts.master')
+<?php $__env->startSection('title', 'Report-flats'); ?>
+<?php $__env->startSection('extraStyle'); ?>
+  <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/select2/select2.css" />
 
-@section('title', 'Report-flats')
-@section('extraStyle')
-  <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/select2/select2.css" />
-
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header no-print">
       <ol class="breadcrumb">
@@ -19,7 +17,7 @@
             <div class="col-lg-12">
               <form class="form form-validate floating-label"
                     novalidate="novalidate"
-                    action="{{URL::route('report.flats')}}"
+                    action="<?php echo e(URL::route('report.flats')); ?>"
                     method="GET"
                     enctype="multipart/form-data">
 
@@ -31,13 +29,15 @@
                     <div class="row">
                       <div class="col-lg-4">
                         <div class="form-group">
-                          {!! Form::select('project', $projects, $project, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          <?php echo Form::select('project', $projects, $project, ['class' => 'form-control select2-list', 'required' => 'required']); ?>
+
                           <label for="">Project</label>
                         </div>
                       </div>
                       <div class="col-lg-4">
                         <div class="form-group">
-                          {!! Form::select('status', ['All' => 'All', '0' => 'Vacant','1' =>'Rented'], $status, ['class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          <?php echo Form::select('status', ['All' => 'All', '0' => 'Vacant','1' =>'Rented'], $status, ['class' => 'form-control select2-list', 'required' => 'required']); ?>
+
                           <label for="">Status</label>
                         </div>
                       </div>
@@ -71,12 +71,12 @@
                       <span class="text-left" style="font-size:16px">Shamsul Alamin Group</span>
                     </div>
                     <div class="col-xs-5 text-left">
-                      <h3 class="text-light text-default-light"><strong>@if($project !="All" and count($flats)){{$flats[0]->project->name}} @endif Flats
-                          @if($status !="All" ) [ @if($status==1) Rented @else Vacant @endif] @endif
+                      <h3 class="text-light text-default-light"><strong><?php if($project !="All" and count($flats)): ?><?php echo e($flats[0]->project->name); ?> <?php endif; ?> Flats
+                          <?php if($status !="All" ): ?> [ <?php if($status==1): ?> Rented <?php else: ?> Vacant <?php endif; ?>] <?php endif; ?>
                         </strong></h3>
                     </div>
                     <div class="col-xs-2 text-right">
-                      <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
+                      <div class="pull-right">Print:<?php echo e(date('d/m/Y')); ?> </div>
                     </div>
                   </div><!--end .row -->
 
@@ -85,54 +85,55 @@
                       <table class="table table-striped">
                         <thead>
                         <tr>
-                          @if($project =="All")
+                          <?php if($project =="All"): ?>
                           <th class="text-center">Project</th>
-                          @endif
+                          <?php endif; ?>
                           <th class="text-center">Floor</th>
                           <th class="text-center">Type</th>
                           <th class="text-center">Size(sft.)</th>
                           <th class="text-center">Parking</th>
-                          @if($status =="All" )
+                          <?php if($status =="All" ): ?>
                           <th class="text-center">Staus</th>
-                          @endif
+                          <?php endif; ?>
                           <th class="text-center">Entry</th>
                         </tr>
                         </thead>
                         <tbody>
-                          @foreach($flats as $flat)
+                          <?php $__currentLoopData = $flats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $flat): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                             <tr>
-                              @if($project =="All")
-                              <td class="text-center">{{$flat->project->name}}</td>
-                              @endif
-                              <td class="text-center">{{floorLevel($flat->floor)}}</td>
-                              <td  class="text-center">{{flatType($flat->type)}}</td>
-                              <td  class="text-center">{{$flat->size}}</td>
+                              <?php if($project =="All"): ?>
+                              <td class="text-center"><?php echo e($flat->project->name); ?></td>
+                              <?php endif; ?>
+                              <td class="text-center"><?php echo e(floorLevel($flat->floor)); ?></td>
+                              <td  class="text-center"><?php echo e(flatType($flat->type)); ?></td>
+                              <td  class="text-center"><?php echo e($flat->size); ?></td>
                               <td  class="text-center">
-                                @if($flat->parking == "Yes")
-                                  {{$flat->parkingNo}}
-                                @else
+                                <?php if($flat->parking == "Yes"): ?>
+                                  <?php echo e($flat->parkingNo); ?>
+
+                                <?php else: ?>
                                   --
-                                @endif
+                                <?php endif; ?>
                               </td>
-                              @if($status =="All" )
+                              <?php if($status =="All" ): ?>
                               <td class="text-center">
-                                @if($flat->status == 1)
+                                <?php if($flat->status == 1): ?>
                                   <span class="text-warning text-bold">Rented</span>
-                                @else
+                                <?php else: ?>
                                   <span class="text-success text-bold">Vacant</span>
 
-                                @endif
+                                <?php endif; ?>
                               </td>
-                              @endif
+                              <?php endif; ?>
 
-                              <td class="text-center">{{$flat->entryDate->format('d/m/Y')}}</td>
+                              <td class="text-center"><?php echo e($flat->entryDate->format('d/m/Y')); ?></td>
                             </tr>
-                          @endforeach
+                          <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                         </tbody>
                         <tfoot>
                         <tr>
-                          <td colspan="@if($project =="All" and $status =="All")6 @endif @if($project == "All" or $status =="All")5 @else 4 @endif" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
-                          <td class="text-right"><strong class="text-lg text-default-dark">{{count($flats)}}</strong></td>
+                          <td colspan="<?php if($project =="All" and $status =="All"): ?>6 <?php endif; ?> <?php if($project == "All" or $status =="All"): ?>5 <?php else: ?> 4 <?php endif; ?>" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
+                          <td class="text-right"><strong class="text-lg text-default-dark"><?php echo e(count($flats)); ?></strong></td>
                         </tr>
                         </tfoot>
                       </table>
@@ -148,10 +149,10 @@
     </div>
 
   </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('extraScript')
-  <script src="{{url('/')}}/assets/js/libs/select2/select2.min.js"></script>
+<?php $__env->startSection('extraScript'); ?>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/select2/select2.min.js"></script>
 
   <script type="text/javascript">
       $( document ).ready(function() {
@@ -160,4 +161,6 @@
 
       });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

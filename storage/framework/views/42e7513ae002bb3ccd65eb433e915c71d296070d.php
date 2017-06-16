@@ -1,13 +1,13 @@
-<?php $__env->startSection('title', 'Report-customers'); ?>
+<?php $__env->startSection('title', 'Report-Expense'); ?>
 <?php $__env->startSection('extraStyle'); ?>
   <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/select2/select2.css" />
-
+  <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/bootstrap-datepicker/datepicker3.css" />
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header no-print">
       <ol class="breadcrumb">
-        <li class="active">Customer Report</li>
+        <li class="active">Expense Report</li>
       </ol>
     </div><!--end .section-header -->
     <div class="section-body">
@@ -17,7 +17,7 @@
             <div class="col-lg-12">
               <form class="form form-validate floating-label"
                     novalidate="novalidate"
-                    action="<?php echo e(URL::route('report.customers')); ?>"
+                    action="<?php echo e(URL::route('report.expenses')); ?>"
                     method="GET"
                     enctype="multipart/form-data">
 
@@ -27,21 +27,24 @@
                   </div>
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-md-4">
+                      <div class="col-lg-6">
                         <div class="form-group">
-                          <input type="text" class="form-control" placeholder="customer name" name="name" value="<?php echo e($name); ?>">
+                          <?php echo Form::select('project', $projects, $project, ['id' => 'projects_id', 'class' => 'form-control select2-list', 'required' => 'required']); ?>
+
+                          <label for="">Project</label>
                         </div>
                       </div>
-                      <div class="col-md-4">
+
+                      <div class="col-lg-2">
                         <div class="form-group">
-                          <input type="text" class="form-control" placeholder="customer mobile no" name="mobileNo" value="<?php echo e($mobileNo); ?>">
+                          <input type="text" class="form-control datepicker" value="<?php echo e($fromDate); ?>" name="fromDate" required>
+                          <label for="entryDate">From date</label>
                         </div>
                       </div>
                       <div class="col-lg-2">
                         <div class="form-group">
-                          <?php echo Form::select('status', ['All' => 'All', 'No' => 'Inactive','Yes' =>'Active'], $status, ['class' => 'form-control select2-list', 'required' => 'required']); ?>
-
-                          <label for="">Status</label>
+                          <input type="text" class="form-control datepicker" value="<?php echo e($toDate); ?>" name="toDate" required>
+                          <label for="entryDate">To date</label>
                         </div>
                       </div>
                       <div class="col-lg-2">
@@ -74,60 +77,66 @@
                       <span class="text-left" style="font-size:16px">Shamsul Alamin Group</span>
                     </div>
                     <div class="col-xs-5 text-left">
-                      <h3 class="text-light text-default-light"><strong>Customers <?php if($status != "All"): ?>[ <?php if($status == "No"): ?> Inactive <?php else: ?> Active <?php endif; ?>] <?php endif; ?></strong></h3>
+                      <h3 class="text-light text-default-light"><strong>Expenses <?php if($project !="All" and count($expenses)): ?> [<?php echo e($expenses[0]->project->name); ?>] <?php endif; ?> </strong></h3>
                     </div>
                     <div class="col-xs-2 text-right">
                       <div class="pull-right">Print:<?php echo e(date('d/m/Y')); ?> </div>
                     </div>
                   </div><!--end .row -->
-
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="well">
+                        <div class="clearfix">
+                          <div class="text-center text-bold text-default-dark"> Reports Of <?php echo e($reportTitle); ?> </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="well">
+                        <div class="clearfix">
+                          <div class="text-center text-bold text-default-dark"> <strong>From</strong> <?php echo e($fromDate); ?> <strong>To</strong> <?php echo e($toDate); ?> </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="col-md-12">
                       <table class="table table-striped">
                         <thead>
                         <tr>
-                          <th style="width:15%" class="text-center">Name</th>
-                          <th style="width:10%" class="text-center">Mobile</th>
-                          <th style="width:10%" class="text-center">Phone</th>
-                          <th style="width:20%" class="text-center">Permanent Address</th>
-                          <th style="width:20%" class="text-center">Mailing Address</th>
-                          <th style="width:10%" class="text-center">Contact Person</th>
-                          <th style="width:10%" class="text-center">C.P Mobile</th>
-                          <?php if($status == "All"): ?>
-                          <th style="width:5%" class="text-center">Status</th>
+                          <th class="text-center">#SL</th>
+                          <?php if($project =="All"): ?>
+                            <th  class="text-center">Project</th>
                           <?php endif; ?>
-                          <th style="width:10%" class="text-center">Entry</th>
+                          <th colspan="<?php if($project !="All"): ?>2 <?php endif; ?>" class="text-center">Amount(&#2547;)</th>
+                          <th  class="text-center">Notes</th>
+                          <th class="text-center">Entry At</th>
+                          <th class="text-center">Entry By</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php $__currentLoopData = $customers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $customer): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+                        <?php ($grandTotal = 0); ?>
+                        <?php $__currentLoopData = $expenses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $expense): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                           <tr>
-                            <td class="text-center"><?php echo e($customer->name); ?></td>
-                            <td class="text-center"><?php echo e($customer->cellNo); ?></td>
-                            <td class="text-center"><?php echo e($customer->phone); ?></td>
-                            <td class="text-center"><?php echo e($customer->permanentAddress); ?></td>
-                            <td class="text-center"><?php echo e($customer->mailingAddress); ?></td>
-                            <td class="text-center"><?php echo e($customer->contactPerson); ?></td>
-                            <td class="text-center"><?php echo e($customer->contactPersonCellNo); ?></td>
-                            <?php if($status == "All"): ?>
-                            <td class="text-center">
-                              <?php if($customer->active == "No"): ?>
-                                <span class="text-warning text-bold">Inactive</span>
-                              <?php else: ?>
-                                <span class="text-success text-bold">Active</span>
-
-                              <?php endif; ?>
-                            </td>
+                            <td class="text-center"><?php echo e($expense->expenseNo); ?></td>
+                            <?php if($project =="All"): ?>
+                              <td class="text-center"><?php echo e($expense->project->name); ?></td>
                             <?php endif; ?>
+                            <td colspan="<?php if($project !="All"): ?>2 <?php endif; ?>" class="text-center"><?php echo e($expense->amount); ?>
 
-                            <td class="text-center"><?php echo e($customer->entryDate->format('d/m/Y')); ?></td>
+                              <?php ($grandTotal += $expense->amount); ?>
+                            </td>
+                            <td class="text-center"><?php echo e($expense->note); ?></td>
+                            <td class="text-center"><?php echo e($expense->created_at->format('d/m/y h:i A')); ?></td>
+                            <td class="text-center"><?php echo e($expense->entry->name); ?></td>
+
                           </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                         </tbody>
                         <tfoot>
                         <tr>
-                          <td colspan="8" class="text-right"><strong class="text-lg text-default-dark">Total</strong></td>
-                          <td class="text-right"><strong class="text-lg text-default-dark"><?php echo e(count($customers)); ?></strong></td>
+                          <td class="text-center"><strong class="text-lg text-default-dark">Total</strong></td>
+                          <td  colspan="<?php if($project !="All"): ?>2 <?php endif; ?>" class="text-center"><strong class="text-lg text-default-dark">&#2547;<?php echo e($grandTotal); ?></strong></td>
                         </tr>
                         </tfoot>
                       </table>
@@ -147,11 +156,20 @@
 
 <?php $__env->startSection('extraScript'); ?>
   <script src="<?php echo e(url('/')); ?>/assets/js/libs/select2/select2.min.js"></script>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 
   <script type="text/javascript">
       $( document ).ready(function() {
+          $('.datepicker').datepicker({
+              format: 'dd/mm/yyyy',
+              autoclose: true,
+              todayHighlight : true
+
+          });
           $('#menubarToggler').trigger('click');
           $('select').select2();
+
+
 
       });
   </script>

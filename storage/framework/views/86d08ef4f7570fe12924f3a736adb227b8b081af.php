@@ -1,11 +1,9 @@
-@extends('layouts.master')
-
-@section('title', 'Report-Collections')
-@section('extraStyle')
-  <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/select2/select2.css" />
-  <link type="text/css" rel="stylesheet" href="{{url('/')}}/assets/css/libs/bootstrap-datepicker/datepicker3.css" />
-@endsection
-@section('content')
+<?php $__env->startSection('title', 'Report-Collections'); ?>
+<?php $__env->startSection('extraStyle'); ?>
+  <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/select2/select2.css" />
+  <link type="text/css" rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/libs/bootstrap-datepicker/datepicker3.css" />
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
   <section>
     <div class="section-header no-print">
       <ol class="breadcrumb">
@@ -19,7 +17,7 @@
             <div class="col-lg-12">
               <form class="form form-validate floating-label"
                     novalidate="novalidate"
-                    action="{{URL::route('report.collections')}}"
+                    action="<?php echo e(URL::route('report.collections')); ?>"
                     method="GET"
                     enctype="multipart/form-data">
 
@@ -31,25 +29,27 @@
                     <div class="row">
                       <div class="col-lg-3">
                         <div class="form-group">
-                          {!! Form::select('project', $projects, $project, ['id' => 'projects_id', 'class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          <?php echo Form::select('project', $projects, $project, ['id' => 'projects_id', 'class' => 'form-control select2-list', 'required' => 'required']); ?>
+
                           <label for="">Project</label>
                         </div>
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
-                          {!! Form::select('customer', $customers, $customer, ['id' => 'customers_id', 'class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          <?php echo Form::select('customer', $customers, $customer, ['id' => 'customers_id', 'class' => 'form-control select2-list', 'required' => 'required']); ?>
+
                           <label for="">Customer</label>
                         </div>
                       </div>
                       <div class="col-lg-2">
                         <div class="form-group">
-                          <input type="text" class="form-control datepicker" value="{{$fromDate}}" name="fromDate" required>
+                          <input type="text" class="form-control datepicker" value="<?php echo e($fromDate); ?>" name="fromDate" required>
                           <label for="entryDate">From date</label>
                         </div>
                       </div>
                       <div class="col-lg-2">
                         <div class="form-group">
-                          <input type="text" class="form-control datepicker" value="{{$toDate}}" name="toDate" required>
+                          <input type="text" class="form-control datepicker" value="<?php echo e($toDate); ?>" name="toDate" required>
                           <label for="entryDate">To date</label>
                         </div>
                       </div>
@@ -86,21 +86,21 @@
                       <h1 class="text-light text-default-light"><strong>Collections</strong></h1>
                     </div>
                     <div class="col-xs-2 text-right">
-                      <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
+                      <div class="pull-right">Print:<?php echo e(date('d/m/Y')); ?> </div>
                     </div>
                   </div><!--end .row -->
                   <div class="row">
                     <div class="col-xs-6">
                       <div class="well">
                         <div class="clearfix">
-                          <div class="text-center text-bold text-default-dark"> Reports Of {{ $reportTitle }} </div>
+                          <div class="text-center text-bold text-default-dark"> Reports Of <?php echo e($reportTitle); ?> </div>
                         </div>
                       </div>
                   </div>
                     <div class="col-xs-6">
                       <div class="well">
                         <div class="clearfix">
-                          <div class="text-center text-bold text-default-dark"> <strong>From</strong> {{ $fromDate }} <strong>To</strong> {{ $toDate }} </div>
+                          <div class="text-center text-bold text-default-dark"> <strong>From</strong> <?php echo e($fromDate); ?> <strong>To</strong> <?php echo e($toDate); ?> </div>
                         </div>
                       </div>
                   </div>
@@ -120,39 +120,40 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @php ($grandTotal = 0)
-                        @foreach($collections as $collection)
+                        <?php ($grandTotal = 0); ?>
+                        <?php $__currentLoopData = $collections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $collection): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                           <tr>
-                            <td class="text-center">{{$collection->collectionNo}}</td>
-                            <td class="text-center">{{$collection->collectionDate->format('d/m/y')}}</td>
-                            <td class="text-center">{{$collection->customer->name}} [{{$collection->customer->cellNo}}]</td>
-                            <td class="text-center">{{$collection->amount}}
-                              @php ($grandTotal += $collection->amount)
+                            <td class="text-center"><?php echo e($collection->collectionNo); ?></td>
+                            <td class="text-center"><?php echo e($collection->collectionDate->format('d/m/y')); ?></td>
+                            <td class="text-center"><?php echo e($collection->customer->name); ?> [<?php echo e($collection->customer->cellNo); ?>]</td>
+                            <td class="text-center"><?php echo e($collection->amount); ?>
+
+                              <?php ($grandTotal += $collection->amount); ?>
                             </td>
                             <td class="text-center">
-                              @if($collection->collectionType == "Cheque")
-                                <span class="text-info text-bold">Cheque, {{$collection->chequeNo}}, {{$collection->bankName}}, {{$collection->branchName}}</span>
-                              @elseif($collection->collectionType == "P.O")
-                                <span class="text-warning text-bold">P.O, {{$collection->poNo}}, {{$collection->poName}}, {{$collection->poCode}}</span>
-                              @else
-                                @if($collection->fromAdvance == 1)
+                              <?php if($collection->collectionType == "Cheque"): ?>
+                                <span class="text-info text-bold">Cheque, <?php echo e($collection->chequeNo); ?>, <?php echo e($collection->bankName); ?>, <?php echo e($collection->branchName); ?></span>
+                              <?php elseif($collection->collectionType == "P.O"): ?>
+                                <span class="text-warning text-bold">P.O, <?php echo e($collection->poNo); ?>, <?php echo e($collection->poName); ?>, <?php echo e($collection->poCode); ?></span>
+                              <?php else: ?>
+                                <?php if($collection->fromAdvance == 1): ?>
                                   <span class="text-success text-bold">Cash [from advance]</span>
-                                @else
+                                <?php else: ?>
                                   <span class="text-success text-bold">Cash</span>
-                                @endif
-                              @endif
+                                <?php endif; ?>
+                              <?php endif; ?>
                             </td>
-                            <td class="text-center">{{$collection->created_at->format('d/m/y h:i A')}}</td>
-                            <td class="text-center">{{$collection->entry->name}}</td>
+                            <td class="text-center"><?php echo e($collection->created_at->format('d/m/y h:i A')); ?></td>
+                            <td class="text-center"><?php echo e($collection->entry->name); ?></td>
 
                           </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                         </tbody>
                         <tfoot>
                         <tr>
-                          <td class="text-center"><strong class="text-lg text-default-dark">{{count($collections)}}</strong></td>
+                          <td class="text-center"><strong class="text-lg text-default-dark"><?php echo e(count($collections)); ?></strong></td>
                           <td colspan="2" class="text-center"><strong class="text-lg text-default-dark">Total</strong></td>
-                          <td class="text-center"><strong class="text-lg text-default-dark">&#2547;{{$grandTotal}}</strong></td>
+                          <td class="text-center"><strong class="text-lg text-default-dark">&#2547;<?php echo e($grandTotal); ?></strong></td>
                           <td colspan="4"></td>
                         </tr>
                         </tfoot>
@@ -169,11 +170,11 @@
     </div>
 
   </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('extraScript')
-  <script src="{{url('/')}}/assets/js/libs/select2/select2.min.js"></script>
-  <script src="{{url('/')}}/assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<?php $__env->startSection('extraScript'); ?>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/select2/select2.min.js"></script>
+  <script src="<?php echo e(url('/')); ?>/assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 
   <script type="text/javascript">
       $( document ).ready(function() {
@@ -200,4 +201,6 @@
 
       });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
