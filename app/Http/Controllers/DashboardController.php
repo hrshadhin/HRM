@@ -64,15 +64,15 @@ class DashboardController extends Controller
 
     public function fetchAll(){
         //crate due notification
-        if(!\Session::has('collectionNotifications') || !count(session('collectionNotifications'))){
-            $collectionNotifications = MyNotify::where('notiType','collection')->orderBy('created_at','asc')->take(5)->get();
-            session(['collectionNotifications' => $collectionNotifications]);
+//        if(!\Session::has('collectionNotifications') || !count(session('collectionNotifications'))){
+            $collectionNotifications = MyNotify::where('notiType','collection')->orderBy('created_at','desc')->take(5)->get();
+//            session(['collectionNotifications' => $collectionNotifications]);
 
-        }else{
-            $collectionNotifications = session('collectionNotifications');
-        }
+//        }else{
+//            $collectionNotifications = session('collectionNotifications');
+//        }
 
-        if(!\Session::has('dueNotifications') || !count(session('dueNotifications'))){
+//        if(!\Session::has('dueNotifications') || !count(session('dueNotifications'))){
             $haveDueNotification = MyNotify::where('notiType','due')->count();
             if(!$haveDueNotification){
                 $collectionsHave = RentCollection::select('rents_id')->whereMonth('collectionDate', '=', date('m'))->whereYear('collectionDate', '=', date('Y'))
@@ -91,19 +91,19 @@ class DashboardController extends Controller
                     //end mynoti
                 }
             }
-            $dueNotifications = MyNotify::where('notiType','due')->orderBy('created_at','asc')->take(5)->get();
-            session(['dueNotifications' => $dueNotifications]);
-
-        }else{
-            $dueNotifications = session('dueNotifications');
-        }
-        if(!\Session::has('toletNotifications') || !count(session('toletNotifications'))){
-            $toletNotifications = MyNotify::where('notiType','tolet')->orderBy('created_at','asc')->take(5)->get();
-            session(['toletNotifications' => $toletNotifications]);
-
-        }else{
-            $toletNotifications = session('toletNotifications');
-        }
+            $dueNotifications = MyNotify::where('notiType','due')->orderBy('created_at','desc')->take(5)->get();
+//            session(['dueNotifications' => $dueNotifications]);
+//
+//        }else{
+//            $dueNotifications = session('dueNotifications');
+//        }
+//        if(!\Session::has('toletNotifications') || !count(session('toletNotifications'))){
+            $toletNotifications = MyNotify::where('notiType','tolet')->orderBy('created_at','desc')->take(5)->get();
+//            session(['toletNotifications' => $toletNotifications]);
+//
+//        }else{
+//            $toletNotifications = session('toletNotifications');
+//        }
 
         if(count($collectionNotifications) || count($dueNotifications) || count($toletNotifications)){
             $hasAnyNotification = 1;

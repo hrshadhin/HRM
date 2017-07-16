@@ -380,10 +380,13 @@
 	};
     var addNotification = function(listElement,typeClass,notifications){
         $('#'+listElement+' li.'+typeClass).remove();
+        var allNotif = "";
         $.each(notifications,function (index,notification) {
 			var notiItem = makeNotificationItem(notification,typeClass);
-			$('#'+listElement+' li:first-child').after(notiItem);
+			allNotif += notiItem;
         });
+        $('#'+listElement+' li:first-child').after(allNotif);
+
     };
     var fetchAllNotifications = function () {
         var url= '<?php echo e(URL::route('notification.fetch.all')); ?>';
