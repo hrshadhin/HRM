@@ -36,7 +36,7 @@ class ReportController extends Controller
             $query = $query->where('areas_id',$area);
         }
 
-        $projects = $query->with('area')->orderBy('entryDate', 'desc')->get();
+        $projects = $query->with('area')->orderBy('created_at', 'desc')->get();
 
 //       $pdf = PDF::loadView('report.projects',compact('projects'));
 //		$fileName='Projects.pdf';
@@ -59,7 +59,7 @@ class ReportController extends Controller
             $flats = Flat::where('projects_id',$project)->with('project')->orderBy('entryDate', 'desc')->get();
         }
         else{
-            $flats = Flat::where('projects_id',$project)->where('status',$status)->with('project')->orderBy('entryDate', 'desc')->get();
+            $flats = Flat::where('projects_id',$project)->where('status',$status)->with('project')->orderBy('created_at', 'desc')->get();
         }
         return view('report.flats',compact('flats','project','status','projects'));
     }
@@ -78,7 +78,7 @@ class ReportController extends Controller
         if($status != "All") {
             $query = $query->Where('active',$status);
         }
-        $query = $query->orderBy('entryDate','desc')->with('entry');
+        $query = $query->orderBy('created_at','desc')->with('entry');
         $customers = $query->get();
         return view('report.customers',compact('customers','status','name','mobileNo'));
     }
@@ -104,7 +104,7 @@ class ReportController extends Controller
         }
         else{
             $rents = Rent::where('projects_id',$project)->where('status',$status)
-                ->orderBy('entryDate','desc')->with('project')->with('flat')->with('customer')->get();
+                ->orderBy('created_at','desc')->with('project')->with('flat')->with('customer')->get();
         }
         return view('report.rents',compact('rents','project','status','projects'));
     }
@@ -132,20 +132,20 @@ class ReportController extends Controller
             $rent_ids = Rent::select('id')->where('projects_id',$project)->pluck('id');
             $collections = RentCollection::whereIn('rents_id',$rent_ids)
                 ->where('collectionDate','>=',$fromDate)->where('collectionDate','<=',$toDate)
-                ->orderBy('collectionDate','desc')->with('customer')->with('entry')->get();
+                ->orderBy('created_at','desc')->with('customer')->with('entry')->get();
         }
         else if($customer != "None" &&  $customer !="All"){
             $customerInfo = Customer::where('id',$customer)->first();
             $reportTitle = $customerInfo->name;
             $collections = RentCollection::where('customers_id',$customer)
                 ->where('collectionDate','>=',$fromDate)->where('collectionDate','<=',$toDate)
-                ->orderBy('collectionDate','desc')->with('customer')->with('entry')->get();
+                ->orderBy('created_at','desc')->with('customer')->with('entry')->get();
         }
         else{
             $project = 'All';
             $customer = 'All';
             $collections = RentCollection::where('collectionDate','>=',$fromDate)->where('collectionDate','<=',$toDate)
-                ->orderBy('collectionDate','desc')->with('customer')->get();
+                ->orderBy('created_at','desc')->with('customer')->get();
         }
         $fromDate = Carbon::createFromFormat('Y-m-d', $fromDate)->format('d/m/Y');
         $toDate = Carbon::createFromFormat('Y-m-d', $toDate)->format('d/m/Y');
@@ -272,11 +272,11 @@ class ReportController extends Controller
             $reportTitle = $projectInfo->name;
             $expenses = Expense::where('projects_id',$projectInfo->id)
                 ->where('entryDate','>=',$fromDate)->where('entryDate','<=',$toDate)
-                ->orderBy('entryDate','desc')->with('project')->with('entry')->get();
+                ->orderBy('created_at','desc')->with('project')->with('entry')->get();
         }
         else{
             $expenses = Expense::where('entryDate','>=',$fromDate)->where('entryDate','<=',$toDate)
-                ->orderBy('entryDate','desc')->with('project')->with('entry')->get();
+                ->orderBy('created_at','desc')->with('project')->with('entry')->get();
         }
         $fromDate = Carbon::createFromFormat('Y-m-d', $fromDate)->format('d/m/Y');
         $toDate = Carbon::createFromFormat('Y-m-d', $toDate)->format('d/m/Y');

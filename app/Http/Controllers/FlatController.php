@@ -92,7 +92,7 @@ class FlatController extends Controller
 
     public function index()
     {
-        $flats = Flat::orderBy('id','asc')->with('project')->with('entry')->paginate(10);
+        $flats = Flat::orderBy('created_at','desc')->with('project')->with('entry')->paginate(10);
         return view('flat.index',compact('flats'));
     }
     public function show($id)

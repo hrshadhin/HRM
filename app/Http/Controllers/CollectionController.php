@@ -83,7 +83,7 @@ class CollectionController extends Controller
 
     public function index()
     {
-        $collections = RentCollection::orderBy('collectionDate','desc')->with('customer')->with('entry')->paginate(10);
+        $collections = RentCollection::orderBy('created_at','desc')->with('customer')->with('entry')->paginate(10);
         return view('collection.index',compact('collections'));
     }
 

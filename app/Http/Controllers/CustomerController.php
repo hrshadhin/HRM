@@ -82,7 +82,7 @@ class CustomerController extends Controller
         }
 
 
-        $customers = $query->orderBy('id','asc')->paginate(10);
+        $customers = $query->orderBy('created_at','desc')->paginate(10);
 
         return view('customer.index',compact('customers','name','mobileNo','page'));
     }

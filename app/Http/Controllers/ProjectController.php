@@ -64,7 +64,7 @@ class ProjectController extends Controller
             $query = $query->where('areas_id',$area);
         }
 
-        $projects = $query->orderBy('id','asc')->with('area')->paginate(10);
+        $projects = $query->orderBy('created_at','desc')->with('area')->paginate(10);
         return view('project.index',compact('projects','name','projectType','area','areas'));
     }
 

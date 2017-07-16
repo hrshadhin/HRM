@@ -78,7 +78,7 @@ class RentController extends Controller
 
     public function index()
     {
-        $rents = Rent::orderBy('id','asc')->with('project')->with('flat')->with('entry')->paginate(10);
+        $rents = Rent::orderBy('created_at','desc')->with('project')->with('flat')->with('entry')->paginate(10);
         return view('rent.index',compact('rents'));
     }
 
