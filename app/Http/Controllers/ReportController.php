@@ -303,7 +303,10 @@ class ReportController extends Controller
         $notPaidRentCustomers = Rent::with('customer')
             ->where('status',1)
             ->whereNotIn('id',$collectionsHave)
+            ->whereDate('deedStart','<=',$myPart[1].'-'.$myPart[0].'-31')
+            ->whereDate('deedEnd','>=',$myPart[1].'-'.$myPart[0].'-31')
             ->get();
+//        return count($notPaidRentCustomers);
         $monthYear = Carbon::createFromFormat('m-Y', $monthYear);
         return view('report.dues',compact('dues','monthYear','notPaidRentCustomers'));
     }
