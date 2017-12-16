@@ -1,2 +1,4 @@
 *
+!customers/
+!rents/
 !.gitignore
