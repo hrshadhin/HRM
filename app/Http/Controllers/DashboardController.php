@@ -17,17 +17,17 @@ class DashboardController extends Controller
             ->where('deleted_at',null)
             ->sum('amount');
 
-        $collectionsHave = RentCollection::select('rents_id')->whereMonth('collectionDate', '=', date('m'))->whereYear('collectionDate', '=', date('Y'))
-            ->pluck('rents_id');
+//        $collectionsHave = RentCollection::select('rents_id')->whereMonth('collectionDate', '=', date('m'))->whereYear('collectionDate', '=', date('Y'))
+//            ->pluck('rents_id');
         $notPaidRent = Rent::select(DB::raw('sum(rent) AS total_rent'),DB::raw('sum(serviceCharge) AS total_service'),DB::raw('sum(utilityCharge) AS total_utility'))
             ->where('status',1)
-            ->whereNotIn('id',$collectionsHave)
+//            ->whereNotIn('id',$collectionsHave)
             ->whereDate('deedStart','<=',date('Y-m').'-31')
             ->whereDate('deedEnd','>=',date('Y-m').'-31')
             ->first();
-        $totalDue = $notPaidRent->total_rent + $notPaidRent->total_service + $notPaidRent->totalutility;
+        $total = $notPaidRent->total_rent + $notPaidRent->total_service + $notPaidRent->totalutility;
 
-        $total = $collections + $totalDue;
+        $totalDue = $total-$collections;
 
         $newRenters = Rent::orderBy('entryDate','desc')->with('customer')->take(5)->get();
         $collectionsAll =  RentCollection::select(

@@ -302,7 +302,10 @@
 							@if(Gate::check('report.collections'))
 								<li><a href="{{URL::Route('report.collections')}}" ><span class="title">Collections</span></a></li>
 							@endif
-							@if(Gate::check('report.dues'))
+							@if(Gate::check('report.collectionSummary'))
+								<li><a href="{{URL::Route('report.collectionSummary')}}" ><span class="title">Collection Summary</span></a></li>
+							@endif
+								@if(Gate::check('report.dues'))
 								<li><a href="{{URL::Route('report.dues')}}" ><span class="title">Collection Dues</span></a></li>
 							@endif
 							@if(Gate::check('report.expenses'))
@@ -361,6 +364,7 @@
 <script src="{{url('/')}}/assets/js/core/source/AppCard.js"></script>
 <script src="{{url('/')}}/assets/js/core/source/AppForm.js"></script>
 <script src="{{url('/')}}/assets/js/core/source/AppVendor.js"></script>
+<script src="{{url('/')}}/assets/js/core/utils.js"></script>
 <script type="text/javascript">
 	var makeNotificationItem = function(notification,typeClass){
         var notiItem = '<li class="'+typeClass+'">';
@@ -491,6 +495,10 @@ toastr.warning('{{Session::get("warning")["body"]}}','{{Session::get("success")[
 
         }, (1000*60*2));
         fetchAllNotifications();
+
+        $('.bdMoney').each(function () {
+            $(this).text(Utils.takaFormat($(this).text()));
+        });
 
     });
 

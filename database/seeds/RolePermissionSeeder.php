@@ -69,6 +69,7 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'rent.edit'],
             ['name' => 'report.balance'],
             ['name' => 'report.collections'],
+            ['name' => 'report.collectionSummary'],
             ['name' => 'report.customers'],
             ['name' => 'report.expenses'],
             ['name' => 'report.flats'],
