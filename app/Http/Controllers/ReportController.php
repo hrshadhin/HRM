@@ -316,7 +316,14 @@ class ReportController extends Controller
 
         $projects = Project::select('id','name')->pluck('name','id');
         $projects->prepend('All','All');
+        $projects->prepend('None','None');
+
+        $customers = Customer::select('id','name')->pluck('name','id');
+        $customers->prepend('All','All');
+        $customers->prepend('None','None');
+
         $project = $request->has('project') ? $request->get('project') : 'All';
+        $customer = $request->has('customer') ? $request->get('customer') : 'All';
         $monthYearFrom = $request->has('monthYearFrom') ?  $request->get('monthYearFrom') : date('m-Y');
         $monthYearTo = $request->has('monthYearTo') ?  $request->get('monthYearTo') : date('m-Y');
         //parse string date
@@ -333,10 +340,11 @@ class ReportController extends Controller
         }
 
         $data=[];
+        $reportTitle=null;
         foreach ($months as $month){
             $myPart = mb_split('-',$month);
 
-            if($project != "All") {
+            if($project !="None" && $project != "All") {
                 $projectInfo = Project::where('id',$project)->first();
                 $reportTitle = $projectInfo->name;
                 $rent_ids = Rent::select('id')->where('projects_id',$project)->pluck('id');
@@ -347,6 +355,23 @@ class ReportController extends Controller
                 $rents = Rent::select(DB::raw('sum(rent) AS total_rent'),DB::raw('sum(serviceCharge) AS total_service'),DB::raw('sum(utilityCharge) AS total_utility'))
                     ->where('status',1)
                     ->where('projects_id',$project)
+                    ->where('deleted_at',null)
+                    ->whereDate('deedStart','<=',$myPart[0].'-'.$myPart[1].'-31')
+                    ->whereDate('deedEnd','>=',$myPart[0].'-'.$myPart[1].'-31')
+                    ->first();
+            }
+            else if($customer != "None" &&  $customer !="All"){
+                $customerInfo = Customer::where('id',$customer)->first();
+                $reportTitle = $customerInfo->name;
+
+                $rent_ids = Rent::select('id')->where('customers_id',$customer)->pluck('id');
+                $collections = RentCollection::whereIn('rents_id',$rent_ids)->whereMonth('collectionDate', '=', $myPart[1])->whereYear('collectionDate', '=', $myPart[0])
+                    ->where('deleted_at',null)
+                    ->sum('amount');
+
+                $rents = Rent::select(DB::raw('sum(rent) AS total_rent'),DB::raw('sum(serviceCharge) AS total_service'),DB::raw('sum(utilityCharge) AS total_utility'))
+                    ->where('status',1)
+                    ->where('customers_id',$customer)
                     ->where('deleted_at',null)
                     ->whereDate('deedStart','<=',$myPart[0].'-'.$myPart[1].'-31')
                     ->whereDate('deedEnd','>=',$myPart[0].'-'.$myPart[1].'-31')
@@ -373,6 +398,6 @@ class ReportController extends Controller
             ];
         }
 
-        return view('report.collectionsSummary',compact('data','monthYearFrom','monthYearTo','reportTitle','project','projects'));
+        return view('report.collectionsSummary',compact('data','monthYearFrom','monthYearTo','reportTitle','project','projects','customer','customers'));
     }
 }

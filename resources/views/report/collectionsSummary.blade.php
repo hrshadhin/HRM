@@ -35,6 +35,12 @@
                           <label for="">Project</label>
                         </div>
                       </div>
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          {!! Form::select('customer', $customers, $customer, ['id' => 'customers_id', 'class' => 'form-control select2-list', 'required' => 'required']) !!}
+                          <label for="">Customer</label>
+                        </div>
+                      </div>
                       <div class="col-lg-2">
                         <div class="form-group">
                           <input type="text" class="form-control datepicker" value="{{$monthYearFrom}}" name="monthYearFrom" required>
@@ -77,7 +83,7 @@
                       <span class="text-left" style="font-size:16px">Shamsul Alamin Group</span>
                    </div>
                     <div class="col-xs-5 text-left">
-                      <h3 class="text-light text-default-light"><strong>Collection Summary @if($project!="All") Of<br>{{ $reportTitle }} @endif</strong></h3>
+                      <h3 class="text-light text-default-light"><strong>Collection Summary @if($reportTitle) Of<br>{{ $reportTitle }} @endif</strong></h3>
                     </div>
                     <div class="col-xs-2 text-right">
                       <div class="pull-right">Print:{{ date('d/m/Y') }} </div>
@@ -159,8 +165,20 @@
               todayHighlight : true
 
           });
-//          $('#menubarToggler').trigger('click');
+          $('#menubarToggler').trigger('click');
           $('select').select2();
+          $('#projects_id').change(function () {
+              if($(this).val() != 'None'){
+                  $('#customers_id').val('None');
+                  $('select').select2();              }
+          });
+
+          $('#customers_id').change(function () {
+              if($(this).val() != 'None'){
+                  $('#projects_id').val('None');
+                  $('select').select2();
+              }
+          });
 
       });
   </script>
