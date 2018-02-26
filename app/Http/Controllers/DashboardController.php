@@ -13,27 +13,37 @@ use App\MyNotify;
 class DashboardController extends Controller
 {
     public function index(){
-        $collections = RentCollection::whereMonth('collectionDate', '=', date('m'))->whereYear('collectionDate', '=', date('Y'))
-            ->where('deleted_at',null)
-            ->sum('amount');
+//        $collections = RentCollection::whereMonth('collectionDate', '=', date('m'))->whereYear('collectionDate', '=', date('Y'))
+//            ->where('deleted_at',null)
+//            ->sum('amount');
 
-//        $collectionsHave = RentCollection::select('rents_id')->whereMonth('collectionDate', '=', date('m'))->whereYear('collectionDate', '=', date('Y'))
-//            ->pluck('rents_id');
+        $collectionsHave = RentCollection::select('rents_id')->whereMonth('collectionDate', '=', date('m'))->whereYear('collectionDate', '=', date('Y'))
+            ->pluck('rents_id');
         $notPaidRent = Rent::select(DB::raw('sum(rent) AS total_rent'),DB::raw('sum(serviceCharge) AS total_service'),DB::raw('sum(utilityCharge) AS total_utility'))
             ->where('status',1)
-//            ->whereNotIn('id',$collectionsHave)
+            ->whereNotIn('id',$collectionsHave)
             ->whereDate('deedStart','<=',date('Y-m').'-31')
             ->whereDate('deedEnd','>=',date('Y-m').'-31')
             ->first();
-        $total = $notPaidRent->total_rent + $notPaidRent->total_service + $notPaidRent->totalutility;
+        $totalDue = $notPaidRent->total_rent + $notPaidRent->total_service + $notPaidRent->totalutility;
 
-        $totalDue = $total-$collections;
+        $rents = Rent::select(DB::raw('sum(rent) AS total_rent'),DB::raw('sum(serviceCharge) AS total_service'),DB::raw('sum(utilityCharge) AS total_utility'))
+            ->where('status',1)
+            ->whereDate('deedStart','<=',date('Y-m').'-31')
+            ->whereDate('deedEnd','>=',date('Y-m').'-31')
+            ->first();
+        $total = $rents->total_rent + $rents->total_service + $rents->totalutility;
+
+        $collections = $total - $totalDue;
+
 
         $newRenters = Rent::orderBy('entryDate','desc')->with('customer')->take(5)->get();
         $collectionsAll =  RentCollection::select(
             DB::raw('sum(amount) as amounts'),
-            DB::raw("DATE_FORMAT(collectionDate,'%m-%Y') as month")
+            DB::raw("DATE_FORMAT(collectionDate,'%Y-%m') as month")
         )->groupBy('month')->get();
+
+//        return $collectionsAll;
 
         return view('dashboard',compact('collections','totalDue','total','newRenters','collectionsAll'));
     }

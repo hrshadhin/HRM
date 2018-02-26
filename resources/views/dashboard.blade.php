@@ -158,7 +158,7 @@
 	<script>
 		var myDateFormater = function(mydate){
 		    var datesPart = mydate.split('-');
-            return datesPart[0]+'-01-'+datesPart[1];
+            return datesPart[1]+'-01-'+datesPart[0];
 		};
 		(function (namespace, $) {
 		"use strict";
