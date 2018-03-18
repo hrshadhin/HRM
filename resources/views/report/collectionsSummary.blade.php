@@ -81,7 +81,7 @@
                     <div class="col-xs-5">
                       <img src="/assets/img/logo.png" height="80px" width="100px" alt="">
                       <span class="text-left" style="font-size:16px">Shamsul Alamin Group</span>
-                   </div>
+                    </div>
                     <div class="col-xs-5 text-left">
                       <h3 class="text-light text-default-light"><strong>Collection Summary @if($reportTitle) Of<br>{{ $reportTitle }} @endif</strong></h3>
                     </div>
@@ -96,48 +96,99 @@
                           <div class="text-center text-bold text-default-dark"> Reports from  <i>{{date('F, Y',strtotime('01-'.$monthYearFrom))}}</i>  to  <i>{{date('F, Y',strtotime('01-'.$monthYearTo))}}</i> </div>
                         </div>
                       </div>
-                  </div>
+                    </div>
 
                   </div>
+                  <br>
                   <div class="row">
                     <div class="col-md-12">
-                      <table class="table table-striped">
-                        <thead>
-                        <tr>
-                          <th width="40%" class="text-center">Month</th>
-                          <th width="20%" class="text-center">Total Rent(&#2547;)</th>
-                          <th width="20%" class="text-center">Total Collection(&#2547;)</th>
-                          <th width="20%" class="text-center">Total Due(&#2547;)</th>
-
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @php ($grandTotalR = 0)
+                      @php ($grandTotalR = 0)
                         @php ($grandTotalC = 0)
-                        @php ($grandTotalD = 0)
-                        @foreach($data as $date=>$datum)
-                          <tr>
-                            <td class="text-center">{{date('F, Y',strtotime($date))}}</td>
-                            <td class="text-center">{{number_format($datum['total'],2,'.','')}}</td>
-                            <td class="text-center">{{number_format($datum['collections'],2,'.','')}}</td>
-                            <td class="text-center">{{number_format($datum['dues'],2,'.','')}}</td>
-                              @php ($grandTotalR += $datum['total'])
-                              @php ($grandTotalC += $datum['collections'])
-                              @php ($grandTotalD += $datum['dues'])
+                          @php ($grandTotalD = 0)
+                            @foreach($data as $date=>$datum)
+                              <h4 class="text-bold">{{date('F, Y',strtotime($date))}}</h4>
+                              <hr>
+                              <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                  <th width="40%" class="text-left">Customer</th>
+                                  <th width="20%" class="text-center">Total Rent(&#2547;)</th>
+                                  <th width="20%" class="text-center">Total Collection(&#2547;)</th>
+                                  <th width="20%" class="text-center">Total Due(&#2547;)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @php ($mTotalR = 0)
+                                  @php ($mTotalC = 0)
+                                    @php ($mTotalD = 0)
+                                      @foreach($datum as $rent)
+                                        <tr>
+                                          <td class="text-left">{{ $rent->customer->name }} # {{$rent->customer->cellNo}}</td>
+                                          <td class="text-center">
+                                            @php($tRent = ($rent->rent+$rent->serviceCharge+$rent->utilityCharge))
+                                              {{number_format($tRent,2,'.','')}}
+                                          </td>
+                                          <td class="text-center">
+                                            @php($collection = 0)
+                                              @if(isset($rent->collectionSum->first()->total))
+                                                @php($collection = $rent->collectionSum->first()->total)
+                                                  @endif
+                                                  {{number_format($collection,2,'.','')}}
+                                          </td>
+                                          <td class="text-center">
+                                            @php($due = ($tRent-$collection))
+                                              {{number_format($due,2,'.','')}}
+                                          </td>
+                                          @php ($mTotalR += $tRent)
+                                            @php ($mTotalC += $collection)
+                                              @php ($mTotalD += $due)
 
-                          </tr>
-                        @endforeach
-                        <tr>
-                          <td class="text-center"><strong class="text-lg text-default-dark">Total</strong></td>
-                          <td class="text-center"><strong class="text-lg text-default-dark bdMoney">{{number_format($grandTotalR,2,'.','')}}</strong>&#2547;</td>
-                          <td class="text-center"><strong class="text-lg text-default-dark bdMoney">{{number_format($grandTotalC,2,'.','')}}</strong>&#2547;</td>
-                          <td class="text-center"><strong class="text-lg text-default-dark bdMoney">{{number_format($grandTotalD,2,'.','')}}</strong>&#2547;</td>
-                        </tr>
-                        </tbody>
+                                        </tr>
+                                      @endforeach
+                                      <tr>
+                                        <td class="text-center"><strong class="text-lg text-default-dark">Total</strong></td>
+                                        <td class="text-center"><strong class="text-lg text-default-dark bdMoney">{{number_format($mTotalR,2,'.',',')}}</strong>&#2547;</td>
+                                        <td class="text-center"><strong class="text-lg text-default-dark bdMoney">{{number_format($mTotalC,2,'.',',')}}</strong>&#2547;</td>
+                                        <td class="text-center"><strong class="text-lg text-default-dark bdMoney">{{number_format($mTotalD,2,'.',',')}}</strong>&#2547;</td>
+                                      </tr>
+                                </tbody>
 
-                      </table>
+                              </table>
+                              @php ($grandTotalR += $mTotalR)
+                                @php ($grandTotalC += $mTotalC)
+                                  @php ($grandTotalD += $mTotalD)
+                            @endforeach
+
                     </div><!--end .col -->
                   </div><!--end .row -->
+                  @if(count($data)>1)
+                    <br>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <table width="100%">
+                          <tr>
+                            <td width="33.33%" class="text-center">
+                              <div class="well" style="margin: 10px;">
+                                <strong class="text-lg text-default-dark">Grand Total Rent<br>{{number_format($grandTotalR,2,'.',',')}}</strong>&#2547;
+                              </div>
+                            </td>
+                            <td width="33.33%" class="text-center">
+                              <div class="well" style="margin: 10px;">
+                                <strong class="text-lg text-default-dark">Grand Total Collection<br>{{number_format($grandTotalC,2,'.',',')}}</strong>&#2547;
+                              </div>
+                            </td>
+                            <td width="33.33%" class="text-center">
+                              <div class="well" style="margin: 10px;">
+                                <strong class="text-lg text-default-dark">Grand Total Due<br>{{number_format($grandTotalD,2,'.',',')}}</strong>&#2547;
+
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+
+                    @endif
 
                 </div><!--end .card-body -->
               </div><!--end .card -->

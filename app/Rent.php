@@ -59,6 +59,12 @@ class Rent extends Model
     {
         return $this->hasMany('App\RentCollection','rents_id');
     }
+    public function collectionSum()
+    {
+        return $this->hasMany('App\RentCollection','rents_id')
+            ->selectRaw('rents_id,SUM(amount) as total')
+            ->groupBy('rents_id');
+    }
 
 
     function setEntryDateAttribute($value)

@@ -347,55 +347,80 @@ class ReportController extends Controller
             if($project !="None" && $project != "All") {
                 $projectInfo = Project::where('id',$project)->first();
                 $reportTitle = $projectInfo->name;
-                $rent_ids = Rent::select('id')->where('projects_id',$project)->pluck('id');
-                $collections = RentCollection::whereIn('rents_id',$rent_ids)->whereMonth('collectionDate', '=', $myPart[1])->whereYear('collectionDate', '=', $myPart[0])
-                    ->where('deleted_at',null)
-                    ->sum('amount');
-
-                $rents = Rent::select(DB::raw('sum(rent) AS total_rent'),DB::raw('sum(serviceCharge) AS total_service'),DB::raw('sum(utilityCharge) AS total_utility'))
+//                $rent_ids = Rent::select('id')->where('projects_id',$project)->pluck('id');
+//                $collections = RentCollection::whereIn('rents_id',$rent_ids)->whereMonth('collectionDate', '=', $myPart[1])->whereYear('collectionDate', '=', $myPart[0])
+//                    ->where('deleted_at',null)
+//                    ->sum('amount');
+//
+//                $rents = Rent::select(DB::raw('sum(rent) AS total_rent'),DB::raw('sum(serviceCharge) AS total_service'),DB::raw('sum(utilityCharge) AS total_utility'))
+//                    ->where('status',1)
+//                    ->where('projects_id',$project)
+//                    ->where('deleted_at',null)
+//                    ->whereDate('deedStart','<=',$myPart[0].'-'.$myPart[1].'-31')
+//                    ->whereDate('deedEnd','>=',$myPart[0].'-'.$myPart[1].'-31')
+//                    ->first();
+                $rents = Rent::with(array('collectionSum'=> function($query) use($myPart){
+                    $query->whereMonth('collectionDate', '=', $myPart[1])
+                        ->whereYear('collectionDate', '=', $myPart[0])
+                        ->where('deleted_at',null)
+                        ->get();
+                },'customer'))
                     ->where('status',1)
-                    ->where('projects_id',$project)
                     ->where('deleted_at',null)
+                    ->where('projects_id',$project)
                     ->whereDate('deedStart','<=',$myPart[0].'-'.$myPart[1].'-31')
                     ->whereDate('deedEnd','>=',$myPart[0].'-'.$myPart[1].'-31')
-                    ->first();
+                    ->get();
             }
             else if($customer != "None" &&  $customer !="All"){
                 $customerInfo = Customer::where('id',$customer)->first();
                 $reportTitle = $customerInfo->name;
 
-                $rent_ids = Rent::select('id')->where('customers_id',$customer)->pluck('id');
-                $collections = RentCollection::whereIn('rents_id',$rent_ids)->whereMonth('collectionDate', '=', $myPart[1])->whereYear('collectionDate', '=', $myPart[0])
-                    ->where('deleted_at',null)
-                    ->sum('amount');
-
-                $rents = Rent::select(DB::raw('sum(rent) AS total_rent'),DB::raw('sum(serviceCharge) AS total_service'),DB::raw('sum(utilityCharge) AS total_utility'))
+//                $rent_ids = Rent::select('id')->where('customers_id',$customer)->pluck('id');
+//                $collections = RentCollection::whereIn('rents_id',$rent_ids)->whereMonth('collectionDate', '=', $myPart[1])->whereYear('collectionDate', '=', $myPart[0])
+//                    ->where('deleted_at',null)
+//                    ->sum('amount');
+//
+//                $rents = Rent::select(DB::raw('sum(rent) AS total_rent'),DB::raw('sum(serviceCharge) AS total_service'),DB::raw('sum(utilityCharge) AS total_utility'))
+//                    ->where('status',1)
+//                    ->where('customers_id',$customer)
+//                    ->where('deleted_at',null)
+//                    ->whereDate('deedStart','<=',$myPart[0].'-'.$myPart[1].'-31')
+//                    ->whereDate('deedEnd','>=',$myPart[0].'-'.$myPart[1].'-31')
+//                    ->first();
+                $rents = Rent::with(array('collectionSum'=> function($query) use($myPart){
+                    $query->whereMonth('collectionDate', '=', $myPart[1])
+                        ->whereYear('collectionDate', '=', $myPart[0])
+                        ->where('deleted_at',null)
+                        ->get();
+                },'customer'))
                     ->where('status',1)
-                    ->where('customers_id',$customer)
                     ->where('deleted_at',null)
+                    ->where('customers_id',$customer)
                     ->whereDate('deedStart','<=',$myPart[0].'-'.$myPart[1].'-31')
                     ->whereDate('deedEnd','>=',$myPart[0].'-'.$myPart[1].'-31')
-                    ->first();
+                    ->get();
             }
             else{
-                $collections = RentCollection::whereMonth('collectionDate', '=', $myPart[1])->whereYear('collectionDate', '=', $myPart[0])
-                    ->where('deleted_at',null)
-                    ->sum('amount');
-                $rents = Rent::select(DB::raw('sum(rent) AS total_rent'),DB::raw('sum(serviceCharge) AS total_service'),DB::raw('sum(utilityCharge) AS total_utility'))
+//                $collections = RentCollection::whereMonth('collectionDate', '=', $myPart[1])->whereYear('collectionDate', '=', $myPart[0])
+//                    ->where('deleted_at',null)
+//                    ->sum('amount');
+//                return $collections;
+                $rents = Rent::with(array('collectionSum'=> function($query) use($myPart){
+                        $query->whereMonth('collectionDate', '=', $myPart[1])
+                            ->whereYear('collectionDate', '=', $myPart[0])
+                            ->where('deleted_at',null)
+                            ->get();
+                    },'customer'))
                     ->where('status',1)
                     ->where('deleted_at',null)
                     ->whereDate('deedStart','<=',$myPart[0].'-'.$myPart[1].'-31')
                     ->whereDate('deedEnd','>=',$myPart[0].'-'.$myPart[1].'-31')
-                    ->first();
+                    ->get();
             }
 
-
-            $totalRent = $rents->total_rent + $rents->total_service + $rents->totalutility;
-            $data[$month] =[
-                'total' => $totalRent,
-                'collections' => $collections,
-                'dues' => ($totalRent-$collections)
-            ];
+//            return $rents[3]->collectionSum->first()->total;
+            $data[$month] = $rents;
         }
 
         return view('report.collectionsSummary',compact('data','monthYearFrom','monthYearTo','reportTitle','project','projects','customer','customers'));
