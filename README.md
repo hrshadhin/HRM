@@ -48,7 +48,6 @@ PASS: demo123
 <img src="public/assets/images/2.png">
 <img src="public/assets/images/3.png">
 <img src="public/assets/images/4.png">
-<img src="public/assets/images/5.png">
 <img src="public/assets/images/6.png">
 <img src="public/assets/images/7.png">
 
