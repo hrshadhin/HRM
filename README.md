@@ -1,7 +1,7 @@
 RHM[Rent & Housing Management]
 ==========================================
 
-#Description
+# Description
   Easy & hassle free Rent & Housing Management Web Application
 
 ## Installation and use
@@ -43,7 +43,7 @@ USER: admin@hrm.com
 PASS: demo123
 
 
-#Screenshot
+# Screenshot
 <img src="public/assets/images/1.png">
 <img src="public/assets/images/2.png">
 <img src="public/assets/images/3.png">
@@ -53,7 +53,7 @@ PASS: demo123
 <img src="public/assets/images/7.png">
 
 
-#Licence
+# Licence
 HRM is open-sourced software licensed under the AGPL-3.0 license. Frameworks and libraries has it own licensed
 
 Enjoy :)
