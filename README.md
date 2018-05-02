@@ -4,8 +4,8 @@ RHM[Rent & Housing Management]
 # Description
   Easy & hassle free Rent & Housing Management Web Application
 
-## Installation and use
-# HRM is build using Laravel 5.3
+# Installation and use
+### HRM is build using Laravel 5.3
 ```
 $ git clone https://github.com/hrshadhin/HRM.git
 ```
