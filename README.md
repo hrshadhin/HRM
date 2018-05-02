@@ -53,7 +53,7 @@ PASS: demo123
 <img src="public/assets/images/7.png">
 
 
-# Licence
+# License
 HRM is open-sourced software licensed under the AGPL-3.0 license. Frameworks and libraries has it own licensed
 
 Enjoy :)
