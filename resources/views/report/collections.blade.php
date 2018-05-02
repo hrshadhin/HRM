@@ -80,7 +80,7 @@
                   <div class="row">
                     <div class="col-xs-7">
                       <img src="/assets/img/logo.png" height="80px" width="100px" alt="">
-                      <span class="text-left" style="font-size:16px">Shamsul Alamin Group</span>
+                      <span class="text-left" style="font-size:16px">ShanixLab</span>
                    </div>
                     <div class="col-xs-3 text-right">
                       <h1 class="text-light text-default-light"><strong>Collections</strong></h1>

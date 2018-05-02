@@ -339,7 +339,7 @@
 
 			<div class="menubar-foot-panel">
 				<small class="no-linebreak hidden-folded">
-					<span class="opacity-75">Copyright &copy; 2017</span> <strong>sagproperty</strong>
+					<span class="opacity-75">Copyright &copy; {{date('Y')}}</span> <a href="http://shanixlab.com" target="_blank"><strong>ShanixLab</a></strong>
 				</small>
 			</div>
 		</div><!--end .menubar-scroll-panel-->

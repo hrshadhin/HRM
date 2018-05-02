@@ -77,12 +77,14 @@
 
                                                 <div class="form-group">
                                                         @foreach($permission as $value)
+                                                            <div class="col-sm-3">
                                                             <p>
                                                             <label class="checkbox-styled checkbox-primary">
                                                            {{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
                                                                 <span>{{ $value->name }}</span>
                                                             </label>
                                                             </p>
+                                                            </div>
                                                         @endforeach
 
                                                 </div>
