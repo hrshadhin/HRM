@@ -101,3 +101,27 @@ fieldset legend {
     border: none !important;
     margin: 0;
 }
+footer strong {
+    color: #1abb9c;
+  }
+  footer a {
+    color: #3498db;
+    font-weight: bold;
+  }
+  
+.footer_fixed {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    z-index: 100;
+}
+
+footer {
+    background: #f2f3f3;
+    padding: 15px 20px;
+    display: block;
+}
+#content{
+    margin-bottom: 55px;
+}

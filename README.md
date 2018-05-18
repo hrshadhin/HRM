@@ -1,8 +1,8 @@
-RHM[Rent & Housing Management]
+RHM[Open Source University Management System]
 ==========================================
 
 # Description
-  Easy & hassle free Rent & Housing Management Web Application
+  Easy & hassle free Open Source University Management System Web Application
 
 # Installation and use
 ### HRM is build using Laravel 5.3
@@ -44,12 +44,12 @@ PASS: demo123
 
 
 # Screenshot
-<img src="public/assets/images/1.png">
-<img src="public/assets/images/2.png">
-<img src="public/assets/images/3.png">
-<img src="public/assets/images/4.png">
-<img src="public/assets/images/6.png">
-<img src="public/assets/images/7.png">
+<img src="screenshots/1.png">
+<img src="screenshots/2.png">
+<img src="screenshots/3.png">
+<img src="screenshots/4.png">
+<img src="screenshots/6.png">
+<img src="screenshots/7.png">
 
 
 # License

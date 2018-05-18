@@ -11,6 +11,8 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
+use App\Http\Helpers\AppHelper;
+
 
 class UserController extends Controller
 {
@@ -31,6 +33,8 @@ class UserController extends Controller
         $remember=$request->has('remember');
         if (auth()->attempt(['email'=> $email, 'password'=> $password,'deleted_at' => null],$remember)) {
             session(['name' => auth()->user()->name]);
+            session(['user_session_sha1' => AppHelper::getUserSessionHash()]);
+
             $notification= array('title' => 'Login', 'body' => 'Hello '.auth()->user()->name.'!You are now logged in.');
             return redirect()->intended('dashboard')->with('success',$notification);
         } else {

@@ -42,6 +42,9 @@
 
 		}
 	</style>
+	<script>
+      var hash = '{{session('user_session_sha1')}}';
+    </script>
 	<!-- END STYLESHEETS -->
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -151,6 +154,7 @@
 	<!-- END CHILD PAGE-->
 	</div><!--end #content-->
 	<!-- END CONTENT -->
+	@include('layouts.footer')
 
 	<!-- BEGIN MENUBAR-->
 	<div id="menubar" class="no-print">
@@ -339,7 +343,7 @@
 
 			<div class="menubar-foot-panel">
 				<small class="no-linebreak hidden-folded">
-					<span class="opacity-75">Copyright &copy; {{date('Y')}}</span> <a href="http://shanixlab.com" target="_blank"><strong>ShanixLab</a></strong>
+					<span class="opacity-75">Copyright &copy; {{date('Y')}}</span> <a href="#" target="_blank"><strong>HRM</a></strong>
 				</small>
 			</div>
 		</div><!--end .menubar-scroll-panel-->
