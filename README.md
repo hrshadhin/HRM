@@ -33,13 +33,13 @@ $ php artisan storage:link
 ```
 $ php artisan serve
 ```
-**  http://localhost:8000 **
-USER: admin@hrm.com
+**http://localhost:8000**\
+USER: admin@hrm.com\
 PASS: demo123
 
 # Demo Live Link
-URL: http://hrm.hrshadhin.me
-USER: admin@hrm.com
+URL: http://hrm.hrshadhin.me\
+USER: admin@hrm.com\
 PASS: demo123
 
 
