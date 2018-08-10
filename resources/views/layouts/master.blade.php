@@ -440,7 +440,7 @@
         $("#main-menu li a").each(function(){
             if($(this).attr("href") == pgurl || $(this).attr("href") == '' ){
                 $("#main-menu li").removeClass('active');
-                $(this).parent().parent().parent().addClass("active");
+                $(this).parent().parent().parent('li').addClass("active");
                 $(this).parent().addClass("active");
             }
         });
