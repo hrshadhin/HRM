@@ -1,8 +1,8 @@
-RHM[Open Source University Management System]
+HRM[House Rent Management]
 ==========================================
 
 # Description
-  Easy & hassle free Open Source University Management System Web Application
+  Easy & hassle free 'House Rent Management' web application.
 
 # Installation and use
 ### HRM is build using Laravel 5.3
